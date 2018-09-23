@@ -1,0 +1,436 @@
+Initiating legacy licensing module
+LICENSE SYSTEM [2018910 9:54:59] Next license update check is after 2018-09-06T15:36:22
+
+Built from 'toolsmiths/upgrade-graphics-test-runner' branch; Version is '2018.3.0b1 (c0d26a5d00eb) revision 12636778'; Using compiler version '191326128'
+OS: 'Windows 8.1  (6.3.0) 64bit' Language: 'en' Physical Memory: 32719 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 1
+[Package Manager] Server::Start -- Setting the cache path to tmp [path: `C:/Users/yan/AppData/Local/Temp/93acb10de1435c44db1508e41d0a48d3`]
+
+[Package Manager] Server::Start -- Port 51112 was selected
+
+ COMMAND LINE ARGUMENTS:
+C:\unity\lane3\Tests\bin\UTRDebug_win_msbuild\..\..\..\build\WindowsEditor\Unity.exe
+-projectPath
+C:\unity\lane3\Tests\EditModeAndPlayModeTests\EditorCrash
+-cleanTestPrefs
+-batchmode
+-logFile
+C:\temp\arts\Tests\EditModeAndPlayModeTests\EditorCrash\UnityLog.txt
+-testPlatform
+editmode
+-testResults
+C:\temp\arts\Tests\EditModeAndPlayModeTests\EditorCrash\TestResults.xml
+-testSettingsFile
+C:\temp\arts\Tests\EditModeAndPlayModeTests\EditorCrash\TestSettings.json
+-useTempPackageCache
+-forgetProjectPath
+-automated
+-upmNoDefaultPackages
+-enableAllModules
+-forceFullStacktrace Assert
+-scripting-runtime-version
+latest
+-api-profile
+NET_Standard_2_0
+-runTests
+-automated
+-accept-apiupdate
+-crash-report-folder
+C:\temp\arts\Tests\EditModeAndPlayModeTests\EditorCrash\CrashArtifacts
+Successfully changed project path to: C:\unity\lane3\Tests\EditModeAndPlayModeTests\EditorCrash
+C:/unity/lane3/Tests/EditModeAndPlayModeTests/EditorCrash
+Using Asset Import Pipeline V1.
+Initiating legacy licensing moduleLoading GUID <-> Path mappings...0.000059 seconds
+Loading Asset Database...0.004656 seconds
+Audio: FMOD Profiler initialized on port 54900
+Build target: OSXUniversal found and added!
+Build target: WindowsStoreApps found and added!
+Build target: Win64 found and added!
+Build target: Win found and added!
+Build target: LinuxUniversal found and added!
+Build target: Linux64 found and added!
+Build target: Linux found and added!
+Build target: iOS found and added!
+Build target: tvOS found and added!
+Build target: PS4 found and added!
+Build target: XboxOne found and added!
+Build target: Android found and added!
+Build target: WebGL found and added!
+Build target: Switch found and added!
+Build target: Lumin found and added!
+Build target: PSM found and added!
+Build target: PSP2 found and added!
+Build target: WiiU found and added!
+Build target: Web found and added!
+Build target: WebStreamed found and added!
+Build target: OSXIntel found and added!
+Build target: OSXIntel64 found and added!
+Build target: BlackBerry found and added!
+Build target: PS3 found and added!
+Build target: N3DS found and added!
+Build target: WP8 found and added!
+Build target: SamsungTV found and added!
+Build target: Tizen found and added!
+AssetDatabase consistency checks...0.009830 seconds
+Refreshing native plugins compatible for Editor in 6.23 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+DisplayProgressbar: Unity Package Manager
+[Package Manager] Done resolving packages in 6.85s seconds
+[Package Manager] Registering 0 packages:
+[Package Manager] Done registering packages in 0.00s seconds
+Initialize engine version: 2018.3.0b1 (c0d26a5d00eb)
+GfxDevice: creating device client; threaded=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: NVIDIA GeForce GTX 750 (ID=0x1381)
+    Vendor:   
+    VRAM:     967 MB
+    Driver:   9.18.13.5306
+WARNING: Shader Unsupported: 'AR/TangoARRender' - Pass '' has no vertex shader
+WARNING: Shader Unsupported: 'AR/TangoARRender' - Setting to default shader.
+WARNING: Shader Unsupported: 'Hidden/VideoDecodeOSX' - Pass 'Flip_RGBARect_To_RGBA' has no vertex shader
+WARNING: Shader Unsupported: 'Hidden/VideoDecodeOSX' - Setting to default shader.
+WARNING: Shader Unsupported: 'Hidden/VideoDecodeAndroid' - Pass 'RGBAExternal_To_RGBA' has no vertex shader
+WARNING: Shader Unsupported: 'Hidden/VideoDecodeAndroid' - Setting to default shader.
+Setting api compatibility level to 'NET_Standard_2_0'
+Initialize mono
+Mono path[0] = 'C:/unity/lane3/build/WindowsEditor/Data/Managed'
+Mono path[1] = 'C:/unity/lane3/build/WindowsEditor/Data/MonoBleedingEdge/lib/mono/unityjit'
+Mono config path = 'C:/unity/lane3/build/WindowsEditor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=0.0.0.0:56076
+Begin MonoManager ReloadAssembly
+Refreshing native plugins compatible for Editor in 0.16 ms, found 1 plugins.
+Initializing Unity.PackageManager (PackageManager) v2018.3.0 for Unity v2018.3.0b1
+Registering precompiled unity dll's ...
+Trying to register platform support module: C:/unity/lane3/build/iOSSupport/UnityEditor.iOS.Extensions.dll (that doesn't exist). Retrying without overrides.
+Platform support module is not available: C:/unity/lane3/build/iOSSupport/UnityEditor.iOS.Extensions.dll
+Register platform support module: C:/unity/lane3/build/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.001165 seconds.
+Registering precompiled user dll's ...
+Registered in 0.000162 seconds.
+Symbol file LoadedFromMemory is not a mono symbol file
+Registering platform support modules:
+Registered platform support modules in: 0.0719796s.
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.21 ms, found 1 plugins.
+Preloading 1 native plugins for Editor in 0.75 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.931 seconds
+Platform modules already initialized, skipping
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory is not a mono symbol file
+Initializing Unity.PackageManager (PackageManager) v2018.3.0 for Unity v2018.3.0b1
+Registering platform support modules:
+Registered platform support modules in: 0.0368446s.
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.29 ms, found 1 plugins.
+Preloading 1 native plugins for Editor in 0.12 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.785 seconds
+Platform modules already initialized, skipping
+Validating Project structure ... 0.000097 seconds.
+Refresh: detecting if any assets need to be imported or removed ...
+
+Hashing assets (1 files)... 0.000 seconds
+  file read: 0.000 seconds (0.001 MB)
+  wait for write: 0.000 seconds (I/O thread blocked by consumer, aka CPU bound)
+  wait for read: 0.000 seconds (CPUT thread waiting for I/O thread, aka disk bound)
+  hash: 0.000 seconds
+----- Compute hash(es) for 1 asset(s).
+
+Updating Assets/Editor/EditorCrashTests.cs - GUID: 61e6207a87ec49c4f83a8d2ceb530df4...
+ done. [Time: 64.486722 ms] 
+Unloading 56 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 114.4 MB.
+System memory in use after: 25.9 MB.
+
+Unloading 192 unused Assets to reduce memory usage. Loaded Objects now: 636.
+Total: 22.460183 ms (FindLiveObjects: 0.200704 ms CreateObjectMapping: 0.012288 ms MarkObjects: 1.585922 ms  DeleteObjects: 20.660501 ms)
+
+- Starting compile Library/ScriptAssemblies/Assembly-CSharp-Editor.dll
+- Finished compile Library/ScriptAssemblies/Assembly-CSharp-Editor.dll
+Assets\Editor\EditorCrashTests.cs(21,9): warning CS0618: 'Application.ForceCrash(int)' is obsolete: 'Use UnityEngine.Diagnostics.Utils.ForceCrash'
+ 
+(Filename: Assets\Editor\EditorCrashTests.cs Line: 21)
+
+Reloading assemblies after script compilation.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory is not a mono symbol file
+Initializing Unity.PackageManager (PackageManager) v2018.3.0 for Unity v2018.3.0b1
+Registering platform support modules:
+Registered platform support modules in: 0.0378041s.
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 3.82 ms, found 1 plugins.
+Preloading 1 native plugins for Editor in 0.06 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.875 seconds
+Platform modules already initialized, skipping
+Script Compilation Pipeline Post Process Assets time: 1.808726s
+Assembly Updater Post Process Assets time: 0.000066s
+Updating ProjectSettings/ProjectSettings.asset - GUID: 00000000000000004000000000000000...
+ done. [Time: 60.759614 ms] 
+Script Compilation Pipeline Post Process Assets time: 0.000478s
+Assembly Updater Post Process Assets time: 0.000064s
+Refreshing native plugins compatible for Editor in 0.21 ms, found 1 plugins.
+Preloading 1 native plugins for Editor in 0.07 ms.
+Refreshing native plugins compatible for Editor in 0.22 ms, found 1 plugins.
+Preloading 1 native plugins for Editor in 0.07 ms.
+
+Refresh Completed time: 2.087547s
+	Asset Scan time: 0.000146s
+	Asset Hashing: 0.000533s [0.6 KB, 1.025259 mb/s]
+	Asset Import (Scripting) time: 0.064563s (count: 1)
+	Post Processs Assets (Scripting) time: 1.855895s
+	Asset Rehashing: 0.000000s [0 B, 0.000000 mb/s]
+	Asset Import (Non Scripting) time: 0.060798s (count: 1)
+	Post Process Assets (Non Scripting) time: 0.001503s
+	Dependent Assets to Import Queue time: 0.000019s
+
+Warming cache for 50 main assets: 0.000054 seconds elapsed
+Initializing Unity extensions:
+ 'C:/unity/lane3/build/WindowsEditor/Data/UnityExtensions/Unity/Timeline/Runtime/UnityEngine.Timeline.dll'  GUID: 6a10b2909283487f913b00d94cd3faf5
+ 'C:/unity/lane3/build/WindowsEditor/Data/UnityExtensions/Unity/TestRunner/portable/nunit.framework.dll'  GUID: 405b9b51bb344a128608d968297df79c
+ 'C:/unity/lane3/build/WindowsEditor/Data/UnityExtensions/Unity/GUISystem/Standalone/UnityEngine.UI.dll'  GUID: f70555f144d8491a825f0804e09c671c
+ 'C:/unity/lane3/build/WindowsEditor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll'  GUID: f5f67c52d1564df4a8936ccd202a3bd8
+ 'C:/unity/lane3/build/WindowsEditor/Data/UnityExtensions/Unity/Timeline/RuntimeEditor/UnityEngine.Timeline.dll'  GUID: 844f815391db42d49455cbf1a7bfc434
+ 'C:/unity/lane3/build/WindowsEditor/Data/UnityExtensions/Unity/Networking/Standalone/UnityEngine.Networking.dll'  GUID: dc443db3e92b4983b9738c1131f555cb
+ 'C:/unity/lane3/build/WindowsEditor/Data/UnityExtensions/Unity/UnitySpatialTracking/Runtime/UnityEngine.SpatialTracking.dll'  GUID: ed7343f30e3843b3afda8f8b02669cea
+ 'C:/unity/lane3/build/WindowsEditor/Data/UnityExtensions/Unity/UnityGoogleAudioSpatializer/Editor/UnityEditor.GoogleAudioSpatializer.dll'  GUID: 4a3ecb1425d14502837abea459cf2b70
+ 'C:/unity/lane3/build/WindowsEditor/Data/UnityExtensions/Unity/Networking/Editor/UnityEditor.Networking.dll'  GUID: 5f32cd94baa94578a686d4b9d6b660f7
+ 'C:/unity/lane3/build/WindowsEditor/Data/UnityExtensions/Unity/UnitySpatialTracking/Editor/UnityEditor.SpatialTracking.dll'  GUID: b5da970776034f77a070d99423d68791
+ 'C:/unity/lane3/build/WindowsEditor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll'  GUID: 870353891bb340e2b2a9c8707e7419ba
+ 'C:/unity/lane3/build/WindowsEditor/Data/UnityExtensions/Unity/TestRunner/UnityEngine.TestRunner.dll'  GUID: 53ebcfaa2e1e4e2dbc85882cd5a73fa1
+ 'C:/unity/lane3/build/WindowsEditor/Data/UnityExtensions/Unity/UnityGoogleAudioSpatializer/RuntimeEditor/UnityEngine.GoogleAudioSpatializer.dll'  GUID: ead147da21254ff9a0a936bdd75e1680
+ 'C:/unity/lane3/build/WindowsEditor/Data/UnityExtensions/Unity/UnityGoogleAudioSpatializer/Runtime/UnityEngine.GoogleAudioSpatializer.dll'  GUID: e4f4cf1b9b434137a499903a7a1d651a
+ 'C:/unity/lane3/build/WindowsEditor/Data/UnityExtensions/Unity/UnityVR/Editor/UnityEditor.VR.dll'  GUID: 4ba2329b63d54f0187bcaa12486b1b0f
+ 'C:/unity/lane3/build/WindowsEditor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll'  GUID: 3a84de5cd0624681b6b6dcd8921d912a
+ 'C:/unity/lane3/build/WindowsEditor/Data/UnityExtensions/Unity/GUISystem/Editor/UnityEditor.UI.dll'  GUID: 80a3616ca19596e4da0f10f14d241e9f
+ 'C:/unity/lane3/build/WindowsEditor/Data/UnityExtensions/Unity/TestRunner/Editor/UnityEditor.TestRunner.dll'  GUID: 4113173d5e95493ab8765d7b08371de4
+ 'C:/unity/lane3/build/WindowsEditor/Data/UnityExtensions/Unity/TestRunner/net35/unity-custom/nunit.framework.dll'  GUID: 4b3fa4bde7f1451a8218c03ee6a8ded8
+ 'C:/unity/lane3/build/WindowsEditor/Data/UnityExtensions/Unity/Timeline/Editor/UnityEditor.Timeline.dll'  GUID: 7668179ede524d6396c8b7d84461ea29
+C:/unity/lane3/Tests/EditModeAndPlayModeTests/EditorCrash/Assets/Editor Default Resources
+Unloading 36 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 28.0 MB.
+System memory in use after: 27.9 MB.
+
+Unloading 6 unused Assets to reduce memory usage. Loaded Objects now: 662.
+Total: 3.318019 ms (FindLiveObjects: 0.471808 ms CreateObjectMapping: 0.024576 ms MarkObjects: 2.780419 ms  DeleteObjects: 0.039424 ms)
+
+Refreshing native plugins compatible for Editor in 0.20 ms, found 1 plugins.
+Running tests for editmode
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+UnityEditor.TestTools.TestRunner.CommandLineTest.SettingsBuilder:LogParametersForRun(String, String[], String[], String) (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\CommandLineTest\SettingsBuilder.cs:100)
+UnityEditor.TestTools.TestRunner.CommandLineTest.SettingsBuilder:BuildApiExecutionSettings(String[]) (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\CommandLineTest\SettingsBuilder.cs:46)
+UnityEditor.TestTools.TestRunner.CommandLineTest.Executer:InitializeAndExecuteRun(String[]) (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\CommandLineTest\Executer.cs:32)
+UnityEditor.TestTools.TestRunner.CommandLineTest.TestStarter:UpdateWatch() (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\CommandLineTest\TestStarter.cs:48)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions() (at C:\unity\lane3\Editor\Mono\EditorApplication.cs:195)
+ 
+(Filename: C:/unity/lane3/Extensions/TestRunner/UnityEditor.TestRunner/CommandLineTest/SettingsBuilder.cs Line: 100)
+
+With test settings file: C:\temp\arts\Tests\EditModeAndPlayModeTests\EditorCrash\TestSettings.json
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+UnityEditor.TestTools.TestRunner.CommandLineTest.SettingsBuilder:LogParametersForRun(String, String[], String[], String) (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\CommandLineTest\SettingsBuilder.cs:111)
+UnityEditor.TestTools.TestRunner.CommandLineTest.SettingsBuilder:BuildApiExecutionSettings(String[]) (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\CommandLineTest\SettingsBuilder.cs:46)
+UnityEditor.TestTools.TestRunner.CommandLineTest.Executer:InitializeAndExecuteRun(String[]) (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\CommandLineTest\Executer.cs:32)
+UnityEditor.TestTools.TestRunner.CommandLineTest.TestStarter:UpdateWatch() (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\CommandLineTest\TestStarter.cs:48)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions() (at C:\unity\lane3\Editor\Mono\EditorApplication.cs:195)
+ 
+(Filename: C:/unity/lane3/Extensions/TestRunner/UnityEditor.TestRunner/CommandLineTest/SettingsBuilder.cs Line: 111)
+
+Could not convert 'scriptingBackend' argument 'Mono' to a valid ScriptingImplementation. Accepted values: Mono2x, IL2CPP, WinRTDotNET.
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:LogFormat(LogType, String, Object[])
+UnityEngine.Debug:LogFormat(String, Object[])
+UnityEditor.TestTools.TestRunner.TestSettingsDeserializer:SetEnumValue(String, Object, Type, Action`1) (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\TestSettings\TestSettingsDeserializer.cs:103)
+UnityEditor.TestTools.TestRunner.TestSettingsDeserializer:GetSettingsFromJsonFile(String) (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\TestSettings\TestSettingsDeserializer.cs:54)
+UnityEditor.TestTools.TestRunner.CommandLineTest.SettingsBuilder:GetTestSettings(String) (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\CommandLineTest\SettingsBuilder.cs:125)
+UnityEditor.TestTools.TestRunner.CommandLineTest.SettingsBuilder:BuildApiExecutionSettings(String[]) (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\CommandLineTest\SettingsBuilder.cs:48)
+UnityEditor.TestTools.TestRunner.CommandLineTest.Executer:InitializeAndExecuteRun(String[]) (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\CommandLineTest\Executer.cs:32)
+UnityEditor.TestTools.TestRunner.CommandLineTest.TestStarter:UpdateWatch() (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\CommandLineTest\TestStarter.cs:48)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions() (at C:\unity\lane3\Editor\Mono\EditorApplication.cs:195)
+ 
+(Filename: C:/unity/lane3/Extensions/TestRunner/UnityEditor.TestRunner/TestSettings/TestSettingsDeserializer.cs Line: 103)
+
+Could not convert 'architecture' argument '' to a valid String.
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:LogFormat(LogType, String, Object[])
+UnityEngine.Debug:LogFormat(String, Object[])
+UnityEditor.TestTools.TestRunner.TestSettingsDeserializer:SetValue(String, Object, Type, Action`1) (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\TestSettings\TestSettingsDeserializer.cs:128)
+UnityEditor.TestTools.TestRunner.TestSettingsDeserializer:GetSettingsFromJsonFile(String) (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\TestSettings\TestSettingsDeserializer.cs:58)
+UnityEditor.TestTools.TestRunner.CommandLineTest.SettingsBuilder:GetTestSettings(String) (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\CommandLineTest\SettingsBuilder.cs:125)
+UnityEditor.TestTools.TestRunner.CommandLineTest.SettingsBuilder:BuildApiExecutionSettings(String[]) (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\CommandLineTest\SettingsBuilder.cs:48)
+UnityEditor.TestTools.TestRunner.CommandLineTest.Executer:InitializeAndExecuteRun(String[]) (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\CommandLineTest\Executer.cs:32)
+UnityEditor.TestTools.TestRunner.CommandLineTest.TestStarter:UpdateWatch() (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\CommandLineTest\TestStarter.cs:48)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions() (at C:\unity\lane3\Editor\Mono\EditorApplication.cs:195)
+ 
+(Filename: C:/unity/lane3/Extensions/TestRunner/UnityEditor.TestRunner/TestSettings/TestSettingsDeserializer.cs Line: 128)
+
+Executing tests with settings: test mode = EditMode
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+UnityEditor.TestTools.TestRunner.Api.TestRunnerApi:Execute(ExecutionSettings) (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\Api\TestRunnerApi.cs:15)
+UnityEditor.TestTools.TestRunner.CommandLineTest.Executer:InitializeAndExecuteRun(String[]) (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\CommandLineTest\Executer.cs:42)
+UnityEditor.TestTools.TestRunner.CommandLineTest.TestStarter:UpdateWatch() (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\CommandLineTest\TestStarter.cs:48)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions() (at C:\unity\lane3\Editor\Mono\EditorApplication.cs:195)
+ 
+(Filename: C:/unity/lane3/Extensions/TestRunner/UnityEditor.TestRunner/Api/TestRunnerApi.cs Line: 15)
+
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 29.7 MB.
+System memory in use after: 29.7 MB.
+
+Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 677.
+Total: 3.176707 ms (FindLiveObjects: 0.188928 ms CreateObjectMapping: 0.017664 ms MarkObjects: 2.961923 ms  DeleteObjects: 0.007680 ms)
+
+
+##utp:{"type":"TestPlan","time":1536566112064,"version":2,"phase":"Immediate","processId":18076,"tests":["EditorCrashTests.Test1","EditorCrashTests.Test2"]}
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+UnityEditor.TestTools.TestRunner.UnityTestProtocol.UtpDebugLogger:Log(Message) (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\UnityTestProtocol\UtpDebuglogger.cs:10)
+UnityEditor.TestTools.TestRunner.UnityTestProtocol.UtpMessageReporter:ReportTestRunStarted(ITest) (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\UnityTestProtocol\UtpMessageReporter.cs:34)
+UnityEditor.TestTools.TestRunner.UnityTestProtocol.UnityTestProtocolListener:RunStarted(ITest) (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\UnityTestProtocol\UnityTestProtocolListener.cs:17)
+UnityEditor.TestTools.TestRunner.Api.<RunStarted>c__AnonStorey0:<>m__0(ICallbacks) (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\Api\CallbacksDelegator.cs:17)
+UnityEditor.TestTools.TestRunner.Api.CallbacksDelegator:TryInvokeAllCallbacks(Action`1) (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\Api\CallbacksDelegator.cs:80)
+UnityEditor.TestTools.TestRunner.Api.CallbacksDelegator:RunStarted(ITest) (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\Api\CallbacksDelegator.cs:17)
+UnityEngine.Events.InvokableCall`1:Invoke(ITest) (at C:\unity\lane3\Runtime\Export\UnityEvent.cs:207)
+UnityEngine.Events.UnityEvent`1:Invoke(ITest) (at C:\unity\lane3\Runtime\Export\UnityEvent_1.cs:58)
+UnityEditor.TestTools.TestRunner.EditModeRunner:Run() (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\TestRunner\EditModeRunner.cs:146)
+UnityEditor.TestTools.TestRunner.EditModeLauncher:Run() (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\TestLaunchers\EditModeLauncher.cs:52)
+UnityEditor.TestTools.TestRunner.Api.TestRunnerApi:Execute(ExecutionSettings) (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\Api\TestRunnerApi.cs:22)
+UnityEditor.TestTools.TestRunner.CommandLineTest.Executer:InitializeAndExecuteRun(String[]) (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\CommandLineTest\Executer.cs:42)
+UnityEditor.TestTools.TestRunner.CommandLineTest.TestStarter:UpdateWatch() (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\CommandLineTest\TestStarter.cs:48)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions() (at C:\unity\lane3\Editor\Mono\EditorApplication.cs:195)
+ 
+(Filename: C:/unity/lane3/Extensions/TestRunner/UnityEditor.TestRunner/UnityTestProtocol/UtpDebuglogger.cs Line: 10)
+
+[UnityConnectServicesConfig] config is NOT valid, switching to default
+Created GICache directory at C:/Users/yan/AppData/LocalLow/Unity/Caches/GiCache. Took: 0.020s, timestamps: [12.602 - 12.622]
+[00:00:00] Enlighten: Precompute started.
+
+##utp:{"type":"TestStatus","time":1536566112103,"version":2,"phase":"Begin","processId":18076,"name":"EditorCrashTests.Test1","state":0}
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+UnityEditor.TestTools.TestRunner.UnityTestProtocol.UtpDebugLogger:Log(Message) (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\UnityTestProtocol\UtpDebuglogger.cs:10)
+UnityEditor.TestTools.TestRunner.UnityTestProtocol.UtpMessageReporter:ReportTestStarted(ITest) (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\UnityTestProtocol\UtpMessageReporter.cs:44)
+UnityEditor.TestTools.TestRunner.UnityTestProtocol.UnityTestProtocolListener:TestStarted(ITest) (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\UnityTestProtocol\UnityTestProtocolListener.cs:27)
+UnityEditor.TestTools.TestRunner.Api.<TestStarted>c__AnonStorey5:<>m__0(ICallbacks) (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\Api\CallbacksDelegator.cs:51)
+UnityEditor.TestTools.TestRunner.Api.CallbacksDelegator:TryInvokeAllCallbacks(Action`1) (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\Api\CallbacksDelegator.cs:80)
+UnityEditor.TestTools.TestRunner.Api.CallbacksDelegator:TestStarted(ITest) (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\Api\CallbacksDelegator.cs:51)
+UnityEngine.Events.InvokableCall`1:Invoke(ITest) (at C:\unity\lane3\Runtime\Export\UnityEvent.cs:207)
+UnityEngine.Events.UnityEvent`1:Invoke(ITest) (at C:\unity\lane3\Runtime\Export\UnityEvent_1.cs:58)
+UnityEngine.TestTools.TestRunner.TestListenerWrapper:TestStarted(ITest) (at C:\unity\lane3\Extensions\TestRunner\UnityEngine.TestRunner\TestRunner\TestListenerWrapper.cs:18)
+UnityEngine.TestRunner.NUnitExtensions.Runner.UnityWorkItem:Execute() (at C:\unity\lane3\Extensions\TestRunner\UnityEngine.TestRunner\NUnitExtensions\Runner\UnityWorkItem.cs:74)
+UnityEngine.TestRunner.NUnitExtensions.Runner.<RunChildren>c__Iterator1:MoveNext() (at C:\unity\lane3\Extensions\TestRunner\UnityEngine.TestRunner\NUnitExtensions\Runner\CompositeWorkItem.cs:186)
+UnityEngine.TestRunner.NUnitExtensions.Runner.<PerformWork>c__Iterator0:MoveNext() (at C:\unity\lane3\Extensions\TestRunner\UnityEngine.TestRunner\NUnitExtensions\Runner\CompositeWorkItem.cs:73)
+UnityEngine.TestRunner.NUnitExtensions.Runner.<RunChildren>c__Iterator1:MoveNext() (at C:\unity\lane3\Extensions\TestRunner\UnityEngine.TestRunner\NUnitExtensions\Runner\CompositeWorkItem.cs:190)
+UnityEngine.TestRunner.NUnitExtensions.Runner.<PerformWork>c__Iterator0:MoveNext() (at C:\unity\lane3\Extensions\TestRunner\UnityEngine.TestRunner\NUnitExtensions\Runner\CompositeWorkItem.cs:73)
+UnityEngine.TestRunner.NUnitExtensions.Runner.<RunChildren>c__Iterator1:MoveNext() (at C:\unity\lane3\Extensions\TestRunner\UnityEngine.TestRunner\NUnitExtensions\Runner\CompositeWorkItem.cs:190)
+UnityEngine.TestRunner.NUnitExtensions.Runner.<PerformWork>c__Iterator0:MoveNext() (at C:\unity\lane3\Extensions\TestRunner\UnityEngine.TestRunner\NUnitExtensions\Runner\CompositeWorkItem.cs:73)
+UnityEditor.TestTools.TestRunner.EditModeRunner:MoveNextAndUpdateYieldObject() (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\TestRunner\EditModeRunner.cs:197)
+UnityEditor.TestTools.TestRunner.EditModeRunner:TestConsumer() (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\TestRunner\EditModeRunner.cs:230)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions() (at C:\unity\lane3\Editor\Mono\EditorApplication.cs:195)
+ 
+(Filename: C:/unity/lane3/Extensions/TestRunner/UnityEditor.TestRunner/UnityTestProtocol/UtpDebuglogger.cs Line: 10)
+
+
+##utp:{"type":"TestStatus","time":1536566112128,"version":2,"phase":"End","processId":18076,"name":"EditorCrashTests.Test1","state":4,"message":"","duration":7,"durationMicroseconds":7416}
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+UnityEditor.TestTools.TestRunner.UnityTestProtocol.UtpDebugLogger:Log(Message) (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\UnityTestProtocol\UtpDebuglogger.cs:10)
+UnityEditor.TestTools.TestRunner.UnityTestProtocol.UtpMessageReporter:ReportTestFinished(ITestResult) (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\UnityTestProtocol\UtpMessageReporter.cs:54)
+UnityEditor.TestTools.TestRunner.UnityTestProtocol.UnityTestProtocolListener:TestFinished(ITestResult) (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\UnityTestProtocol\UnityTestProtocolListener.cs:32)
+UnityEditor.TestTools.TestRunner.Api.<TestFinished>c__AnonStorey7:<>m__0(ICallbacks) (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\Api\CallbacksDelegator.cs:64)
+UnityEditor.TestTools.TestRunner.Api.CallbacksDelegator:TryInvokeAllCallbacks(Action`1) (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\Api\CallbacksDelegator.cs:80)
+UnityEditor.TestTools.TestRunner.Api.CallbacksDelegator:TestFinished(ITestResult) (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\Api\CallbacksDelegator.cs:64)
+UnityEngine.Events.InvokableCall`1:Invoke(ITestResult) (at C:\unity\lane3\Runtime\Export\UnityEvent.cs:207)
+UnityEngine.Events.UnityEvent`1:Invoke(ITestResult) (at C:\unity\lane3\Runtime\Export\UnityEvent_1.cs:58)
+UnityEngine.TestTools.TestRunner.TestListenerWrapper:TestFinished(ITestResult) (at C:\unity\lane3\Extensions\TestRunner\UnityEngine.TestRunner\TestRunner\TestListenerWrapper.cs:23)
+UnityEngine.TestRunner.NUnitExtensions.Runner.UnityWorkItem:WorkItemComplete() (at C:\unity\lane3\Extensions\TestRunner\UnityEngine.TestRunner\NUnitExtensions\Runner\UnityWorkItem.cs:98)
+UnityEngine.TestRunner.NUnitExtensions.Runner.<PerformWork>c__Iterator0:<>__Finally0() (at C:\unity\lane3\Extensions\TestRunner\UnityEngine.TestRunner\NUnitExtensions\Runner\DefaultTestWorkItem.cs:61)
+UnityEngine.TestRunner.NUnitExtensions.Runner.<PerformWork>c__Iterator0:MoveNext() (at C:\unity\lane3\Extensions\TestRunner\UnityEngine.TestRunner\NUnitExtensions\Runner\DefaultTestWorkItem.cs:58)
+UnityEngine.TestRunner.NUnitExtensions.Runner.<RunChildren>c__Iterator1:MoveNext() (at C:\unity\lane3\Extensions\TestRunner\UnityEngine.TestRunner\NUnitExtensions\Runner\CompositeWorkItem.cs:190)
+UnityEngine.TestRunner.NUnitExtensions.Runner.<PerformWork>c__Iterator0:MoveNext() (at C:\unity\lane3\Extensions\TestRunner\UnityEngine.TestRunner\NUnitExtensions\Runner\CompositeWorkItem.cs:73)
+UnityEngine.TestRunner.NUnitExtensions.Runner.<RunChildren>c__Iterator1:MoveNext() (at C:\unity\lane3\Extensions\TestRunner\UnityEngine.TestRunner\NUnitExtensions\Runner\CompositeWorkItem.cs:190)
+UnityEngine.TestRunner.NUnitExtensions.Runner.<PerformWork>c__Iterator0:MoveNext() (at C:\unity\lane3\Extensions\TestRunner\UnityEngine.TestRunner\NUnitExtensions\Runner\CompositeWorkItem.cs:73)
+UnityEngine.TestRunner.NUnitExtensions.Runner.<RunChildren>c__Iterator1:MoveNext() (at C:\unity\lane3\Extensions\TestRunner\UnityEngine.TestRunner\NUnitExtensions\Runner\CompositeWorkItem.cs:190)
+UnityEngine.TestRunner.NUnitExtensions.Runner.<PerformWork>c__Iterator0:MoveNext() (at C:\unity\lane3\Extensions\TestRunner\UnityEngine.TestRunner\NUnitExtensions\Runner\CompositeWorkItem.cs:73)
+UnityEditor.TestTools.TestRunner.EditModeRunner:MoveNextAndUpdateYieldObject() (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\TestRunner\EditModeRunner.cs:197)
+UnityEditor.TestTools.TestRunner.EditModeRunner:TestConsumer() (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\TestRunner\EditModeRunner.cs:230)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions() (at C:\unity\lane3\Editor\Mono\EditorApplication.cs:195)
+ 
+(Filename: C:/unity/lane3/Extensions/TestRunner/UnityEditor.TestRunner/UnityTestProtocol/UtpDebuglogger.cs Line: 10)
+
+
+##utp:{"type":"TestStatus","time":1536566112151,"version":2,"phase":"Begin","processId":18076,"name":"EditorCrashTests.Test2","state":0}
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+UnityEditor.TestTools.TestRunner.UnityTestProtocol.UtpDebugLogger:Log(Message) (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\UnityTestProtocol\UtpDebuglogger.cs:10)
+UnityEditor.TestTools.TestRunner.UnityTestProtocol.UtpMessageReporter:ReportTestStarted(ITest) (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\UnityTestProtocol\UtpMessageReporter.cs:44)
+UnityEditor.TestTools.TestRunner.UnityTestProtocol.UnityTestProtocolListener:TestStarted(ITest) (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\UnityTestProtocol\UnityTestProtocolListener.cs:27)
+UnityEditor.TestTools.TestRunner.Api.<TestStarted>c__AnonStorey5:<>m__0(ICallbacks) (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\Api\CallbacksDelegator.cs:51)
+UnityEditor.TestTools.TestRunner.Api.CallbacksDelegator:TryInvokeAllCallbacks(Action`1) (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\Api\CallbacksDelegator.cs:80)
+UnityEditor.TestTools.TestRunner.Api.CallbacksDelegator:TestStarted(ITest) (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\Api\CallbacksDelegator.cs:51)
+UnityEngine.Events.InvokableCall`1:Invoke(ITest) (at C:\unity\lane3\Runtime\Export\UnityEvent.cs:207)
+UnityEngine.Events.UnityEvent`1:Invoke(ITest) (at C:\unity\lane3\Runtime\Export\UnityEvent_1.cs:58)
+UnityEngine.TestTools.TestRunner.TestListenerWrapper:TestStarted(ITest) (at C:\unity\lane3\Extensions\TestRunner\UnityEngine.TestRunner\TestRunner\TestListenerWrapper.cs:18)
+UnityEngine.TestRunner.NUnitExtensions.Runner.UnityWorkItem:Execute() (at C:\unity\lane3\Extensions\TestRunner\UnityEngine.TestRunner\NUnitExtensions\Runner\UnityWorkItem.cs:74)
+UnityEngine.TestRunner.NUnitExtensions.Runner.<RunChildren>c__Iterator1:MoveNext() (at C:\unity\lane3\Extensions\TestRunner\UnityEngine.TestRunner\NUnitExtensions\Runner\CompositeWorkItem.cs:186)
+UnityEngine.TestRunner.NUnitExtensions.Runner.<PerformWork>c__Iterator0:MoveNext() (at C:\unity\lane3\Extensions\TestRunner\UnityEngine.TestRunner\NUnitExtensions\Runner\CompositeWorkItem.cs:73)
+UnityEngine.TestRunner.NUnitExtensions.Runner.<RunChildren>c__Iterator1:MoveNext() (at C:\unity\lane3\Extensions\TestRunner\UnityEngine.TestRunner\NUnitExtensions\Runner\CompositeWorkItem.cs:190)
+UnityEngine.TestRunner.NUnitExtensions.Runner.<PerformWork>c__Iterator0:MoveNext() (at C:\unity\lane3\Extensions\TestRunner\UnityEngine.TestRunner\NUnitExtensions\Runner\CompositeWorkItem.cs:73)
+UnityEngine.TestRunner.NUnitExtensions.Runner.<RunChildren>c__Iterator1:MoveNext() (at C:\unity\lane3\Extensions\TestRunner\UnityEngine.TestRunner\NUnitExtensions\Runner\CompositeWorkItem.cs:190)
+UnityEngine.TestRunner.NUnitExtensions.Runner.<PerformWork>c__Iterator0:MoveNext() (at C:\unity\lane3\Extensions\TestRunner\UnityEngine.TestRunner\NUnitExtensions\Runner\CompositeWorkItem.cs:73)
+UnityEditor.TestTools.TestRunner.EditModeRunner:MoveNextAndUpdateYieldObject() (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\TestRunner\EditModeRunner.cs:197)
+UnityEditor.TestTools.TestRunner.EditModeRunner:TestConsumer() (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\TestRunner\EditModeRunner.cs:230)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions() (at C:\unity\lane3\Editor\Mono\EditorApplication.cs:195)
+ 
+(Filename: C:/unity/lane3/Extensions/TestRunner/UnityEditor.TestRunner/UnityTestProtocol/UtpDebuglogger.cs Line: 10)
+
+
+##utp:{"type":"TestStatus","time":1536566112154,"version":2,"phase":"End","processId":18076,"name":"EditorCrashTests.Test2","state":4,"message":"","duration":0,"durationMicroseconds":237}
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+UnityEditor.TestTools.TestRunner.UnityTestProtocol.UtpDebugLogger:Log(Message) (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\UnityTestProtocol\UtpDebuglogger.cs:10)
+UnityEditor.TestTools.TestRunner.UnityTestProtocol.UtpMessageReporter:ReportTestFinished(ITestResult) (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\UnityTestProtocol\UtpMessageReporter.cs:54)
+UnityEditor.TestTools.TestRunner.UnityTestProtocol.UnityTestProtocolListener:TestFinished(ITestResult) (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\UnityTestProtocol\UnityTestProtocolListener.cs:32)
+UnityEditor.TestTools.TestRunner.Api.<TestFinished>c__AnonStorey7:<>m__0(ICallbacks) (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\Api\CallbacksDelegator.cs:64)
+UnityEditor.TestTools.TestRunner.Api.CallbacksDelegator:TryInvokeAllCallbacks(Action`1) (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\Api\CallbacksDelegator.cs:80)
+UnityEditor.TestTools.TestRunner.Api.CallbacksDelegator:TestFinished(ITestResult) (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\Api\CallbacksDelegator.cs:64)
+UnityEngine.Events.InvokableCall`1:Invoke(ITestResult) (at C:\unity\lane3\Runtime\Export\UnityEvent.cs:207)
+UnityEngine.Events.UnityEvent`1:Invoke(ITestResult) (at C:\unity\lane3\Runtime\Export\UnityEvent_1.cs:58)
+UnityEngine.TestTools.TestRunner.TestListenerWrapper:TestFinished(ITestResult) (at C:\unity\lane3\Extensions\TestRunner\UnityEngine.TestRunner\TestRunner\TestListenerWrapper.cs:23)
+UnityEngine.TestRunner.NUnitExtensions.Runner.UnityWorkItem:WorkItemComplete() (at C:\unity\lane3\Extensions\TestRunner\UnityEngine.TestRunner\NUnitExtensions\Runner\UnityWorkItem.cs:98)
+UnityEngine.TestRunner.NUnitExtensions.Runner.<PerformWork>c__Iterator0:<>__Finally0() (at C:\unity\lane3\Extensions\TestRunner\UnityEngine.TestRunner\NUnitExtensions\Runner\DefaultTestWorkItem.cs:61)
+UnityEngine.TestRunner.NUnitExtensions.Runner.<PerformWork>c__Iterator0:MoveNext() (at C:\unity\lane3\Extensions\TestRunner\UnityEngine.TestRunner\NUnitExtensions\Runner\DefaultTestWorkItem.cs:58)
+UnityEngine.TestRunner.NUnitExtensions.Runner.<RunChildren>c__Iterator1:MoveNext() (at C:\unity\lane3\Extensions\TestRunner\UnityEngine.TestRunner\NUnitExtensions\Runner\CompositeWorkItem.cs:190)
+UnityEngine.TestRunner.NUnitExtensions.Runner.<PerformWork>c__Iterator0:MoveNext() (at C:\unity\lane3\Extensions\TestRunner\UnityEngine.TestRunner\NUnitExtensions\Runner\CompositeWorkItem.cs:73)
+UnityEngine.TestRunner.NUnitExtensions.Runner.<RunChildren>c__Iterator1:MoveNext() (at C:\unity\lane3\Extensions\TestRunner\UnityEngine.TestRunner\NUnitExtensions\Runner\CompositeWorkItem.cs:190)
+UnityEngine.TestRunner.NUnitExtensions.Runner.<PerformWork>c__Iterator0:MoveNext() (at C:\unity\lane3\Extensions\TestRunner\UnityEngine.TestRunner\NUnitExtensions\Runner\CompositeWorkItem.cs:73)
+UnityEngine.TestRunner.NUnitExtensions.Runner.<RunChildren>c__Iterator1:MoveNext() (at C:\unity\lane3\Extensions\TestRunner\UnityEngine.TestRunner\NUnitExtensions\Runner\CompositeWorkItem.cs:190)
+UnityEngine.TestRunner.NUnitExtensions.Runner.<PerformWork>c__Iterator0:MoveNext() (at C:\unity\lane3\Extensions\TestRunner\UnityEngine.TestRunner\NUnitExtensions\Runner\CompositeWorkItem.cs:73)
+UnityEditor.TestTools.TestRunner.EditModeRunner:MoveNextAndUpdateYieldObject() (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\TestRunner\EditModeRunner.cs:197)
+UnityEditor.TestTools.TestRunner.EditModeRunner:TestConsumer() (at C:\unity\lane3\Extensions\TestRunner\UnityEditor.TestRunner\TestRunner\EditModeRunner.cs:230)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions() (at C:\unity\lane3\Editor\Mono\EditorApplication.cs:195)
+ 
+(Filename: C:/unity/lane3/Extensions/TestRunner/UnityEditor.TestRunner/UnityTestProtocol/UtpDebuglogger.cs Line: 10)
+

@@ -1,0 +1,73 @@
+TestSession
+	minimalCommandLine:
+		--suite=editor
+		--testproject=EditorCrash
+		--open-report
+		--env=win
+
+ArtifactPublish
+	destination: C:\temp\arts\TestRunnerLog.txt
+
+TestSuite
+	name: editor
+	scope: Tests/EditModeAndPlayModeTests/EditorCrash
+	platform: editmode
+	supportsFilters: True
+	minimalCommandLine:
+		--testproject=Tests/EditModeAndPlayModeTests/EditorCrash
+
+Launching executable, Debugging Time 09:54:59.1711857
+Launching executable: C:\unity\lane3\Tests\bin\UTRDebug_win_msbuild\..\..\..\build\WindowsEditor\Unity.exe
+Successfully started MacroClientServer on port 9001
+Launching editor with latest scripting runtime
+Starting editor at: C:\unity\lane3\Tests\bin\UTRDebug_win_msbuild\..\..\..\build\WindowsEditor\Unity.exe
+With arguments: -projectPath C:\unity\lane3\Tests\EditModeAndPlayModeTests\EditorCrash -cleanTestPrefs -batchmode -logFile C:\temp\arts\Tests\EditModeAndPlayModeTests\EditorCrash\UnityLog.txt -testPlatform editmode -testResults C:\temp\arts\Tests\EditModeAndPlayModeTests\EditorCrash\TestResults.xml -testSettingsFile C:\temp\arts\Tests\EditModeAndPlayModeTests\EditorCrash\TestSettings.json -useTempPackageCache -forgetProjectPath -automated -upmNoDefaultPackages -enableAllModules "-forceFullStacktrace Assert" -scripting-runtime-version latest -api-profile NET_Standard_2_0 -runTests -automated -accept-apiupdate -crash-report-folder C:\temp\arts\Tests\EditModeAndPlayModeTests\EditorCrash\CrashArtifacts
+Started Unity.Automation.UnityEditorProcess with processid: 18076
+Running C:\unity\lane3\Tests\bin\UTRDebug_win_msbuild\..\..\..\build\WindowsEditor\Unity.exe
+	arguments: -projectPath C:\unity\lane3\Tests\EditModeAndPlayModeTests\EditorCrash -cleanTestPrefs -batchmode -logFile C:\temp\arts\Tests\EditModeAndPlayModeTests\EditorCrash\UnityLog.txt -testPlatform editmode -testResults C:\temp\arts\Tests\EditModeAndPlayModeTests\EditorCrash\TestResults.xml -testSettingsFile C:\temp\arts\Tests\EditModeAndPlayModeTests\EditorCrash\TestSettings.json -useTempPackageCache -forgetProjectPath -automated -upmNoDefaultPackages -enableAllModules "-forceFullStacktrace Assert" -scripting-runtime-version latest -api-profile NET_Standard_2_0 -runTests -automated -accept-apiupdate -crash-report-folder C:\temp\arts\Tests\EditModeAndPlayModeTests\EditorCrash\CrashArtifacts
+	id: 18076
+	logs:
+		C:\temp\arts\Tests\EditModeAndPlayModeTests\EditorCrash\UnityLog.txt
+
+TestPlan
+	tests:
+		EditorCrashTests.Test1
+		EditorCrashTests.Test2
+
+[1/2] TestStart 'EditorCrashTests.Test1'
+[1/2] TestFinish
+	name: EditorCrashTests.Test1
+	result: PASSED
+	duration: 0.007416 seconds
+
+[2/2] TestStart 'EditorCrashTests.Test2'
+[2/2] TestFinish
+	name: EditorCrashTests.Test2
+	result: PASSED
+	duration: 0.000237 seconds
+
+error: Process exited abnormally. Attempting to get artifacts.
+ArtifactPublish
+	destination: C:\temp\arts\Tests\EditModeAndPlayModeTests\EditorCrash\CrashArtifacts\Crash_2018-09-10_075512194\crash.dmp
+
+ArtifactPublish
+	destination: C:\temp\arts\Tests\EditModeAndPlayModeTests\EditorCrash\CrashArtifacts\Crash_2018-09-10_075512194\error.log
+
+Completed C:\unity\lane3\Tests\bin\UTRDebug_win_msbuild\..\..\..\build\WindowsEditor\Unity.exe
+	arguments: -projectPath C:\unity\lane3\Tests\EditModeAndPlayModeTests\EditorCrash -cleanTestPrefs -batchmode -logFile C:\temp\arts\Tests\EditModeAndPlayModeTests\EditorCrash\UnityLog.txt -testPlatform editmode -testResults C:\temp\arts\Tests\EditModeAndPlayModeTests\EditorCrash\TestResults.xml -testSettingsFile C:\temp\arts\Tests\EditModeAndPlayModeTests\EditorCrash\TestSettings.json -useTempPackageCache -forgetProjectPath -automated -upmNoDefaultPackages -enableAllModules "-forceFullStacktrace Assert" -scripting-runtime-version latest -api-profile NET_Standard_2_0 -runTests -automated -accept-apiupdate -crash-report-folder C:\temp\arts\Tests\EditModeAndPlayModeTests\EditorCrash\CrashArtifacts
+	exitCode: -1
+	id: 18076
+	logs:
+		C:\temp\arts\Tests\EditModeAndPlayModeTests\EditorCrash\UnityLog.txt
+
+ArtifactPublish
+	destination: C:\temp\arts\Tests\EditModeAndPlayModeTests\EditorCrash\UnityLog.txt
+
+TestSuite
+	errors:
+		Editor exited with non-zero exit code: -1
+	name: editor
+
+Deleting directory C:\unity\lane3\Tests\EditModeAndPlayModeTests\EditorCrash\Library
+TestSession
+

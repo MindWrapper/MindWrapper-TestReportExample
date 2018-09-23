@@ -1,0 +1,113 @@
+﻿Unity Editor by Unity Technologies [version: Unity 2018.3.0b1_c0d26a5d00eb]
+
+Unity.exe attempted to call a pure virtual function in module Unity.exe at 0033:4212606e.
+
+Error occurred at 2018-09-10_095514.
+C:\unity\lane3\build\WindowsEditor\Unity.exe, run by yan.
+
+42% physical memory in use.
+32720 MB physical memory [18779 MB free].
+678 MB process peak paging file [637 MB used].
+404 MB process peak working set [374 MB used].
+System Commit Total/Limit/Peak: 16741MB/37584MB/33787MB
+System Physical Total/Available: 32720MB/18779MB
+System Process Count: 187
+System Thread Count: 2577
+System Handle Count: 74309
+Disk space data for 'C:\temp\arts\Tests\EditModeAndPlayModeTests\EditorCrash\CrashArtifacts\Crash_2018-09-10_075512194\': 110483529728 bytes free of 999835037696 total.
+
+
+Context:
+RDI:    0x0000000145118d80  RSI: 0x0000000000000003  RAX:   0x000000000023c040
+RBX:    0x0000000142126040  RCX: 0x000000000023c040  RDX:   0x0000000145118d80
+RIP:    0x000000014212606e  RBP: 0x000000000023cad9  SegCs: 0x0000000100000033
+EFlags: 0x0000000000000207  RSP: 0x000000000023c000  SegSs: 0x000000010000002b
+R8:     0x00000000000004d0  R9:  0x0000000000000000  R10:   0x00007ff931f00000
+R11:    0x000000000023c040  R12: 0x0000000000000000  R13:   0x00000000348e3e50
+R14:    0x0000000000000000  R15: 0x000000000023cb88
+
+
+Bytes at CS:EIP:
+48 8d 8c 24 10 05 00 00 ba 09 00 00 00 48 8d 44 
+
+Mono DLL loaded successfully at 'C:\unity\lane3\build\WindowsEditor\Data\MonoBleedingEdge\EmbedRuntime\mono-2.0-bdwgc.dll'.
+
+
+Stack Trace of Crashed Thread 12440:
+ERROR: SymGetSymFromAddr64, GetLastError: 'Attempt to access invalid address.' (Address: 000000014212606E)
+0x000000014212606E (Unity) (function-name not available)
+ERROR: SymGetSymFromAddr64, GetLastError: 'Attempt to access invalid address.' (Address: 0000000143F149A0)
+0x0000000143F149A0 (Unity) (function-name not available)
+ERROR: SymGetSymFromAddr64, GetLastError: 'Attempt to access invalid address.' (Address: 00000001414A67F7)
+0x00000001414A67F7 (Unity) (function-name not available)
+ERROR: SymGetSymFromAddr64, GetLastError: 'Attempt to access invalid address.' (Address: 000000014251454F)
+0x000000014251454F (Unity) (function-name not available)
+0x000000002CBFFE9E (UnityEngine.CoreModule) UnityEngine.Diagnostics.Utils.ForceCrash()
+0x000000002CBFFD83 (UnityEngine.CoreModule) UnityEngine.Application.ForceCrash()
+0x000000002CBFFC93 (Assembly-CSharp-Editor) EditorCrashTests.CrashEditor()
+0x000000002CB4A5F0 (mscorlib) System.Object.runtime_invoke_void__this__()
+0x00007FF93202BFFB (mono-2.0-bdwgc) mono_get_runtime_build_info
+0x00007FF931FB1DB2 (mono-2.0-bdwgc) mono_perfcounters_init
+0x00007FF931FBAF92 (mono-2.0-bdwgc) mono_runtime_invoke_array
+0x00007FF931FBB729 (mono-2.0-bdwgc) mono_runtime_set_main_args
+0x00007FF931FBAF26 (mono-2.0-bdwgc) mono_runtime_invoke_array
+0x00007FF931F5FE84 (mono-2.0-bdwgc) mono_lookup_internal_call
+0x0000000028E37B76 (mscorlib) System.Reflection.MonoMethod.InternalInvoke()
+0x0000000028E3617B (mscorlib) System.Reflection.MonoMethod.Invoke()
+0x000000002A70286F (mscorlib) System.Reflection.MethodBase.Invoke()
+0x000000002CB55FEB (nunit.framework) NUnit.Framework.Internal.Reflect.InvokeMethod()
+0x000000002CBFFB73 (nunit.framework) NUnit.Framework.Internal.Reflect.InvokeMethod()
+0x000000002CBFFA2B (nunit.framework) NUnit.Framework.Internal.Commands.SetUpTearDownItem.RunNonAsyncMethod()
+0x000000002CBFF893 (nunit.framework) NUnit.Framework.Internal.Commands.SetUpTearDownItem.RunSetUpOrTearDownMethod()
+0x000000002CBFF56B (nunit.framework) NUnit.Framework.Internal.Commands.SetUpTearDownItem.RunTearDown()
+0x000000002CBFE94B (nunit.framework) NUnit.Framework.Internal.Commands.OneTimeTearDownCommand.Execute()
+0x000000002CBFE3A3 (UnityEngine.TestRunner) UnityEngine.TestRunner.NUnitExtensions.Runner.CompositeWorkItem.PerformOneTimeTearDown()
+0x000000002CB2B75B (UnityEngine.TestRunner) <PerformWork>c__Iterator0.MoveNext()
+0x000000002CB41789 (UnityEngine.TestRunner) <RunChildren>c__Iterator1.MoveNext()
+0x000000002CB2B20D (UnityEngine.TestRunner) <PerformWork>c__Iterator0.MoveNext()
+0x000000002CB41789 (UnityEngine.TestRunner) <RunChildren>c__Iterator1.MoveNext()
+0x000000002CB2B20D (UnityEngine.TestRunner) <PerformWork>c__Iterator0.MoveNext()
+0x000000002CB29C4A (UnityEditor.TestRunner) UnityEditor.TestTools.TestRunner.EditModeRunner.MoveNextAndUpdateYieldObject()
+0x000000002CB2983B (UnityEditor.TestRunner) UnityEditor.TestTools.TestRunner.EditModeRunner.TestConsumer()
+0x000000002CA98AB7 (UnityEditor) <Module>.invoke_void()
+0x000000002CA987BD (UnityEditor) UnityEditor.EditorApplication.Internal_CallUpdateFunctions()
+0x00000000328EC965 (mscorlib) System.Object.runtime_invoke_void()
+0x00007FF93202BFFB (mono-2.0-bdwgc) mono_get_runtime_build_info
+0x00007FF931FB1DB2 (mono-2.0-bdwgc) mono_perfcounters_init
+0x00007FF931FBADBF (mono-2.0-bdwgc) mono_runtime_invoke
+ERROR: SymGetSymFromAddr64, GetLastError: 'Attempt to access invalid address.' (Address: 000000014155B41B)
+0x000000014155B41B (Unity) (function-name not available)
+ERROR: SymGetSymFromAddr64, GetLastError: 'Attempt to access invalid address.' (Address: 000000014155B071)
+0x000000014155B071 (Unity) (function-name not available)
+ERROR: SymGetSymFromAddr64, GetLastError: 'Attempt to access invalid address.' (Address: 000000014155ADE1)
+0x000000014155ADE1 (Unity) (function-name not available)
+ERROR: SymGetSymFromAddr64, GetLastError: 'Attempt to access invalid address.' (Address: 0000000141E1BFF3)
+0x0000000141E1BFF3 (Unity) (function-name not available)
+ERROR: SymGetSymFromAddr64, GetLastError: 'Attempt to access invalid address.' (Address: 0000000141EB6B51)
+0x0000000141EB6B51 (Unity) (function-name not available)
+ERROR: SymGetSymFromAddr64, GetLastError: 'Attempt to access invalid address.' (Address: 00000001421C756B)
+0x00000001421C756B (Unity) (function-name not available)
+ERROR: SymGetSymFromAddr64, GetLastError: 'Attempt to access invalid address.' (Address: 00000001421C9176)
+0x00000001421C9176 (Unity) (function-name not available)
+ERROR: SymGetSymFromAddr64, GetLastError: 'Attempt to access invalid address.' (Address: 0000000143834A3A)
+0x0000000143834A3A (Unity) (function-name not available)
+0x00007FF96D8216AD (KERNEL32) BaseThreadInitThunk
+0x00007FF96DB654F4 (ntdll) RtlUserThreadStart
+
+Stacks for Running Threads:
+
+Call Stack for Thread 22128:
+0x00007FF96DBE071A (ntdll) ZwWaitForSingleObject
+0x00007FF96AFC1118 (KERNELBASE) WaitForSingleObjectEx
+ERROR: SymGetSymFromAddr64, GetLastError: 'Attempt to access invalid address.' (Address: 0000000141435038)
+0x0000000141435038 (Unity) (function-name not available)
+ERROR: SymGetSymFromAddr64, GetLastError: 'Attempt to access invalid address.' (Address: 000000014143708E)
+0x000000014143708E (Unity) (function-name not available)
+ERROR: SymGetSymFromAddr64, GetLastError: 'Attempt to access invalid address.' (Address: 000000014122A0A8)
+0x000000014122A0A8 (Unity) (function-name not available)
+0x00007FF96D8216AD (KERNEL32) BaseThreadInitThunk
+0x00007FF96DB654F4 (ntdll) RtlUserThreadStart
+
+
+Call Stack for Thread 16812:
+0x00007FF96DBE21CA (ntdll) ZwWaitForWorkViaWorkerFactory

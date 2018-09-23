@@ -1,0 +1,2214 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Test</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script>(function () {
+    angular
+        .module('template/treeGrid/treeGrid.html', [])
+        .run([
+            '$templateCache',
+            function ($templateCache) {
+                $templateCache.put('template/treeGrid/treeGrid.html',
+                    "<div class=\"table-responsive\">\n" +
+                    " <table class=\"table table-bordered table-striped tree-grid\" style=\"table-layout: fixed;\">\n" +
+                    "   <thead>\n" +
+                    "     <tr>\n" +
+                    "       <th style=\"width:{{::expandingProperty.width}};\"><span>{{::expandingProperty.displayName || expandingProperty.field}}</span></th>\n" +
+                    "       <th ng-repeat=\"col in ::colDefinitions\" style=\"width:{{::col.width}};\" class=\"{{::col.class ? col.class : ''}}\"><span>{{::col.displayName || col.field}}</span></th>\n" +
+                    "     </tr>\n" +
+                    "   </thead>\n" +
+                    "   <tbody>\n" +
+                    "     <tr ng-repeat-start=\"row in tree_rows | searchFor:$parent.filters:$parent.additionalFilter:expandingProperty:colDefinitions track by row.branch.uid\"\n" +
+                    "       ng-class=\"(row.branch['rootCause'] ? 'root-cause ' : ' ') + 'level-' + {{::row.level}}\" class=\"tree-grid-row\"" +
+
+                    //"ng-if=\"row.branch['type'] !== 'Info' && row.branch['type'] !== 'InfoPartial' && row.branch['type'] !== 'Error' && row.branch['type'] !== 'Warning' && row.branch['type'] !== 'ArtifactPublish'\"" +
+                    //"ng-if=\"!(row.branch['type'] === 'TestSuite' && row.branch['errors'].length === 0 && $parent.$parent.testStatusFilter.hideSuccessfulSuites)\"" +
+                    "ng-if=\"!row.branch.filtered || !(rowFilter.filtered && row.branch.filtered)\"" +
+                    "ng-click=\"row.branch.detailed = !row.branch.detailed\">" +
+
+                    "<td>" +
+                    //"<span>{{$parent.$parent.testStatusFilter.hideSuccessfulSuites}}</span>"+
+                    "<table table style=\"width: 100%; table-layout: fixed;\">" +
+                        "<tr>" +
+                            "<td style=\"width: 30px;\">" +
+                                "<a ng-click=\"user_clicks_branch(row.branch, $event)\"><i ng-class=\"row.tree_icon\" ng-click=\"row.branch.expanded = !row.branch.expanded\" class=\"indented tree-icon\"></i></a>" +
+                            "</td>" +
+                            "<td style=\"width: 30px;\">" +
+                                "<a><i ng-class=\"row.branch.detailed ? 'glyphicon glyphicon-triangle-top indented tree-icon' : 'glyphicon glyphicon-triangle-bottom indented tree-icon'\" title=\"{{::row.branch.detailed ? 'Show less' : 'Show more'}}\"></i></a>" +
+                            "</td>" +
+                            "<td>" +
+                                "<div style=\"margin-right: {{::row.level*20}}px;\" ng-if=\"expandingProperty.cellCustomTemplate\" class=\"indented tree-label\" ng-click=\"on_user_click(row.branch)\"" +
+                                "compile=\"expandingProperty.cellCustomTemplate[row.branch['type']] ? expandingProperty.cellCustomTemplate[row.branch['type']] : expandingProperty.cellCustomTemplate['default']\"" +
+                                "></div>"+
+                            "</td>" +
+                        "</tr>" +
+                    "</table>" +
+                    "       </td>\n" +
+                    "       <td ng-repeat=\"col in ::colDefinitions\" class=\"{{::col.class ? col.class : ''}}\">\n" +
+                    "         <div compile=\"col.cellCustomTemplate[row.branch['type']] ? col.cellCustomTemplate[row.branch['type']] : col.cellCustomTemplate['default']\" cell-template-scope=\"col.cellTemplateScope\"></div>\n" +
+                    "       </td>\n" +
+                    "     </tr>\n" +
+
+                    "<tr ng-if=\"row.branch.detailed\" ng-repeat-end>" +
+                    "<td colspan=\"{{::colDefinitions.length+1}}\" class=\"details-row\"><div class=\"details-cell\" compile=\"detailsDefs[row.branch['type']] ? detailsDefs[row.branch['type']] : detailsDefs['default']\"></div></td>" +
+                    "</tr>" +
+
+                    "   </tbody>\n" +
+                    " </table>\n" +
+                    "</div>\n" +
+                    "");
+            }]);
+
+    angular
+        .module('treeGrid', [
+            'template/treeGrid/treeGrid.html'
+        ])
+
+        .directive('compile', [
+            '$compile',
+            function ($compile) {
+                return {
+                    restrict: 'A',
+                    link: function (scope, element, attrs) {
+                        scope.cellTemplateScope = scope.$eval(attrs.cellTemplateScope);
+
+                        // Watch for changes to expression.
+                        scope.$watch(attrs.compile, function (new_val) {
+                            /*
+                             * Compile creates a linking function
+                             * that can be used with any scope.
+                             */
+                            var link = $compile(new_val);
+
+                            /*
+                             * Executing the linking function
+                             * creates a new element.
+                             */
+                            var new_elem = link(scope);
+
+                            // Which we can then append to our DOM element.
+                            element.append(new_elem);
+                        });
+                    }
+                };
+            }])
+
+        .directive('treeGrid', [
+            '$timeout',
+            'treegridTemplate',
+            function ($timeout,
+                      treegridTemplate) {
+
+                return {
+                    restrict: 'E',
+                    templateUrl: function (tElement, tAttrs) {
+                        return tAttrs.templateUrl || treegridTemplate.getPath();
+                    },
+                    replace: true,
+                    scope: {
+                        treeData: '=',
+                        colDefs: '=',
+                        expandOn: '=',
+                        onSelect: '&',
+                        onClick: '&',
+                        onLeafIconCreate: '&',
+                        onExpandTo: '&',
+                        initialSelection: '@',
+                        treeControl: '=',
+                        expandTo: '=',
+                        detailsDefs: '=',
+                        rowFilter: '='
+                    },
+                    link: function (scope, element, attrs) {
+                        var error, expandingProperty, expand_all_parents, expand_level, for_all_ancestors, for_each_branch, get_parent, n, on_treeData_change, select_branch, selected_branch, tree;
+
+                        error = function (s) {
+                            console.log('ERROR:' + s);
+                            debugger;
+                            return void 0;
+                        };
+
+                        attrs.iconExpand = attrs.iconExpand ? attrs.iconExpand : 'icon-plus  glyphicon glyphicon-plus  fa fa-plus';
+                        attrs.iconCollapse = attrs.iconCollapse ? attrs.iconCollapse : 'icon-minus glyphicon glyphicon-minus fa fa-minus';
+                        attrs.iconLeaf = attrs.iconLeaf ? attrs.iconLeaf : 'icon-file  glyphicon glyphicon-file  fa fa-file';
+                        attrs.sortedAsc = attrs.sortedAsc ? attrs.sortedAsc : 'icon-file  glyphicon glyphicon-chevron-up  fa angle-up';
+                        attrs.sortedDesc = attrs.sortedDesc ? attrs.sortedDesc : 'icon-file  glyphicon glyphicon-chevron-down  fa angle-down';
+                        attrs.expandLevel = attrs.expandLevel ? attrs.expandLevel : '0';
+                        expand_level = parseInt(attrs.expandLevel, 10);
+
+                        if (!scope.treeData) {
+                            alert('No data was defined for the tree, please define treeData!');
+                            return;
+                        }
+
+                        var getExpandingProperty = function getExpandingProperty() {
+                            if (attrs.expandOn) {
+                                expandingProperty = scope.expandOn;
+                                scope.expandingProperty = scope.expandOn;
+                            } else {
+                                if (scope.treeData.length) {
+                                    var _firstRow = scope.treeData[0],
+                                        _keys = Object.keys(_firstRow);
+                                    for (var i = 0, len = _keys.length; i < len; i++) {
+                                        if (typeof (_firstRow[_keys[i]]) === 'string') {
+                                            expandingProperty = _keys[i];
+                                            break;
+                                        }
+                                    }
+                                    if (!expandingProperty) expandingProperty = _keys[0];
+                                    scope.expandingProperty = expandingProperty;
+                                }
+                            }
+                        };
+
+                        getExpandingProperty();
+
+                        if (!attrs.colDefs) {
+                            if (scope.treeData.length) {
+                                var _col_defs = [],
+                                    _firstRow = scope.treeData[0],
+                                    _unwantedColumn = ['children', 'level', 'expanded', 'icons', expandingProperty];
+                                for (var idx in _firstRow) {
+                                    if (_unwantedColumn.indexOf(idx) === -1) {
+                                        _col_defs.push({
+                                            field: idx
+                                        });
+                                    }
+                                }
+                                scope.colDefinitions = _col_defs;
+                            }
+                        } else {
+                            scope.colDefinitions = scope.colDefs;
+                        }
+
+                        for_each_branch = function (f) {
+                            var do_f, root_branch, _i, _len, _ref, _results;
+                            do_f = function (branch, level) {
+                                var child, _i, _len, _ref, _results;
+                                f(branch, level);
+                                if (branch.children != null) {
+                                    _ref = branch.children;
+                                    _results = [];
+                                    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                                        child = _ref[_i];
+                                        _results.push(do_f(child, level + 1));
+                                    }
+                                    return _results;
+                                }
+                            };
+                            _ref = scope.treeData;
+                            _results = [];
+                            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                                root_branch = _ref[_i];
+                                _results.push(do_f(root_branch, 1));
+                            }
+                            return _results;
+                        };
+                        selected_branch = null;
+                        select_branch = function (branch) {
+                            if (!branch) {
+                                if (selected_branch != null) {
+                                    selected_branch.selected = false;
+                                }
+                                selected_branch = null;
+                                return;
+                            }
+                            if (branch !== selected_branch) {
+                                if (selected_branch != null) {
+                                    selected_branch.selected = false;
+                                }
+                                branch.selected = true;
+                                selected_branch = branch;
+                                expand_all_parents(branch);
+                                if (branch.onSelect != null) {
+                                    return $timeout(function () {
+                                        return branch.onSelect(branch);
+                                    });
+                                } else {
+                                    if (scope.onSelect != null) {
+                                        return $timeout(function () {
+                                            return scope.onSelect({
+                                                branch: branch
+                                            });
+                                        });
+                                    }
+                                }
+                            }
+                        };
+                        scope.on_click_with_no_propagation = function($event) {
+                            $event.stopPropagation();
+                        };
+
+                        scope.on_user_click = function (branch) {
+                            if (scope.onClick) {
+                                scope.onClick({
+                                    branch: branch
+                                });
+                            }
+                        };
+                        scope.user_clicks_branch = function (branch, $event) {
+                            $event.stopPropagation();
+                            if (branch !== selected_branch) {
+                                return select_branch(branch);
+                            }
+                        };
+
+                        /* sorting methods */
+                        scope.sortBy = function (col) {
+                            if (col.sortDirection === "asc") {
+                                sort_recursive(scope.treeData, col, true);
+                                col.sortDirection = "desc";
+                                col.sortingIcon = attrs.sortedDesc;
+                            } else {
+                                sort_recursive(scope.treeData, col, false);
+                                col.sortDirection = "asc";
+                                col.sortingIcon = attrs.sortedAsc;
+                            }
+                            col.sorted = true;
+                            resetSorting(col);
+                        };
+
+                        var sort_recursive = function (elements, col, descending) {
+                            elements.sort(sort_by(col, descending));
+                            for (var i = 0; i < elements.length; i++) {
+                                sort_recursive(elements[i].children, col, descending);
+                            }
+                        };
+
+                        var sort_by = function (col, descending) {
+
+                            var direction = !descending ? 1 : -1;
+
+                            if (col.sortingType === "custom" && typeof col.sortingFunc === "function") {
+                                return function (a, b) {
+                                    return col.sortingFunc(a, b) * direction;
+                                };
+                            }
+
+                            var key = function (x) {
+                                return (x[col.field] === null ? "" : x[col.field].toLowerCase());
+                            };
+
+                            switch (col.sortingType) {
+                                case "number":
+                                    key = function (x) {
+                                        return parseFloat(x[col.field]);
+                                    };
+                                    break;
+                                case "date":
+                                    key = function (x) {
+                                        return new Date(x[col.field]);
+                                    };
+                                    break;
+                            }
+
+                            return function (a, b) {
+                                return a = key(a), b = key(b), direction * ((a > b) - (b > a));
+                            };
+                        }
+
+                        var resetSorting = function (sortedCol) {
+                            var arraySize = scope.colDefinitions.length;
+                            for (var i = 0; i < arraySize; i++) {
+                                var col = scope.colDefinitions[i];
+                                if (col.field != sortedCol.field) {
+                                    col.sorted = false;
+                                    col.sortDirection = "none";
+                                }
+                            }
+                        }
+
+                        /* end of sorting methods */
+
+                        get_parent = function (child) {
+                            var parent;
+                            parent = void 0;
+                            if (child.parent_uid) {
+                                for_each_branch(function (b) {
+                                    if (b.uid === child.parent_uid) {
+                                        return parent = b;
+                                    }
+                                });
+                            }
+                            return parent;
+                        };
+                        for_all_ancestors = function (child, fn) {
+                            var parent;
+                            parent = get_parent(child);
+                            if (parent != null) {
+                                fn(parent);
+                                return for_all_ancestors(parent, fn);
+                            }
+                        };
+                        expand_all_parents = function (child) {
+                            return for_all_ancestors(child, function (b) {
+                                return b.expanded = true;
+                            });
+                        };
+
+                        scope.tree_rows = [];
+
+                        on_treeData_change = function () {
+                            //console.log('on_treeData_change');
+                            getExpandingProperty();
+
+                            var add_branch_to_list, root_branch, _i, _len, _ref, _results;
+                            for_each_branch(function (b, level) {
+                                if (!b.uid) {
+                                    return b.uid = "" + Math.random();
+                                }
+                            });
+                            for_each_branch(function (b) {
+                                var child, _i, _len, _ref, _results;
+                                if (angular.isArray(b.children)) {
+                                    _ref = b.children;
+                                    _results = [];
+                                    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                                        child = _ref[_i];
+                                        _results.push(child.parent_uid = b.uid);
+                                    }
+                                    return _results;
+                                }
+                            });
+                            scope.tree_rows = [];
+                            for_each_branch(function (branch) {
+                                var child, f;
+                                if (branch.children) {
+                                    if (branch.children.length > 0) {
+                                        f = function (e) {
+                                            if (typeof e === 'string') {
+                                                return {
+                                                    label: e,
+                                                    children: []
+                                                };
+                                            } else {
+                                                return e;
+                                            }
+                                        };
+                                        return branch.children = (function () {
+                                            var _i, _len, _ref, _results;
+                                            _ref = branch.children;
+                                            _results = [];
+                                            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                                                child = _ref[_i];
+                                                _results.push(f(child));
+                                            }
+                                            return _results;
+                                        })();
+                                    }
+                                } else {
+                                    return branch.children = [];
+                                }
+                            });
+                            add_branch_to_list = function (level, branch, visible) {
+                                var child, child_visible, tree_icon, _i, _len, _ref, _results;
+                                if (branch.expanded == null) {
+                                    branch.expanded = false;
+                                }
+
+                                if(branch.detailed == null) {
+                                    branch.detailed = false;
+                                }
+
+                                if(branch.filtered == null) {
+                                    branch.filtered = false;
+                                }
+
+                                var leafIconClass = scope.onLeafIconCreate({branch: branch});
+
+                                if (!branch.children || branch.children.length === 0) {
+                                    tree_icon = leafIconClass ? leafIconClass : (branch.icons && branch.icons.iconLeaf || attrs.iconLeaf);
+                                } else {
+                                    if (branch.expanded) {
+                                        tree_icon = branch.icons && branch.icons.iconCollapse || attrs.iconCollapse;
+                                    } else {
+                                        tree_icon = branch.icons && branch.icons.iconExpand || attrs.iconExpand;
+                                    }
+                                }
+                                branch.level = level;
+                                scope.tree_rows.push({
+                                    level: level,
+                                    branch: branch,
+                                    label: branch[expandingProperty],
+                                    tree_icon: tree_icon,
+                                    visible: visible
+                                });
+
+                                if((branch['type'] === 'TestSuite' && branch['errors'].length === 0)) // TEMPORARY!!!
+                                    branch.filtered = true;
+
+                                if (branch.children != null) {
+                                    _ref = branch.children;
+                                    _results = [];
+                                    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                                        child = _ref[_i];
+                                        child.filtered = branch.filtered;
+                                        child_visible = visible && (branch.expanded || branch.level < expand_level);
+                                        _results.push(add_branch_to_list(level + 1, child, child_visible));
+                                    }
+                                    return _results;
+                                }
+                            };
+                            _ref = scope.treeData;
+                            _results = [];
+                            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                                root_branch = _ref[_i];
+                                _results.push(add_branch_to_list(1, root_branch, true));
+                            }
+                            return _results;
+                        };
+
+                        scope.$watch('treeData', on_treeData_change, true);
+
+                        on_expandTo_change = function () {
+                            //console.log('on_tree_data');
+                            if (angular.isDefined((scope.expandTo))) {
+                                for_each_branch(function (b) {
+                                    b.expanded = false;
+                                    //if (b[expandingProperty.field] === scope.expandTo || b[expandingProperty] === scope.expandTo) {
+                                    if(scope.onExpandTo != null && scope.onExpandTo({branch: b})) {
+                                        b.detailed = true;
+                                        return $timeout(function () {
+                                            return select_branch(b);
+                                        });
+                                    }
+                                });
+                            }
+                        };
+
+                        scope.$watch('expandTo', on_expandTo_change, true);
+                        //scope.$watchCollection('expandTo', on_expandTo_change);
+
+                        if (attrs.initialSelection != null) {
+                            for_each_branch(function (b) {
+                                if (b.label === attrs.initialSelection) {
+                                    return $timeout(function () {
+                                        return select_branch(b);
+                                    });
+                                }
+                            });
+                        }
+                        n = scope.treeData.length;
+                        for_each_branch(function (b, level) {
+                            b.level = level;
+                            return b.expanded = b.level < expand_level;
+                        });
+                        if (scope.treeControl != null) {
+                            if (angular.isObject(scope.treeControl)) {
+                                tree = scope.treeControl;
+                                tree.expand_all_error = function () {
+                                    return for_each_branch(function (b, level) {
+                                        if(b.filtered) {
+                                            return false;
+                                        }
+
+                                        if(b['errors'].length > 0 || b['rootCause']) {
+                                            b.expanded = true;
+                                            if(b['rootCause'])
+                                                return b.detailed = true;
+                                        }
+                                    });
+                                };
+                                tree.expand_all = function () {
+                                    return for_each_branch(function (b, level) {
+                                        return b.expanded = true;
+                                    });
+                                };
+                                tree.collapse_all = function () {
+                                    return for_each_branch(function (b, level) {
+                                        return b.expanded = false;
+                                    });
+                                };
+                                tree.get_first_branch = function () {
+                                    n = scope.treeData.length;
+                                    if (n > 0) {
+                                        return scope.treeData[0];
+                                    }
+                                };
+                                tree.select_first_branch = function () {
+                                    var b;
+                                    b = tree.get_first_branch();
+                                    return tree.select_branch(b);
+                                };
+                                tree.get_selected_branch = function () {
+                                    return selected_branch;
+                                };
+                                tree.get_parent_branch = function (b) {
+                                    return get_parent(b);
+                                };
+                                tree.select_branch = function (b) {
+                                    select_branch(b);
+                                    return b;
+                                };
+                                tree.get_children = function (b) {
+                                    return b.children;
+                                };
+                                tree.select_parent_branch = function (b) {
+                                    var p;
+                                    if (b == null) {
+                                        b = tree.get_selected_branch();
+                                    }
+                                    if (b != null) {
+                                        p = tree.get_parent_branch(b);
+                                        if (p != null) {
+                                            tree.select_branch(p);
+                                            return p;
+                                        }
+                                    }
+                                };
+                                tree.add_branch = function (parent, new_branch) {
+                                    if (parent != null) {
+                                        parent.children.push(new_branch);
+                                        parent.expanded = true;
+                                    } else {
+                                        scope.treeData.push(new_branch);
+                                    }
+                                    return new_branch;
+                                };
+                                tree.add_root_branch = function (new_branch) {
+                                    tree.add_branch(null, new_branch);
+                                    return new_branch;
+                                };
+                                tree.expand_branch = function (b) {
+                                    if (b == null) {
+                                        b = tree.get_selected_branch();
+                                    }
+                                    if (b != null) {
+                                        b.expanded = true;
+                                        return b;
+                                    }
+                                };
+                                tree.collapse_branch = function (b) {
+                                    if (b == null) {
+                                        b = selected_branch;
+                                    }
+                                    if (b != null) {
+                                        b.expanded = false;
+                                        return b;
+                                    }
+                                };
+                                tree.get_siblings = function (b) {
+                                    var p, siblings;
+                                    if (b == null) {
+                                        b = selected_branch;
+                                    }
+                                    if (b != null) {
+                                        p = tree.get_parent_branch(b);
+                                        if (p) {
+                                            siblings = p.children;
+                                        } else {
+                                            siblings = scope.treeData;
+                                        }
+                                        return siblings;
+                                    }
+                                };
+                                tree.get_next_sibling = function (b) {
+                                    var i, siblings;
+                                    if (b == null) {
+                                        b = selected_branch;
+                                    }
+                                    if (b != null) {
+                                        siblings = tree.get_siblings(b);
+                                        n = siblings.length;
+                                        i = siblings.indexOf(b);
+                                        if (i < n) {
+                                            return siblings[i + 1];
+                                        }
+                                    }
+                                };
+                                tree.get_prev_sibling = function (b) {
+                                    var i, siblings;
+                                    if (b == null) {
+                                        b = selected_branch;
+                                    }
+                                    siblings = tree.get_siblings(b);
+                                    n = siblings.length;
+                                    i = siblings.indexOf(b);
+                                    if (i > 0) {
+                                        return siblings[i - 1];
+                                    }
+                                };
+                                tree.select_next_sibling = function (b) {
+                                    var next;
+                                    if (b == null) {
+                                        b = selected_branch;
+                                    }
+                                    if (b != null) {
+                                        next = tree.get_next_sibling(b);
+                                        if (next != null) {
+                                            return tree.select_branch(next);
+                                        }
+                                    }
+                                };
+                                tree.select_prev_sibling = function (b) {
+                                    var prev;
+                                    if (b == null) {
+                                        b = selected_branch;
+                                    }
+                                    if (b != null) {
+                                        prev = tree.get_prev_sibling(b);
+                                        if (prev != null) {
+                                            return tree.select_branch(prev);
+                                        }
+                                    }
+                                };
+                                tree.get_first_child = function (b) {
+                                    var _ref;
+                                    if (b == null) {
+                                        b = selected_branch;
+                                    }
+                                    if (b != null) {
+                                        if (((_ref = b.children) != null ? _ref.length : void 0) > 0) {
+                                            return b.children[0];
+                                        }
+                                    }
+                                };
+                                tree.get_closest_ancestor_next_sibling = function (b) {
+                                    var next, parent;
+                                    next = tree.get_next_sibling(b);
+                                    if (next != null) {
+                                        return next;
+                                    } else {
+                                        parent = tree.get_parent_branch(b);
+                                        return tree.get_closest_ancestor_next_sibling(parent);
+                                    }
+                                };
+                                tree.get_next_branch = function (b) {
+                                    var next;
+                                    if (b == null) {
+                                        b = selected_branch;
+                                    }
+                                    if (b != null) {
+                                        next = tree.get_first_child(b);
+                                        if (next != null) {
+                                            return next;
+                                        } else {
+                                            next = tree.get_closest_ancestor_next_sibling(b);
+                                            return next;
+                                        }
+                                    }
+                                };
+                                tree.select_next_branch = function (b) {
+                                    var next;
+                                    if (b == null) {
+                                        b = selected_branch;
+                                    }
+                                    if (b != null) {
+                                        next = tree.get_next_branch(b);
+                                        if (next != null) {
+                                            tree.select_branch(next);
+                                            return next;
+                                        }
+                                    }
+                                };
+                                tree.last_descendant = function (b) {
+                                    var last_child;
+                                    if (b == null) {
+                                        debugger;
+                                    }
+                                    n = b.children.length;
+                                    if (n === 0) {
+                                        return b;
+                                    } else {
+                                        last_child = b.children[n - 1];
+                                        return tree.last_descendant(last_child);
+                                    }
+                                };
+                                tree.get_prev_branch = function (b) {
+                                    var parent, prev_sibling;
+                                    if (b == null) {
+                                        b = selected_branch;
+                                    }
+                                    if (b != null) {
+                                        prev_sibling = tree.get_prev_sibling(b);
+                                        if (prev_sibling != null) {
+                                            return tree.last_descendant(prev_sibling);
+                                        } else {
+                                            parent = tree.get_parent_branch(b);
+                                            return parent;
+                                        }
+                                    }
+                                };
+                                return tree.select_prev_branch = function (b) {
+                                    var prev;
+                                    if (b == null) {
+                                        b = selected_branch;
+                                    }
+                                    if (b != null) {
+                                        prev = tree.get_prev_branch(b);
+                                        if (prev != null) {
+                                            tree.select_branch(prev);
+                                            return prev;
+                                        }
+                                    }
+                                };
+                            }
+                        }
+                    }
+                };
+            }
+        ])
+
+        .provider('treegridTemplate', function () {
+            var templatePath = 'template/treeGrid/treeGrid.html';
+
+            this.setPath = function (path) {
+                templatePath = path;
+            };
+
+            this.$get = function () {
+                return {
+                    getPath: function () {
+                        return templatePath;
+                    }
+                };
+            };
+        })
+
+        .filter('searchFor', function () {
+            return function (arr, filterString, additionalFilter, expandingProperty, colDefinitions, expand) {
+                var filtered = [];
+
+                //console.log(additionalFilter);
+                //var t0 = performance.now();
+
+                //only apply filter for strings 3 characters long or more
+                // if (!filterString || filterString[0].length < 3) {
+                //     for (var i = 0; i < arr.length; i++) {
+                //         var item = arr[i];
+                //         if (item.visible) {
+                //             filtered.push(item);
+                //         }
+                //     }
+                if(!filterString || !filterString.length === 0) {
+                     for (var i = 0; i < arr.length; i++) {
+                        var item = arr[i];
+                        if (item.visible) {
+                            filtered.push(item);
+                        }
+                    }
+                } else {
+                    var ancestorStack = [];
+                    var currentLevel = 0;
+                    for (var i = 0; i < arr.length; i++) {
+                        var item = arr[i];
+
+                        //if(item.branch.filtered)
+                        //    continue;
+
+                        while (currentLevel >= item.level) {
+                            throwAway = ancestorStack.pop();
+                            currentLevel--;
+                        }
+                        ancestorStack.push(item);
+                        currentLevel = item.level;
+                        if (include(item, filterString, additionalFilter, expandingProperty, colDefinitions)) {
+                            for (var ancestorIndex = 0; ancestorIndex < ancestorStack.length; ancestorIndex++) {
+                                ancestor = ancestorStack[ancestorIndex];
+                                if (ancestor.visible) {
+                                    if (expand)
+                                        ancestor.branch.expanded = true;
+                                    filtered.push(ancestor);
+                                }
+                            }
+                            ancestorStack = [];
+                        }
+                    }
+                }
+
+                //var t1 = performance.now();
+                //console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
+
+                return filtered;
+            };
+
+            function include(item, filterString, additionalFilter, expandingProperty, colDefinitions) {
+                var includeItem = false;
+                var filterApplied = false;
+                //first check the expandingProperty
+                if (expandingProperty.filterable) {
+                    filterApplied = true;
+                    if (checkItem(item, filterString, additionalFilter, expandingProperty)) {
+                        includeItem = true;
+                    }
+                }
+                //then chech additional filter
+                if(additionalFilter) {
+                    filterApplied = true;
+                    if (checkItem(item, filterString, additionalFilter, expandingProperty)) {
+                        includeItem = true;
+                    }
+                }
+                //then check each of the other columns
+                // var arraySize = colDefinitions.length;
+                // for (var i = 0; i < arraySize; i++) {
+                //     var col = colDefinitions[i];
+                //     if (col.filterable) {
+                //         filterApplied = true;
+                //         if (checkItem(item, filterString, additionalFilter, col)) {
+                //             includeItem = true;
+                //         }
+                //     }
+                // }
+                if (filterApplied) {
+                    return includeItem;
+                } else {
+                    return false;
+                }
+            }
+
+            function checkItem(item, filterString, additionalFilter, col) {
+                if (col.sortingType === "number") {
+                    // if (item.branch[col.field] != null
+                    //     && parseFloat(item.branch[col.field]) === parseFloat(filterString)) {
+                    //     return false;
+                    // }
+                } else {
+                    if (item.branch[col.field] != null) {
+                        // if(item.branch[col.field].toLowerCase().indexOf(filterString[0].toLowerCase()) !== -1) {
+                        //     return false;
+                        // }
+                        for (var i = 0; i < filterString.length; i++) {
+                            if(item.branch[col.field].toLowerCase() === filterString[i].toLowerCase())
+                                return false;
+                        }
+                    }
+
+                    if(item.branch[additionalFilter.filterPropertyKey] === additionalFilter.filterPropertyValue) {
+                        for (var i = 0; i < additionalFilter.filterAttributeValues.length; i++) {
+                            if(item.branch[additionalFilter.filterAttribute] !== undefined && item.branch[additionalFilter.filterAttribute].toString().toLowerCase().indexOf(additionalFilter.filterAttributeValues[i].toLowerCase()) !== -1)
+                                return false;
+                        }
+                    }
+                }
+
+                return true;
+            }
+        });
+}).call(window);
+</script>
+    <style>
+/*
+   treeGrid.css
+
+   style for the tree-grid
+   for both Bootstrap 2 and Bootstrap 3
+
+*/
+
+
+
+.tree-grid-animate-enter,
+.tree-grid-row.ng-enter {
+  transition: 200ms linear all;
+  position: relative;
+  display: block;
+  opacity: 0;
+  max-height:0px;
+}
+.tree-grid-animate-enter.tree-grid-animate-enter-active,
+.tree-grid-row.ng-enter-active{
+  opacity: 1;
+  max-height:30px;
+}
+
+.tree-grid-animate-leave,
+.tree-grid-row.ng-leave {
+  transition: 200ms linear all;
+  position: relative;
+  display: block;
+  height:30px;
+  max-height: 30px;
+  opacity: 1;
+}
+.tree-grid-animate-leave.tree-grid-animate-leave-active,
+.tree-grid-row.ng-leave-active {
+  height: 0px;
+  max-height:0px;
+  opacity: 0;
+}
+
+
+/*
+------------------------------------------
+Angular 1.2.0 Animation
+*/
+
+
+.tree-grid-animate.ng-enter{
+
+}
+.tree-grid-animate.ng-enter{
+
+}
+
+
+
+
+/*
+   end animation stuff
+-----------------------------------------
+   begin normal css stuff
+*/
+.tree-grid .tree-grid-row {
+  padding: 0px;
+  margin:0px;
+}
+
+/*.tree-grid .tree-grid-row a {
+  padding: 3px 10px;
+}
+*/
+.tree-grid i.indented {
+  padding: 2px;
+}
+
+.tree-grid {
+  cursor: pointer;
+}
+.tree-grid .level-1 .indented {
+  position: relative;
+  left: 0px;
+}
+.tree-grid .level-2 .indented {
+  position: relative;
+  left: 20px;
+}
+.tree-grid .level-3 .indented {
+  position: relative;
+  left: 40px;
+}
+.tree-grid .level-4 .indented {
+  position: relative;
+  left: 60px;
+}
+.tree-grid .level-5 .indented {
+  position: relative;
+  left: 80px;
+}
+.tree-grid .level-6 .indented {
+  position: relative;
+  left: 100px;
+}
+.tree-grid .level-7 .indented {
+  position: relative;
+  left: 120px;
+}
+.tree-grid .level-8 .indented {
+  position: relative;
+  left: 140px;
+}
+.tree-grid .level-9 .indented {
+  position: relative;
+  left: 160px;
+}
+
+
+</style>
+    <style>
+body {
+    font-family: 'Varela Round', sans-serif;
+    font-size: 11px;
+    color: #555555;
+}
+
+.pre-callstack {
+    overflow: auto;
+    display: block;
+    padding: 9.5px;
+    margin-bottom: 0;
+    font-size: 10px;
+    line-height: 1.42857143;
+    color: #333;
+    word-break:break-all;
+    word-wrap: normal;
+    white-space:pre;
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 2;
+}
+
+.details-row {
+    background-color: #fffdf9;
+    -webkit-box-shadow: inset 0 5px 5px rgba(0, 0, 0, .2);
+    box-shadow: inset 0 5px 5px rgba(0, 0, 0, .2), inset 0 -3px 4px rgba(0, 0, 0, .1);
+}
+
+.details-cell {
+    padding-top: 10px;
+    padding-left: 10px;
+}
+
+.details-image-cell {
+    width: 42px;
+    vertical-align:top;
+}
+
+.details-table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.details-icon {
+    font-size: 30px;
+}
+
+.success-test {
+    background-color: #ddffdd;
+}
+
+.fail-test {
+    background-color: #ffdddd;
+}
+
+.selected-branch {
+    background-color: #ffffff;
+    opacity: 0.8;
+}
+
+.clipped {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.tree-icon {
+    color: #444455;
+}
+
+.small-tree-icon {
+    font-size: 8px;
+}
+
+.leaf-icon {
+    font-size: 14px;
+}
+
+.icon-green {
+    color: #03b527;
+}
+
+.icon-red {
+    color: #b50202;
+}
+
+.icon-blue {
+    color: #16b1ff;
+}
+
+.icon-gray {
+    color: #888888;
+}
+
+.icon-black {
+    color: #000;
+}
+
+.icon-yellow {
+    color: #f2a90c;
+}
+
+.my-btn {
+    color: #fff;
+    background-color: #ddee77;
+    border-color: #aacc55;
+}
+
+.toolbox {
+    font-size: 10px;
+}
+
+.toolbox-button {
+    font-size: 10px;
+    width: 55px;
+}
+
+.toolbox-icon-button {
+    font-size: 10px;
+}
+
+.toolbox-button-lg {
+    font-size: 10px;
+   /* width: 100px;*/
+}
+
+.pre-ex-button {
+    font-size: 10px;
+    margin-bottom: 2px;
+    margin-left: 5px;
+}
+
+.pre-ex-button-default {
+    font-size: 10px;
+    margin-bottom: 2px;
+}
+
+.pre-ex-div {
+    padding-bottom: 5px;
+}
+
+.pre-ex-div-default {
+    padding-bottom: 10px;
+}
+
+.btn-info, .btn-warning, .btn-danger, .btn-success, .btn-primary {
+    background: #fff;
+    color: #000;
+    border-color: #cccccc;
+}
+
+/*.btn-info .active{
+    background: #16b1ff;
+    color: #000;
+    border-color: #06a1ff;
+}*/
+
+.btn.active {
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .1);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .1);
+}
+
+.alert-danger {
+    background: #ffe5e5;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.icon-artifact {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.list-item-padding {
+    padding-bottom: 10px;
+}
+
+.fail-color {
+    color: #930101;
+}
+
+.pass-color {
+    color: #019220;
+}
+
+.checkbox-babel {
+    padding-left: 5px;
+    font-weight:normal;
+}
+
+table.table.table-striped tr.root-cause td {
+    background-color:#ffeded;
+}
+
+.title-error {
+    background-color: #c9302c;
+    color: #fff;
+    border: 1px solid #ac2925;
+    padding-top: 5px;
+    border-radius: 2px;
+}
+
+.title-success {
+    background-color: #449d44;
+    color: #fff;
+    border: 1px solid #398439;
+    padding-top: 5px;
+    border-radius: 2px;
+}
+
+.title-logo {
+    width: 5%;
+    vertical-align: middle;
+    margin-bottom: 0.75em;
+    padding-left: 5px;
+}
+
+.title-text {
+    font-size: 12px;
+}
+
+.title-text-bottom {
+    padding-top: 20px;
+    font-size: 10px;
+    padding-right: 5px;
+}
+
+.toolbar {
+    background-color: #f8f8f8;
+    border: 1px solid #dddddd;
+    border-radius: 2px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+}
+
+.temp-alert {
+   margin-top: 5px;
+   margin-bottom: 5px;
+}
+
+</style>
+    <script>/*
+ * angular-ui-bootstrap
+ * http://angular-ui.github.io/bootstrap/
+
+ * Version: 2.5.0 - 2017-01-28
+ * License: MIT
+ */angular.module("ui.bootstrap", ["ui.bootstrap.buttons"]);
+
+
+
+
+
+
+angular.module('ui.bootstrap.buttons', [])
+
+.constant('uibButtonConfig', {
+  activeClass: 'active',
+  toggleEvent: 'click'
+})
+
+.controller('UibButtonsController', ['uibButtonConfig', function(buttonConfig) {
+  this.activeClass = buttonConfig.activeClass || 'active';
+  this.toggleEvent = buttonConfig.toggleEvent || 'click';
+}])
+
+.directive('uibBtnRadio', ['$parse', function($parse) {
+  return {
+    require: ['uibBtnRadio', 'ngModel'],
+    controller: 'UibButtonsController',
+    controllerAs: 'buttons',
+    link: function(scope, element, attrs, ctrls) {
+      var buttonsCtrl = ctrls[0], ngModelCtrl = ctrls[1];
+      var uncheckableExpr = $parse(attrs.uibUncheckable);
+
+      element.find('input').css({display: 'none'});
+
+      //model -> UI
+      ngModelCtrl.$render = function() {
+        element.toggleClass(buttonsCtrl.activeClass, angular.equals(ngModelCtrl.$modelValue, scope.$eval(attrs.uibBtnRadio)));
+      };
+
+      //ui->model
+      element.on(buttonsCtrl.toggleEvent, function() {
+        if (attrs.disabled) {
+          return;
+        }
+
+        var isActive = element.hasClass(buttonsCtrl.activeClass);
+
+        if (!isActive || angular.isDefined(attrs.uncheckable)) {
+          scope.$apply(function() {
+            ngModelCtrl.$setViewValue(isActive ? null : scope.$eval(attrs.uibBtnRadio));
+            ngModelCtrl.$render();
+          });
+        }
+      });
+
+      if (attrs.uibUncheckable) {
+        scope.$watch(uncheckableExpr, function(uncheckable) {
+          attrs.$set('uncheckable', uncheckable ? '' : undefined);
+        });
+      }
+    }
+  };
+}])
+
+.directive('uibBtnCheckbox', function() {
+  return {
+    require: ['uibBtnCheckbox', 'ngModel'],
+    controller: 'UibButtonsController',
+    controllerAs: 'button',
+    link: function(scope, element, attrs, ctrls) {
+      var buttonsCtrl = ctrls[0], ngModelCtrl = ctrls[1];
+
+      element.find('input').css({display: 'none'});
+
+      function getTrueValue() {
+        return getCheckboxValue(attrs.btnCheckboxTrue, true);
+      }
+
+      function getFalseValue() {
+        return getCheckboxValue(attrs.btnCheckboxFalse, false);
+      }
+
+      function getCheckboxValue(attribute, defaultValue) {
+        return angular.isDefined(attribute) ? scope.$eval(attribute) : defaultValue;
+      }
+
+      //model -> UI
+      ngModelCtrl.$render = function() {
+        element.toggleClass(buttonsCtrl.activeClass, angular.equals(ngModelCtrl.$modelValue, getTrueValue()));
+      };
+
+      //ui->model
+      element.on(buttonsCtrl.toggleEvent, function() {
+        if (attrs.disabled) {
+          return;
+        }
+
+        scope.$apply(function() {
+          ngModelCtrl.$setViewValue(element.hasClass(buttonsCtrl.activeClass) ? getFalseValue() : getTrueValue());
+          ngModelCtrl.$render();
+        });
+      });
+    }
+  };
+});</script>
+    <script type="text/javascript">(function (root, factory) {
+    /* istanbul ignore next */
+    if (typeof define === 'function' && define.amd) {
+        define(['angular'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        module.exports = factory(require('angular'));
+    } else {
+        root.angularClipboard = factory(root.angular);
+  }
+}(this, function (angular) {
+
+return angular.module('angular-clipboard', [])
+    .factory('clipboard', ['$document', '$window', function ($document, $window) {
+        function createNode(text, context) {
+            var node = $document[0].createElement('textarea');
+            node.style.position = 'absolute';
+            node.style.fontSize = '12pt';
+            node.style.border = '0';
+            node.style.padding = '0';
+            node.style.margin = '0';
+            node.style.left = '-10000px';
+            node.style.top = ($window.pageYOffset || $document[0].documentElement.scrollTop) + 'px';
+            node.textContent = text;
+            return node;
+        }
+
+        function copyNode(node) {
+            try {
+                // Set inline style to override css styles
+                $document[0].body.style.webkitUserSelect = 'initial';
+
+                var selection = $document[0].getSelection();
+                selection.removeAllRanges();
+
+                var range = document.createRange();
+                range.selectNodeContents(node);
+                selection.addRange(range);
+                // This makes it work in all desktop browsers (Chrome)
+                node.select();
+                // This makes it work on Mobile Safari
+                node.setSelectionRange(0, 999999);
+
+                try {
+                    if(!$document[0].execCommand('copy')) {
+                        throw('failure copy');
+                    }
+                } finally {
+                    selection.removeAllRanges();
+                }
+            } finally {
+                // Reset inline style
+                $document[0].body.style.webkitUserSelect = '';
+            }
+        }
+
+        function copyText(text, context) {
+            var left = $window.pageXOffset || $document[0].documentElement.scrollLeft;
+            var top = $window.pageYOffset || $document[0].documentElement.scrollTop;
+
+            var node = createNode(text, context);
+            $document[0].body.appendChild(node);
+            copyNode(node);
+
+            $window.scrollTo(left, top);
+            $document[0].body.removeChild(node);
+        }
+
+        return {
+            copyText: copyText,
+            supported: 'queryCommandSupported' in $document[0] && $document[0].queryCommandSupported('copy')
+        };
+    }])
+    .directive('clipboard', ['clipboard', function (clipboard) {
+        return {
+            restrict: 'A',
+            scope: {
+                onCopied: '&',
+                onError: '&',
+                text: '=',
+                supported: '=?'
+            },
+            link: function (scope, element) {
+                scope.supported = clipboard.supported;
+
+                element.on('click', function (event) {
+                    try {
+                        clipboard.copyText(scope.text, element[0]);
+                        if (angular.isFunction(scope.onCopied)) {
+                            scope.$evalAsync(scope.onCopied());
+                        }
+                    } catch (err) {
+                        if (angular.isFunction(scope.onError)) {
+                            scope.$evalAsync(scope.onError({err: err}));
+                        }
+                    }
+                });
+            }
+        };
+    }]);
+
+}));
+</script>
+    <script>var app = angular.module("TreeTestReportApp", ['treeGrid', 'ui.bootstrap', 'angular-clipboard'])
+.directive('selectOnClick', ['$window', function ($window) {
+    return {
+        link: function (scope, element) {
+            element.on('click', function () {
+                var selection = $window.getSelection();
+                var range = document.createRange();
+                range.selectNodeContents(element[0]);
+                selection.removeAllRanges();
+                selection.addRange(range);
+            });
+        }
+    };
+}])
+.directive('preEx', function () {
+    return {
+        restrict: 'E',
+        replace: true,
+        transclude: true,
+        scope: {
+            title: '@',
+            text: '=',
+            textArray: '=',
+        },
+        template: "<div compile=\"temp\"></div>",
+        link: function (scope, elm, attrs, ctrl) {
+            if (!scope.text && !scope.textArray) {
+                console.log('No data was defined for the directive!');
+                return;
+            }
+
+            var singleTextRowTemplate = "<div><div class=\"pre-ex-div\"><span>{{::title}}</span><button type=\"button\" class=\"btn btn-default btn-xs pre-ex-button\" clipboard text=\"value\" on-copied=\"success()\" on-error=\"fail(err)\"><span class=\"glyphicon glyphicon-copy\"></span> Copy to Clipboard</button></div><pre select-on-click class='pre-callstack'>{{::value}}</pre></div>";
+
+            if(scope.text) {
+            	scope.temp = singleTextRowTemplate;
+            	scope.value = scope.text;
+        	}
+
+            else if(scope.textArray) {
+            	if(scope.textArray.length === 1) {
+            		scope.value = scope.textArray[0];
+            		scope.temp = singleTextRowTemplate;
+            	}
+            	else {
+            		scope.temp = "<div><p><span>{{::title}}</span></p><div ng-class=\"!$last ? 'pre-ex-div-default' : ''\" ng-repeat=\"text in ::value\"><div class=\"pre-ex-div\"><button type=\"button\" class=\"btn btn-default btn-xs pre-ex-button-default\" clipboard text=\"::text\" on-copied=\"success()\" on-error=\"fail(err)\"><span class=\"glyphicon glyphicon-copy\"></span> Copy to Clipboard</button></div><pre select-on-click class='pre-callstack'>{{::text}}</pre></div></div>";
+            		scope.value = scope.textArray;
+            	}
+            }
+
+            scope.success = function() {
+                console.log('copied');
+            }
+            scope.fail = function () {
+                console.log('copy failed');
+            }
+        }
+    };
+})
+.directive('detailsWrapper', function () {
+    return {
+        restrict: 'E',
+        replace: true,
+        transclude: true,
+        scope: {
+            iconClass: '@'
+        },
+        template: "<div><table class=\"details-table\"><tr><td class=\"details-image-cell\"><i ng-class=\"::iconClass\"></i></td><td><div ng-transclude></div></td></tr></table></div>",
+        link: function (scope, elm, attrs, ctrl) {
+        }
+    };
+})
+.controller("TreeController", function($scope, $timeout){
+	angular.element(function () {
+    	$timeout(function() {
+			$scope.my_tree.expand_all_error();
+	    }, 0);
+	});
+
+	$scope.today = new Date();
+
+	var data = JSON.parse(document.getElementById("data").innerHTML);
+
+	//$scope.expand_to = {};
+	$scope.row_filter = {filtered: true};
+
+	$scope.filter = {};
+	$scope.filter.info = {value: false, type: 'Info'};
+	$scope.filter.warning = {value: false, type: 'Warning'};
+	$scope.filter.error = {value: true, type: 'Error'};
+	$scope.filter.artifact = {value: false, type: 'ArtifactPublish'};
+
+	$scope.filters = ['Info', 'InfoPartial', 'Warning', 'ArtifactPublish'];
+
+	$scope.filterSelected = function(model){
+		if(!model.value) {
+			$scope.filters.push(model.type);
+		}
+		else {
+			var index = $scope.filters.indexOf(model.type);
+			if(index !== -1)
+				$scope.filters.splice(index, 1);
+		}
+	}
+
+	$scope.additionalFilter = {
+		filterPropertyKey: 'type',
+		filterPropertyValue: 'TestStatus',
+		filterAttribute: 'state',
+		filterAttributeValues: ['1', '2', '3', '4', '7'],
+		hideSuccessfulSuites: true // temporary property, should be changed to something more generic as the other properties
+	};
+
+	$scope.testStatusFilter = {};
+	$scope.testStatusFilter.ignored = {selected: false, values: ['1', '2', '3', '7']}; // NotRunnable = 1, Skipped = 2, Ignored = 3, Cancelled = 7
+	$scope.testStatusFilter.passed = {selected: false, values: ['4']};
+	$scope.testStatusFilter.failed = {selected: true, values: ['5','6']}; // Failure = 5, Error = 6
+	$scope.testStatusFilter.inconclusive = {selected: true, values: ['0']};
+	$scope.testStatusFilter.hideSuccessfulSuites = true;
+
+	$scope.testStatusFilterChanged = function(model){
+		if(!model.selected) {
+			for(var i=0; i<model.values.length; i++) {
+				$scope.additionalFilter.filterAttributeValues.push(model.values[i]);
+			}
+		}
+		else {
+			for(var i=0; i<model.values.length; i++) {
+				var index = $scope.additionalFilter.filterAttributeValues.indexOf(model.values[i]);
+				if(index !== -1)
+					$scope.additionalFilter.filterAttributeValues.splice(index, 1);
+			}
+		}
+	}
+
+	// $scope.$watch('filter', function(){
+	// 	if($scope.filter.info){
+	// 		//$scope.filters
+	// 	}
+	// }, true);
+
+	$scope.my_tree = {};
+
+	$scope.tree_data = [
+		data
+	];
+
+	$scope.summary = {};
+	$scope.summary = data != null && data.type === "TestSession" && data.summary != null ? data.summary : undefined;
+
+
+	$scope.convertTestStateToString = function(state) {
+		switch(state)
+			{
+				case 5:
+					return "Failure";
+				case 6:
+					return "Error";
+				case 1:
+					return "NotRunnable";
+				case 2:
+					return "Skipped";
+				case 3:
+					return "Ignored";
+				case 7:
+					return "Cancelled";
+				case 0:
+					return "Inconclusive";
+				case 4:
+					return "Passed";
+			}
+	}
+
+	$scope.onExpandTo = function(branch){
+		return branch['rootCause']; //branch['errors'].length > 0 && branch.children.length === 0;
+	}
+
+	$scope.getIconByTestState = function(state) {
+		switch(state)
+			{
+				case 5:
+				case 6:
+					return "glyphicon glyphicon-minus-sign icon-red";
+				case 1:
+				case 2:
+				case 3:
+				case 7:
+					return "glyphicon glyphicon-question-sign icon-gray";
+				case 0:
+					return "glyphicon glyphicon-exclamation-sign icon-yellow";
+				case 4:
+					return "glyphicon glyphicon-ok-sign icon-green";
+			}
+	}
+
+	$scope.onLeafNodeCreate = function(branch){
+		var type = branch['type'];
+		if(type === 'TestStatus') {
+			return $scope.getIconByTestState(branch['state']) + " leaf-icon";
+			//return branch['state'] === 5 || branch['state'] === 6 ? "glyphicon glyphicon-remove-sign icon-red" : "glyphicon glyphicon-ok-sign icon-green";
+		}
+
+		if(type === 'Info' || type === 'InfoPartial') {
+			return "glyphicon glyphicon-file icon-blue leaf-icon";
+		}
+
+		if(type === 'Warning') {
+			return "glyphicon glyphicon-file icon-yellow leaf-icon";
+		}
+
+		if(type === 'Error') {
+			return "glyphicon glyphicon-file icon-red leaf-icon";
+		}
+
+		if(type === 'TestPlan') {
+			return "glyphicon glyphicon-list-alt icon-black leaf-icon";
+		}
+
+		if(type === 'AssemblyCompilationErrors') {
+			return "glyphicon glyphicon-remove-sign icon-red leaf-icon";
+		}
+
+		return "glyphicon glyphicon-file leaf-icon";
+
+		//return $scope.icons_defs[branch['type']] ? $scope.icons_defs[branch['type']] : $scope.icons_defs['default'];
+	}
+
+	//var errorsMarkup = "<p ng-if=\"row.branch['errors'].length > 0\">Errors ({{row.branch['errors'].length}}):</p>" +
+	// 		"<ul ng-if=\"row.branch['errors'].length > 0\"><li ng-repeat=\"error in row.branch['errors']\" ng-class=\"!$last ? 'list-item-padding' : ''\"><pre class='pre-callstack'>{{error}}</pre></li></ul>";
+
+	var errorsMarkup = "<p ng-if=\"row.branch['errors'].length > 0\"><pre-ex title=\"Errors ({{::row.branch['errors'].length}}):\" text-array=\"row.branch['errors']\"></pre-ex></p>";
+	var artifactsMarkup = "<p ng-if=\"row.branch['artifacts'].length > 0\"><span>Artifacts ({{::row.branch['artifacts'].length}}):</span><ul><li ng-repeat=\"link in ::row.branch['artifacts']\"><a href=\"{{::link}}\" target=\"_blank\"><i class=\"glyphicon glyphicon-paperclip icon-black icon-artifact\"></i>{{::link}}</a></li></ul></p>";
+
+	$scope.details_defs = {
+		default: "<div><pre class='pre-callstack'>{{::row.branch['message'] ? row.branch['message'] : row.branch['description']}}</pre></div>" +
+			"<p/>" +
+			errorsMarkup,
+		ArtifactPublish: "<div><pre class='pre-callstack'>{{::row.branch['destination']}}</pre></div>",
+		ProcessInfo: "<div>" +
+			"<details-wrapper icon-class=\"{{::row.branch['errors'].length === 0 ? 'glyphicon glyphicon-ok-sign icon-green details-icon' : 'glyphicon glyphicon-remove-sign icon-red details-icon'}}\">" +
+			"<p>Process Id: <b>{{::row.branch['processId']}}</b></p>"+
+			"<p><pre-ex title=\"Path:\" text=\"row.branch['path']\"/></p>"+
+			"<p><pre-ex title=\"Arguments:\" text=\"row.branch['arguments']\"/></p>"+
+			errorsMarkup +
+			artifactsMarkup +
+			"</details-wrapper>" +
+			"</div>",
+		TestGroup: "<div>" +
+			"<details-wrapper icon-class=\"{{::row.branch['errors'].length === 0 ? 'glyphicon glyphicon-ok-sign icon-green details-icon' : 'glyphicon glyphicon-remove-sign icon-red details-icon'}}\">" +
+			artifactsMarkup +
+			errorsMarkup +
+			"</details-wrapper>" +
+			"</div>",
+		TestPlan: "<div>"+
+			"<details-wrapper icon-class=\"glyphicon glyphicon-list-alt icon-black details-icon\">" +
+			"<p>Ready to run <b>{{::row.branch['tests'].length}}</b> tests:</p><ul><li ng-repeat=\"t in ::row.branch['tests']\">{{::t}}</li></ul>" +
+			"</details-wrapper>" +
+			"</div>",
+		TestSuite: "<div>" +
+			"<details-wrapper icon-class=\"{{::row.branch['errors'].length === 0 ? 'glyphicon glyphicon-ok-sign icon-green details-icon' : 'glyphicon glyphicon-remove-sign icon-red details-icon'}}\">" +
+			"<p>Name: <b>{{::row.branch['name']}}</b></p>" +
+			"<p>Scope: <b>{{::row.branch['scope']}}</b></p>" +
+			"<p>Platform: <b>{{::row.branch['platform']}}</b></p>" +
+			"<p><pre-ex title=\"Command to run locally:\" text=\"$parent.$parent.$parent.$parent.$parent.formatCommandLine(row.branch['minimalCommandLine'])\"></pre-ex></p>"+
+			artifactsMarkup +
+			errorsMarkup +
+			"</details-wrapper>" +
+			"</div>",
+		TestStatus: "<div>" +
+			"<details-wrapper icon-class=\"{{::$parent.$parent.$parent.getIconByTestState(row.branch['state']) + ' details-icon'}}\">" +
+			//"<table class=\"details-table\"><tr><td class=\"details-image-cell\"><i ng-class=\"$parent.$parent.$parent.getIconByTestState(row.branch['state']) + ' details-icon'\"></i></td><td>" +
+			"<p>Test Name: <b>{{::row.branch['name']}}</b></p>" +
+			"<p>Test Fixture: <b>{{::row.branch['fixture']}}</b></p>" +
+			"<p>Test Status: <b>{{::row.branch['state'] ? $parent.$parent.$parent.$parent.$parent.convertTestStateToString(row.branch['state']) : $parent.$parent.$parent.$parent.$parent.convertTestStateToString(0)}}</b></p>" +
+			"<p>Test Execution Time: <b>{{::row.branch['durationMicroseconds'] ? (row.branch['durationMicroseconds']/1000).toHHMMSS() : (row.branch['duration']).toHHMMSS()}}</b></p>" +
+			"<p ng-if=\"row.branch['message'] != null && row.branch['message'] != ''\"><pre-ex title=\"Message:\" text=\"row.branch['message']\"></pre-ex></p>"+
+			"<p><pre-ex title=\"Command to run locally:\" text=\"$parent.$parent.$parent.$parent.$parent.formatCommandLine(row.branch['minimalCommandLine'])\"></pre-ex></p>"+
+			artifactsMarkup +
+			errorsMarkup +
+			//"</td></tr></table>"+
+			"</details-wrapper>" +
+			"</div>",
+		AssemblyCompilationErrors: "<div>" +
+			"<details-wrapper icon-class=\"{{::row.branch['errors'].length === 0 ? 'glyphicon glyphicon-ok-sign icon-green details-icon' : 'glyphicon glyphicon-remove-sign icon-red details-icon'}}\">" +
+			"<p>Assembly: <b>{{::row.branch['assembly']}}</b></p>" +
+			errorsMarkup +
+			"</details-wrapper>" +
+			"</div>",
+		TestSession: "<div>" +
+			"<details-wrapper icon-class=\"{{::row.branch['summary'].success ? 'glyphicon glyphicon-ok-sign icon-green details-icon' : 'glyphicon glyphicon-remove-sign icon-red details-icon'}}\">" +
+			//"<table class=\"details-table\"><tr><td class=\"details-image-cell\"><i ng-class=\"row.branch['summary'].success ? 'glyphicon glyphicon-ok-sign icon-green details-icon' : 'glyphicon glyphicon-remove-sign icon-red details-icon'\"\"></i></td><td>" +
+			"<p>Run <b>{{::row.branch['summary'].testsCount}}</b> test(s). Passed: <b>{{::row.branch['summary'].successCount}}</b>, Failed: <b>{{::row.branch['summary'].failedCount + row.branch['summary'].errorCount}}</b>, Inconclusive: <b>{{::row.branch['summary'].inconclusiveCount}}</b>, Ignored: <b>{{::row.branch['summary'].ignoredCount}}</b>, Skipped: <b>{{::row.branch['summary'].skippedCount}}</b>, Not Runnable: <b>{{::row.branch['summary'].notRunCount}}</b></p>" +
+			"<p>Overall result: <b><span ng-class=\"row.branch['summary'].success ? 'pass-color' : 'fail-color'\">{{::row.branch['summary'].success ? 'PASS' : 'FAIL'}}</span></b></p>" +
+			"<p>Conclusion: <b><span ng-class=\"row.branch['summary'].success ? 'pass-color' : 'fail-color'\">{{::row.branch['summary'].failureConclusion}}</span></b></p>" +
+			"<p>Suites count: <b>{{::row.branch['summary'].suitesCount}}</b></p>" +
+			"<p><pre-ex title=\"Command to run locally:\" text=\"$parent.$parent.$parent.$parent.$parent.formatCommandLine(row.branch['minimalCommandLine'])\"></pre-ex></p>"+
+			artifactsMarkup +
+			errorsMarkup +
+			//"</td></tr></table>"+
+			"</details-wrapper>" +
+			"</div>",
+		Action: "<div>" +
+			"<details-wrapper icon-class=\"{{::row.branch['errors'].length === 0 ? 'glyphicon glyphicon-ok-sign icon-green details-icon' : 'glyphicon glyphicon-remove-sign icon-red details-icon'}}\">" +
+			"<p>Name: <b>{{::row.branch['name']}}</b></p>" +
+			artifactsMarkup +
+			errorsMarkup +
+			"</details-wrapper>" +
+			"</div>",
+	};
+
+	$scope.formatCommandLine = function(cmdParams) {
+		if(cmdParams == null || cmdParams.length === 0) {
+			return "";
+		}
+
+		var cmdLine = "perl utr.pl ";
+		for(var i=0; i<cmdParams.length; i++) {
+			cmdLine += cmdParams[i] + " ";
+		}
+		return cmdLine;
+	}
+
+	$scope.expanding_property = {
+		field: "type",
+  		displayName: "Action",
+  		cellCustomTemplate:
+  		{
+  		 		ArtifactPublish: "<div class=\"clipped\">{{::row.branch['destination']}}</div>",
+  		 		ProcessInfo: "<div class=\"clipped\">{{::row.branch['path']}}</div>",
+  		 		TestPlan: "<div>Ready to run <b>{{::row.branch['tests'].length}}</b> tests</div>",
+  		 		TestStatus: "<div class=\"clipped\">{{::row.branch['name']}}</div>",
+  		 		TestSuite: "<div ng-if=\"row.branch['errors'].length === 0\" class=\"clipped\">Run <b>{{::row.branch['name']}}</b> tests for <b>{{::row.branch['scope']}}</b>: <b><span class=\"pass-color\">PASS</span></b> (<b>{{::row.branch['summary'].successCount}}</b> test(s) passed)</div>" +
+  		 			"<div ng-if=\"row.branch['errors'].length > 0\" class=\"clipped\">Run <b>{{::row.branch['name']}}</b> tests for <b>{{::row.branch['scope']}}</b>: <b><span class=\"fail-color\">FAIL</span></b> (<b>{{::row.branch['summary'].successCount}}</b> test(s) passed, <b>{{::row.branch['summary'].failedCount + row.branch['summary'].errorCount + row.branch['summary'].inconclusiveCount}}</b> test(s) failed, <b>{{::row.branch['summary'].compilationErrorsCount}}</b> compilation errors)</div>",
+  		 		Info: "<div class=\"clipped\">{{::row.branch['message']}}</div>",
+  		 		Warning: "<div class=\"clipped\">{{::row.branch['message']}}</div>",
+  		 		Error: "<div class=\"clipped\">{{::row.branch['message']}}</div>",
+  		 		InfoPartial: "<div class=\"clipped\">{{::row.branch['message']}}</div>",
+  		 		AssemblyCompilationErrors: "<div class=\"clipped\">Assembly compilation failed: {{::row.branch['assembly']}}</div>",
+  		 		TestSession: "<div class=\"clipped\">{{::row.branch['summary'].success ? 'Test Session Passed' : 'Test Session Failed'}}: <b>{{::row.branch['summary'].successCount}}</b> test(s) passed, <b>{{::row.branch['summary'].failedCount + row.branch['summary'].errorCount + row.branch['summary'].inconclusiveCount}}</b> test(s) failed, <b>{{::row.branch['summary'].compilationErrorsCount}}</b> compilation error(s)</div>",
+  		 		TestGroup: "<div class=\"clipped\">{{::row.branch['name']}}</div>",
+
+  		 		default: "<div class=\"clipped\">{{::row.branch['name']}} {{::row.branch['description']}}</div>",
+
+  		 },
+  		filterable: true,
+  		width: "65%"
+	}
+
+	$scope.col_defs = [
+  		{
+  			field: "time",
+  			displayName: "Time",
+  			cellCustomTemplate: {
+  				default: "<div>{{::row.branch[col.field] | date : \"HH:mm:ss\"}}</div>"
+  			},
+  			width: "5%",
+  			class: "text-right",
+  		},
+  		{
+  			displayName: "Artifacts",
+    		cellCustomTemplate: {
+  				//default: "<div><ul><li ng-repeat=\"item in row.branch['children']\" ng-if=\"item['type'] === 'ArtifactPublish'\"><a href=\"{{item.destination}}\" ng-click=\"on_click_with_no_propagation($event)\" target=\"_blank\">{{item.destination}}</a></li></ul></div>"
+  				//default: "<ul><li ng-repeat=\"item in row.branch['artifacts']\"><div class=\"clipped\"><a href=\"{{item}}\" ng-click=\"on_click_with_no_propagation($event)\" target=\"_blank\">{{item}}</a></div></li></ul>"
+  				default: "<div ng-if=\"row.branch['artifacts'].length > 0\"><i class=\"glyphicon glyphicon-paperclip icon-black\"></i> {{::row.branch['artifacts'].length}}</div>"
+  			},
+  			width: "23%"
+  		},
+  		{
+  			field: "duration",
+  			displayName: "Duration",
+  			width: "7%",
+  			cellCustomTemplate: {
+  				default: "<div>{{::row.branch['durationMicroseconds'] ? (row.branch['durationMicroseconds']/1000).toHHMMSS() : (row.branch['duration']).toHHMMSS()}}</div>"
+  			},
+  			class: "text-right",
+  			//sortable : true,
+			//filterable : true
+  		},
+		];
+});
+
+Number.prototype.toHHMMSS = function () {
+    //var sec_num = parseInt(this, 10);
+    sec_num = this / 1000;
+    if(sec_num < 0.0005)
+    	return "0";
+
+    var hours   = Math.floor(sec_num / 3600);
+    var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+    var seconds = sec_num - (hours * 3600) - (minutes * 60);
+
+    if (hours   < 10) {hours   = "0"+hours;}
+    if (minutes < 10) {minutes = "0"+minutes;}
+    if (seconds < 10) {seconds = "0"+seconds.toFixed(3);} else {seconds = seconds.toFixed(3);}
+    return hours+':'+minutes+':'+seconds;
+};
+</script>
+
+    <script id="data" type="application/json">
+      {
+  "type": "TestSession",
+  "time": 1536566712386,
+  "phase": "Complete",
+  "version": 2,
+  "processId": 15492,
+  "errors": [
+    "One or more child steps have failed"
+  ],
+  "minimalCommandLine": [
+    "--suite=editor",
+    "--testproject=EditorCrash",
+    "--open-report",
+    "--env=win"
+  ],
+  "duration": 613524,
+  "artifacts": [
+    "TestRunnerLog.txt"
+  ],
+  "children": [
+    {
+      "type": "ArtifactPublish",
+      "time": 1536566098873,
+      "phase": "Immediate",
+      "version": 2,
+      "processId": 15492,
+      "errors": [],
+      "destination": "TestRunnerLog.txt",
+      "children": []
+    },
+    {
+      "type": "TestSuite",
+      "time": 1536566712282,
+      "phase": "Complete",
+      "version": 2,
+      "processId": 15492,
+      "errors": [
+        "One or more child steps have failed",
+        "Editor exited with non-zero exit code: -1"
+      ],
+      "name": "editor",
+      "scope": "Tests/EditModeAndPlayModeTests/EditorCrash",
+      "platform": "editmode",
+      "supportsFilters": true,
+      "minimalCommandLine": [
+        "--suite=editor",
+        "--testproject=Tests/EditModeAndPlayModeTests/EditorCrash"
+      ],
+      "duration": 613117,
+      "artifacts": [
+        "Tests/EditModeAndPlayModeTests/EditorCrash/UnityLog.txt"
+      ],
+      "summary": {
+        "failureReasons": [
+          "One or more child steps have failed",
+          "Editor exited with non-zero exit code: -1"
+        ],
+        "compilationErrorsCount": 0,
+        "time": 7,
+        "inconclusiveCount": 0,
+        "testsCount": 2,
+        "errorCount": 0,
+        "ignoredCount": 0,
+        "notRunCount": 0,
+        "failedCount": 0,
+        "skippedCount": 0,
+        "successCount": 2,
+        "result": 6
+      },
+      "children": [
+        {
+          "type": "Info",
+          "time": 1536566099172,
+          "phase": "Immediate",
+          "version": 2,
+          "processId": 15492,
+          "errors": [],
+          "message": "Launching executable, Debugging Time 09:54:59.1711857",
+          "children": []
+        },
+        {
+          "type": "Info",
+          "time": 1536566099173,
+          "phase": "Immediate",
+          "version": 2,
+          "processId": 15492,
+          "errors": [],
+          "message": "Launching executable: C:\\unity\\lane3\\Tests\\bin\\UTRDebug_win_msbuild\\..\\..\\..\\build\\WindowsEditor\\Unity.exe",
+          "children": []
+        },
+        {
+          "type": "Info",
+          "time": 1536566099178,
+          "phase": "Immediate",
+          "version": 2,
+          "processId": 15492,
+          "errors": [],
+          "message": "Successfully started MacroClientServer on port 9001",
+          "children": []
+        },
+        {
+          "type": "Info",
+          "time": 1536566099182,
+          "phase": "Immediate",
+          "version": 2,
+          "processId": 15492,
+          "errors": [],
+          "message": "Launching editor with latest scripting runtime",
+          "children": []
+        },
+        {
+          "type": "Info",
+          "time": 1536566099185,
+          "phase": "Immediate",
+          "version": 2,
+          "processId": 15492,
+          "errors": [],
+          "message": "Starting editor at: C:\\unity\\lane3\\Tests\\bin\\UTRDebug_win_msbuild\\..\\..\\..\\build\\WindowsEditor\\Unity.exe",
+          "children": []
+        },
+        {
+          "type": "Info",
+          "time": 1536566099185,
+          "phase": "Immediate",
+          "version": 2,
+          "processId": 15492,
+          "errors": [],
+          "message": "With arguments: -projectPath C:\\unity\\lane3\\Tests\\EditModeAndPlayModeTests\\EditorCrash -cleanTestPrefs -batchmode -logFile C:\\temp\\arts\\Tests\\EditModeAndPlayModeTests\\EditorCrash\\UnityLog.txt -testPlatform editmode -testResults C:\\temp\\arts\\Tests\\EditModeAndPlayModeTests\\EditorCrash\\TestResults.xml -testSettingsFile C:\\temp\\arts\\Tests\\EditModeAndPlayModeTests\\EditorCrash\\TestSettings.json -useTempPackageCache -forgetProjectPath -automated -upmNoDefaultPackages -enableAllModules \"-forceFullStacktrace Assert\" -scripting-runtime-version latest -api-profile NET_Standard_2_0 -runTests -automated -accept-apiupdate -crash-report-folder C:\\temp\\arts\\Tests\\EditModeAndPlayModeTests\\EditorCrash\\CrashArtifacts",
+          "children": []
+        },
+        {
+          "type": "Info",
+          "time": 1536566099195,
+          "phase": "Immediate",
+          "version": 2,
+          "processId": 15492,
+          "errors": [],
+          "message": "Started Unity.Automation.UnityEditorProcess with processid: 18076",
+          "children": []
+        },
+        {
+          "type": "ProcessInfo",
+          "time": 1536566712272,
+          "phase": "Complete",
+          "version": 2,
+          "processId": 15492,
+          "errors": [
+            "System.TimeoutException: Timeout while waiting for a log message\r\n   at Unity.UnityTestFramework.PluginBase.UnityProcessLogReader.<ReadFrom>d__4.MoveNext() in C:\\unity\\lane3\\Tests\\Unity.UnityTestFramework.PluginBase\\UnityProcessLogReader.cs:line 41\r\n   at Unity.UnityTestFramework.PluginBase.UnityTestFrameworkRunnerPlugin.Run(UnityEditorStartInfo startInfo) in C:\\unity\\lane3\\Tests\\Unity.UnityTestFramework.PluginBase\\UnityTestFrameworkRunnerPlugin.cs:line 29"
+          ],
+          "id": 18076,
+          "path": "C:\\unity\\lane3\\Tests\\bin\\UTRDebug_win_msbuild\\..\\..\\..\\build\\WindowsEditor\\Unity.exe",
+          "arguments": "-projectPath C:\\unity\\lane3\\Tests\\EditModeAndPlayModeTests\\EditorCrash -cleanTestPrefs -batchmode -logFile C:\\temp\\arts\\Tests\\EditModeAndPlayModeTests\\EditorCrash\\UnityLog.txt -testPlatform editmode -testResults C:\\temp\\arts\\Tests\\EditModeAndPlayModeTests\\EditorCrash\\TestResults.xml -testSettingsFile C:\\temp\\arts\\Tests\\EditModeAndPlayModeTests\\EditorCrash\\TestSettings.json -useTempPackageCache -forgetProjectPath -automated -upmNoDefaultPackages -enableAllModules \"-forceFullStacktrace Assert\" -scripting-runtime-version latest -api-profile NET_Standard_2_0 -runTests -automated -accept-apiupdate -crash-report-folder C:\\temp\\arts\\Tests\\EditModeAndPlayModeTests\\EditorCrash\\CrashArtifacts",
+          "logs": [
+            "C:\\temp\\arts\\Tests\\EditModeAndPlayModeTests\\EditorCrash\\UnityLog.txt"
+          ],
+          "exitCode": -1,
+          "duration": 613076,
+          "artifacts": [
+            "Tests/EditModeAndPlayModeTests/EditorCrash/CrashArtifacts/Crash_2018-09-10_075512194/crash.dmp",
+            "Tests/EditModeAndPlayModeTests/EditorCrash/CrashArtifacts/Crash_2018-09-10_075512194/error.log"
+          ],
+          "rootCause": true,
+          "children": [
+            {
+              "type": "TestPlan",
+              "time": 1536566112064,
+              "version": 2,
+              "phase": "Immediate",
+              "processId": 18076,
+              "tests": [
+                "EditorCrashTests.Test1",
+                "EditorCrashTests.Test2"
+              ],
+              "errors": [],
+              "children": []
+            },
+            {
+              "type": "TestStatus",
+              "time": 1536566112128,
+              "phase": "Complete",
+              "version": 2,
+              "processId": 18076,
+              "errors": [],
+              "name": "EditorCrashTests.Test1",
+              "state": 4,
+              "fixture": "Tests/EditModeAndPlayModeTests/EditorCrash",
+              "message": "",
+              "duration": 7,
+              "durationMicroseconds": 7416,
+              "minimalCommandLine": [
+                "--suite=editor",
+                "--testproject=Tests/EditModeAndPlayModeTests/EditorCrash",
+                "--testfilter=EditorCrashTests.Test1"
+              ],
+              "children": []
+            },
+            {
+              "type": "TestStatus",
+              "time": 1536566112154,
+              "phase": "Complete",
+              "version": 2,
+              "processId": 18076,
+              "errors": [],
+              "name": "EditorCrashTests.Test2",
+              "state": 4,
+              "fixture": "Tests/EditModeAndPlayModeTests/EditorCrash",
+              "message": "",
+              "duration": 0,
+              "durationMicroseconds": 237,
+              "minimalCommandLine": [
+                "--suite=editor",
+                "--testproject=Tests/EditModeAndPlayModeTests/EditorCrash",
+                "--testfilter=EditorCrashTests.Test2"
+              ],
+              "children": []
+            },
+            {
+              "type": "Error",
+              "time": 1536566712269,
+              "phase": "Immediate",
+              "version": 2,
+              "processId": 15492,
+              "errors": [],
+              "message": "Process exited abnormally. Attempting to get artifacts.",
+              "children": []
+            },
+            {
+              "type": "ArtifactPublish",
+              "time": 1536566712270,
+              "phase": "Immediate",
+              "version": 2,
+              "processId": 15492,
+              "errors": [],
+              "destination": "Tests/EditModeAndPlayModeTests/EditorCrash/CrashArtifacts/Crash_2018-09-10_075512194/crash.dmp",
+              "children": []
+            },
+            {
+              "type": "ArtifactPublish",
+              "time": 1536566712271,
+              "phase": "Immediate",
+              "version": 2,
+              "processId": 15492,
+              "errors": [],
+              "destination": "Tests/EditModeAndPlayModeTests/EditorCrash/CrashArtifacts/Crash_2018-09-10_075512194/error.log",
+              "children": []
+            }
+          ]
+        },
+        {
+          "type": "ArtifactPublish",
+          "time": 1536566712281,
+          "phase": "Immediate",
+          "version": 2,
+          "processId": 15492,
+          "errors": [],
+          "destination": "Tests/EditModeAndPlayModeTests/EditorCrash/UnityLog.txt",
+          "children": []
+        }
+      ]
+    },
+    {
+      "type": "Info",
+      "time": 1536566712283,
+      "phase": "Immediate",
+      "version": 2,
+      "processId": 15492,
+      "errors": [],
+      "message": "Deleting directory C:\\unity\\lane3\\Tests\\EditModeAndPlayModeTests\\EditorCrash\\Library",
+      "children": []
+    }
+  ],
+  "summary": {
+    "success": false,
+    "time": 0,
+    "inconclusiveCount": 0,
+    "testsCount": 2,
+    "errorCount": 0,
+    "ignoredCount": 0,
+    "notRunCount": 0,
+    "failedCount": 0,
+    "skippedCount": 0,
+    "successCount": 2,
+    "suitesCount": 1,
+    "compilationErrorsCount": 0,
+    "otherErrorsCount": 1,
+    "failureConclusion": "One or more non-test related failures."
+  }
+}
+    </script>
+</head>
+<body ng-app="TreeTestReportApp">
+    <div class="container-fluid" ng-controller="TreeController">
+        <div class="row">
+          <div class="col-md-12">
+            <div ng-class="summary.success ? 'title-success' : 'title-error'">
+              <img src="logo.png" class="title-logo">
+              <span class="title-text">Test Session Report</span>
+              <span class="title-text-bottom pull-right">{{today | date : "dd.MM.yyyy HH:mm:ss"}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="row" style="height: 10px;">
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="toolbar">
+              <button ng-click="my_tree.expand_all()" class="btn btn-default btn-xs toolbox-button-lg">Expand All</button>
+              <button ng-click="my_tree.collapse_all()" class="btn btn-default btn-xs toolbox-button-lg">Collapse All</button>
+
+
+
+
+              <i ng-class="filters.length > 0 ? 'icon-blue' : 'icon-gray'" class="glyphicon glyphicon-filter toolbox" style="padding-left: 20px; padding-right: 5px;"></i><span class="toolbox">Log records filter: </span>
+              <div class="btn-group">
+              <label class="btn btn-info btn-xs toolbox-button" ng-model="filter.info.value" uib-btn-checkbox="" ng-click="filterSelected(filter.info)">Info</label>
+              <label class="btn btn-warning btn-xs toolbox-button" ng-model="filter.warning.value" uib-btn-checkbox="" ng-click="filterSelected(filter.warning)">Warnings</label>
+              <label class="btn btn-danger btn-xs toolbox-button" ng-model="filter.error.value" uib-btn-checkbox="" ng-click="filterSelected(filter.error)">Errors</label>
+              <label class="btn btn-primary btn-xs toolbox-button" ng-model="filter.artifact.value" uib-btn-checkbox="" ng-click="filterSelected(filter.artifact)">Artifacts</label>
+              </div>
+
+              <i ng-class="additionalFilter.filterAttributeValues.length > 0 ? 'icon-blue' : 'icon-gray'" class="glyphicon glyphicon-filter toolbox" style="padding-left: 20px; padding-right: 5px;"></i><span class="toolbox">Test status filter: </span>
+              <div class="btn-group">
+              <label class="btn btn-primary btn-xs toolbox-button-lg" ng-model="testStatusFilter.ignored.selected" uib-btn-checkbox="" ng-click="testStatusFilterChanged(testStatusFilter.ignored)">Ignored: {{summary.ignoredCount + summary.skippedCount + summary.notRunCount}}</label>
+              <label class="btn btn-success btn-xs toolbox-button-lg" ng-model="testStatusFilter.passed.selected" uib-btn-checkbox="" ng-click="testStatusFilterChanged(testStatusFilter.passed)">Passed: {{summary.successCount}}</label>
+              <label class="btn btn-danger btn-xs toolbox-button-lg" ng-model="testStatusFilter.failed.selected" uib-btn-checkbox="" ng-click="testStatusFilterChanged(testStatusFilter.failed)">Failed: {{summary.errorCount + summary.failedCount}}</label>
+              <label class="btn btn-warning btn-xs toolbox-button-lg" ng-model="testStatusFilter.inconclusive.selected" uib-btn-checkbox="" ng-click="testStatusFilterChanged(testStatusFilter.inconclusive)">Inconclusive: {{summary.inconclusiveCount}}</label>
+              </div>
+              <label class="checkbox-babel toolbox"><input type="checkbox" ng-model="row_filter.filtered"> Hide passed suites</label>
+            </div>
+
+          </div>
+        </div>
+        <div class="row" style="height: 10px;">
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <tree-grid tree-data="tree_data" tree-control="my_tree" col-defs="col_defs" details-defs="details_defs" expand-level="0" expand-to="expand_to" expand-on="expanding_property" on-expand-to="onExpandTo(branch)" on-leaf-icon-create="onLeafNodeCreate(branch)" row-filter="row_filter"></tree-grid>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+              <div class="container text-center">
+                <p class="text-muted credit">Copyright © {{::today | date : "y"}} Unity Technologies</p>
+              </div>
+          </div>
+        </div>
+    </div>
+
+
+</body></html>
