@@ -1,0 +1,1368 @@
+{
+  "type": "TestSession",
+  "time": 1540557972455,
+  "phase": "Complete",
+  "version": 2,
+  "processId": 2860,
+  "errors": [],
+  "minimalCommandLine": [
+    "--suite=editor",
+    "--testproject=Tests\\EditModeAndPlayModeTests\\Instability"
+  ],
+  "duration": 38792,
+  "artifacts": [
+    "TestRunnerLog.txt"
+  ],
+  "children": [
+    {
+      "type": "ArtifactPublish",
+      "time": 1540557933682,
+      "phase": "Immediate",
+      "version": 2,
+      "processId": 2860,
+      "errors": [],
+      "destination": "TestRunnerLog.txt",
+      "children": []
+    },
+    {
+      "type": "TestSuite",
+      "time": 1540557951383,
+      "phase": "Complete",
+      "version": 2,
+      "processId": 2860,
+      "errors": [],
+      "name": "editor",
+      "scope": "Tests/EditModeAndPlayModeTests/Instability",
+      "platform": "editmode",
+      "supportsFilters": true,
+      "minimalCommandLine": [
+        "--suite=editor",
+        "--zero-tests-are-ok=1",
+        "--testproject=Tests/EditModeAndPlayModeTests/Instability"
+      ],
+      "isRerun": false,
+      "duration": 17541,
+      "artifacts": [
+        "Tests/EditModeAndPlayModeTests/Instability/UnityLog.txt"
+      ],
+      "summary": {
+        "failureReasons": [
+          "One or more tests have failed."
+        ],
+        "compilationErrorsCount": 0,
+        "instabilityCount": 0,
+        "time": 19,
+        "inconclusiveCount": 1,
+        "testsCount": 8,
+        "errorCount": 1,
+        "ignoredCount": 2,
+        "notRunCount": 3,
+        "failedCount": 1,
+        "skippedCount": 1,
+        "successCount": 2,
+        "result": 5
+      },
+      "children": [
+        {
+          "type": "Info",
+          "time": 1540557933857,
+          "phase": "Immediate",
+          "version": 2,
+          "processId": 2860,
+          "errors": [],
+          "message": "Launching executable, Debugging Time 14:45:33.8525121",
+          "children": []
+        },
+        {
+          "type": "Info",
+          "time": 1540557933857,
+          "phase": "Immediate",
+          "version": 2,
+          "processId": 2860,
+          "errors": [],
+          "message": "Launching executable: C:\\unity\\lane2\\Tests\\bin\\UTRDebug_monobe_xbuild\\..\\..\\..\\build\\WindowsEditor\\Unity.exe",
+          "children": []
+        },
+        {
+          "type": "Info",
+          "time": 1540557933860,
+          "phase": "Immediate",
+          "version": 2,
+          "processId": 2860,
+          "errors": [],
+          "message": "Successfully started MacroClientServer on port 9001",
+          "children": []
+        },
+        {
+          "type": "Info",
+          "time": 1540557933862,
+          "phase": "Immediate",
+          "version": 2,
+          "processId": 2860,
+          "errors": [],
+          "message": "Launching editor with latest scripting runtime",
+          "children": []
+        },
+        {
+          "type": "Info",
+          "time": 1540557933864,
+          "phase": "Immediate",
+          "version": 2,
+          "processId": 2860,
+          "errors": [],
+          "message": "Starting editor at: C:\\unity\\lane2\\Tests\\bin\\UTRDebug_monobe_xbuild\\..\\..\\..\\build\\WindowsEditor\\Unity.exe",
+          "children": []
+        },
+        {
+          "type": "Info",
+          "time": 1540557933864,
+          "phase": "Immediate",
+          "version": 2,
+          "processId": 2860,
+          "errors": [],
+          "message": "With arguments: -projectPath C:\\unity\\lane2\\Tests\\EditModeAndPlayModeTests\\Instability -cleanTestPrefs -batchmode -logFile C:\\Users\\yan\\AppData\\Local\\Temp\\vyrtgDTalt\\Tests\\EditModeAndPlayModeTests\\Instability\\UnityLog.txt -testPlatform editmode -testResults C:\\Users\\yan\\AppData\\Local\\Temp\\vyrtgDTalt\\Tests\\EditModeAndPlayModeTests\\Instability\\TestResults.xml -testSettingsFile C:\\Users\\yan\\AppData\\Local\\Temp\\vyrtgDTalt\\Tests\\EditModeAndPlayModeTests\\Instability\\TestSettings.json -forgetProjectPath -automated -upmNoDefaultPackages -enableAllModules \"-forceFullStacktrace Assert\" -scripting-runtime-version latest -api-profile NET_Standard_2_0 -runTests -automated -accept-apiupdate -crash-report-folder C:\\Users\\yan\\AppData\\Local\\Temp\\vyrtgDTalt\\Tests\\EditModeAndPlayModeTests\\Instability\\CrashArtifacts",
+          "children": []
+        },
+        {
+          "type": "Info",
+          "time": 1540557933878,
+          "phase": "Immediate",
+          "version": 2,
+          "processId": 2860,
+          "errors": [],
+          "message": "Started Unity.Automation.UnityEditorProcess with processid: 15296",
+          "children": []
+        },
+        {
+          "type": "ProcessInfo",
+          "time": 1540557951370,
+          "phase": "Complete",
+          "version": 2,
+          "processId": 2860,
+          "errors": [],
+          "id": 15296,
+          "path": "C:\\unity\\lane2\\Tests\\bin\\UTRDebug_monobe_xbuild\\..\\..\\..\\build\\WindowsEditor\\Unity.exe",
+          "arguments": "-projectPath C:\\unity\\lane2\\Tests\\EditModeAndPlayModeTests\\Instability -cleanTestPrefs -batchmode -logFile C:\\Users\\yan\\AppData\\Local\\Temp\\vyrtgDTalt\\Tests\\EditModeAndPlayModeTests\\Instability\\UnityLog.txt -testPlatform editmode -testResults C:\\Users\\yan\\AppData\\Local\\Temp\\vyrtgDTalt\\Tests\\EditModeAndPlayModeTests\\Instability\\TestResults.xml -testSettingsFile C:\\Users\\yan\\AppData\\Local\\Temp\\vyrtgDTalt\\Tests\\EditModeAndPlayModeTests\\Instability\\TestSettings.json -forgetProjectPath -automated -upmNoDefaultPackages -enableAllModules \"-forceFullStacktrace Assert\" -scripting-runtime-version latest -api-profile NET_Standard_2_0 -runTests -automated -accept-apiupdate -crash-report-folder C:\\Users\\yan\\AppData\\Local\\Temp\\vyrtgDTalt\\Tests\\EditModeAndPlayModeTests\\Instability\\CrashArtifacts",
+          "logs": [
+            "C:\\Users\\yan\\AppData\\Local\\Temp\\vyrtgDTalt\\Tests\\EditModeAndPlayModeTests\\Instability\\UnityLog.txt"
+          ],
+          "exitCode": 2,
+          "duration": 17491,
+          "children": [
+            {
+              "type": "TestPlan",
+              "time": 1540557948606,
+              "version": 2,
+              "phase": "Immediate",
+              "processId": 15296,
+              "tests": [
+                "InstabilityTests.AlwaysPassingTest",
+                "InstabilityTests.ErrorTest",
+                "InstabilityTests.FailThenPassTest",
+                "InstabilityTests.IgnoredByAssertTest",
+                "InstabilityTests.IgnoredTest",
+                "InstabilityTests.InconclusiveTest",
+                "InstabilityTests.PassThenFailTest",
+                "InstabilityTests.SkippedTest"
+              ],
+              "errors": [],
+              "children": []
+            },
+            {
+              "type": "TestStatus",
+              "time": 1540557948657,
+              "phase": "Complete",
+              "version": 2,
+              "processId": 15296,
+              "errors": [],
+              "name": "InstabilityTests.AlwaysPassingTest",
+              "state": 4,
+              "fixture": "Tests/EditModeAndPlayModeTests/Instability",
+              "message": "",
+              "duration": 6,
+              "durationMicroseconds": 5800,
+              "minimalCommandLine": [
+                "--suite=editor",
+                "--zero-tests-are-ok=1",
+                "--testproject=Tests/EditModeAndPlayModeTests/Instability",
+                "--testfilter=InstabilityTests.AlwaysPassingTest"
+              ],
+              "children": []
+            },
+            {
+              "type": "TestStatus",
+              "time": 1540557948680,
+              "phase": "Complete",
+              "version": 2,
+              "processId": 15296,
+              "errors": [],
+              "name": "InstabilityTests.ErrorTest",
+              "state": 6,
+              "fixture": "Tests/EditModeAndPlayModeTests/Instability",
+              "message": "System.Exception : Exception of type 'System.Exception' was thrown.",
+              "duration": 7,
+              "durationMicroseconds": 6612,
+              "rootCause": true,
+              "minimalCommandLine": [
+                "--suite=editor",
+                "--zero-tests-are-ok=1",
+                "--testproject=Tests/EditModeAndPlayModeTests/Instability",
+                "--testfilter=InstabilityTests.ErrorTest"
+              ],
+              "children": []
+            },
+            {
+              "type": "TestStatus",
+              "time": 1540557948686,
+              "phase": "Complete",
+              "version": 2,
+              "processId": 15296,
+              "errors": [],
+              "name": "InstabilityTests.FailThenPassTest",
+              "state": 4,
+              "fixture": "Tests/EditModeAndPlayModeTests/Instability",
+              "message": "",
+              "duration": 5,
+              "durationMicroseconds": 4976,
+              "minimalCommandLine": [
+                "--suite=editor",
+                "--zero-tests-are-ok=1",
+                "--testproject=Tests/EditModeAndPlayModeTests/Instability",
+                "--testfilter=InstabilityTests.FailThenPassTest"
+              ],
+              "children": []
+            },
+            {
+              "type": "TestStatus",
+              "time": 1540557948690,
+              "phase": "Complete",
+              "version": 2,
+              "processId": 15296,
+              "errors": [],
+              "name": "InstabilityTests.IgnoredByAssertTest",
+              "state": 3,
+              "fixture": "Tests/EditModeAndPlayModeTests/Instability",
+              "message": "Test ignored on purpose",
+              "duration": 2,
+              "durationMicroseconds": 1879,
+              "minimalCommandLine": [
+                "--suite=editor",
+                "--zero-tests-are-ok=1",
+                "--testproject=Tests/EditModeAndPlayModeTests/Instability",
+                "--testfilter=InstabilityTests.IgnoredByAssertTest"
+              ],
+              "children": []
+            },
+            {
+              "type": "TestStatus",
+              "time": 1540557948691,
+              "phase": "Complete",
+              "version": 2,
+              "processId": 15296,
+              "errors": [],
+              "name": "InstabilityTests.IgnoredTest",
+              "state": 3,
+              "fixture": "Tests/EditModeAndPlayModeTests/Instability",
+              "message": "No reason",
+              "duration": 0,
+              "durationMicroseconds": 336,
+              "minimalCommandLine": [
+                "--suite=editor",
+                "--zero-tests-are-ok=1",
+                "--testproject=Tests/EditModeAndPlayModeTests/Instability",
+                "--testfilter=InstabilityTests.IgnoredTest"
+              ],
+              "children": []
+            },
+            {
+              "type": "TestStatus",
+              "time": 1540557948693,
+              "phase": "Complete",
+              "version": 2,
+              "processId": 15296,
+              "errors": [],
+              "name": "InstabilityTests.InconclusiveTest",
+              "state": 0,
+              "fixture": "Tests/EditModeAndPlayModeTests/Instability",
+              "message": "The test was inconclusive",
+              "duration": 1,
+              "durationMicroseconds": 867,
+              "rootCause": true,
+              "minimalCommandLine": [
+                "--suite=editor",
+                "--zero-tests-are-ok=1",
+                "--testproject=Tests/EditModeAndPlayModeTests/Instability",
+                "--testfilter=InstabilityTests.InconclusiveTest"
+              ],
+              "children": []
+            },
+            {
+              "type": "TestStatus",
+              "time": 1540557948698,
+              "phase": "Complete",
+              "version": 2,
+              "processId": 15296,
+              "errors": [],
+              "name": "InstabilityTests.PassThenFailTest",
+              "state": 5,
+              "fixture": "Tests/EditModeAndPlayModeTests/Instability",
+              "message": "  Expected: 1\r\n  But was:  0\r\n",
+              "duration": 4,
+              "durationMicroseconds": 3757,
+              "rootCause": true,
+              "minimalCommandLine": [
+                "--suite=editor",
+                "--zero-tests-are-ok=1",
+                "--testproject=Tests/EditModeAndPlayModeTests/Instability",
+                "--testfilter=InstabilityTests.PassThenFailTest"
+              ],
+              "children": []
+            },
+            {
+              "type": "TestStatus",
+              "time": 1540557948699,
+              "phase": "Complete",
+              "version": 2,
+              "processId": 15296,
+              "errors": [],
+              "name": "InstabilityTests.SkippedTest",
+              "state": 2,
+              "fixture": "Tests/EditModeAndPlayModeTests/Instability",
+              "message": "",
+              "duration": 0,
+              "durationMicroseconds": 6,
+              "minimalCommandLine": [
+                "--suite=editor",
+                "--zero-tests-are-ok=1",
+                "--testproject=Tests/EditModeAndPlayModeTests/Instability",
+                "--testfilter=InstabilityTests.SkippedTest"
+              ],
+              "children": []
+            },
+            {
+              "type": "MemoryLeaks",
+              "time": 1540557949256,
+              "version": 2,
+              "phase": "Immediate",
+              "processId": 15296,
+              "allocatedMemory": 390215,
+              "memoryLabels": [
+                {
+                  "default": 2180
+                },
+                {
+                  "newDelete": 260426
+                },
+                {
+                  "thread": 136
+                },
+                {
+                  "manager": 1032
+                },
+                {
+                  "gfxDevice": 496
+                },
+                {
+                  "physics": 81
+                },
+                {
+                  "serialization": 40
+                },
+                {
+                  "terrain": 112
+                },
+                {
+                  "string": 35509
+                },
+                {
+                  "dynamicArray": 19196
+                },
+                {
+                  "hashMap": 768
+                },
+                {
+                  "curl": 1376
+                },
+                {
+                  "poolAlloc": 8
+                },
+                {
+                  "scriptManager": 11200
+                },
+                {
+                  "sprites": 8
+                },
+                {
+                  "gi": 616
+                },
+                {
+                  "vr": 2387
+                },
+                {
+                  "secure": 8
+                },
+                {
+                  "image": 32768
+                },
+                {
+                  "editorGui": 40
+                },
+                {
+                  "editorUtility": 556
+                },
+                {
+                  "assetImporter": 32
+                },
+                {
+                  "restService": 256
+                },
+                {
+                  "unityConnect": 20200
+                },
+                {
+                  "collab": 696
+                },
+                {
+                  "upm": 88
+                }
+              ],
+              "errors": [],
+              "children": []
+            }
+          ]
+        },
+        {
+          "type": "ArtifactPublish",
+          "time": 1540557951380,
+          "phase": "Immediate",
+          "version": 2,
+          "processId": 2860,
+          "errors": [],
+          "destination": "Tests/EditModeAndPlayModeTests/Instability/UnityLog.txt",
+          "children": []
+        },
+        {
+          "type": "Warning",
+          "time": 1540557951382,
+          "phase": "Immediate",
+          "version": 2,
+          "processId": 2860,
+          "errors": [],
+          "message": "Tests failed!",
+          "children": []
+        }
+      ]
+    },
+    {
+      "type": "Info",
+      "time": 1540557951386,
+      "phase": "Immediate",
+      "version": 2,
+      "processId": 2860,
+      "errors": [],
+      "message": "Deleting directory C:\\unity\\lane2\\Tests\\EditModeAndPlayModeTests\\Instability\\Library",
+      "children": []
+    },
+    {
+      "type": "TestSuite",
+      "time": 1540557961785,
+      "phase": "Complete",
+      "version": 2,
+      "processId": 2860,
+      "errors": [],
+      "name": "editor",
+      "scope": "Tests/EditModeAndPlayModeTests/Instability",
+      "platform": "editmode",
+      "supportsFilters": true,
+      "minimalCommandLine": [
+        "--suite=editor",
+        "--zero-tests-are-ok=1",
+        "--testproject=Tests/EditModeAndPlayModeTests/Instability"
+      ],
+      "isRerun": true,
+      "duration": 10246,
+      "artifacts": [
+        "Tests/EditModeAndPlayModeTests/Instability/Rerun1/UnityLog.txt"
+      ],
+      "summary": {
+        "failureReasons": [
+          "One or more tests have failed."
+        ],
+        "compilationErrorsCount": 0,
+        "instabilityCount": 0,
+        "time": 19,
+        "inconclusiveCount": 1,
+        "testsCount": 8,
+        "errorCount": 1,
+        "ignoredCount": 2,
+        "notRunCount": 3,
+        "failedCount": 1,
+        "skippedCount": 1,
+        "successCount": 2,
+        "result": 5
+      },
+      "children": [
+        {
+          "type": "Info",
+          "time": 1540557951540,
+          "phase": "Immediate",
+          "version": 2,
+          "processId": 2860,
+          "errors": [],
+          "message": "Launching executable, Debugging Time 14:45:51.5402056",
+          "children": []
+        },
+        {
+          "type": "Info",
+          "time": 1540557951540,
+          "phase": "Immediate",
+          "version": 2,
+          "processId": 2860,
+          "errors": [],
+          "message": "Launching executable: C:\\unity\\lane2\\Tests\\bin\\UTRDebug_monobe_xbuild\\..\\..\\..\\build\\WindowsEditor\\Unity.exe",
+          "children": []
+        },
+        {
+          "type": "Info",
+          "time": 1540557951541,
+          "phase": "Immediate",
+          "version": 2,
+          "processId": 2860,
+          "errors": [],
+          "message": "Successfully started MacroClientServer on port 9002",
+          "children": []
+        },
+        {
+          "type": "Info",
+          "time": 1540557951541,
+          "phase": "Immediate",
+          "version": 2,
+          "processId": 2860,
+          "errors": [],
+          "message": "Launching editor with latest scripting runtime",
+          "children": []
+        },
+        {
+          "type": "Info",
+          "time": 1540557951541,
+          "phase": "Immediate",
+          "version": 2,
+          "processId": 2860,
+          "errors": [],
+          "message": "Starting editor at: C:\\unity\\lane2\\Tests\\bin\\UTRDebug_monobe_xbuild\\..\\..\\..\\build\\WindowsEditor\\Unity.exe",
+          "children": []
+        },
+        {
+          "type": "Info",
+          "time": 1540557951541,
+          "phase": "Immediate",
+          "version": 2,
+          "processId": 2860,
+          "errors": [],
+          "message": "With arguments: -projectPath C:\\unity\\lane2\\Tests\\EditModeAndPlayModeTests\\Instability -cleanTestPrefs -batchmode -logFile C:\\Users\\yan\\AppData\\Local\\Temp\\vyrtgDTalt\\Tests\\EditModeAndPlayModeTests\\Instability\\Rerun1\\UnityLog.txt -testPlatform editmode -testResults C:\\Users\\yan\\AppData\\Local\\Temp\\vyrtgDTalt\\Tests\\EditModeAndPlayModeTests\\Instability\\Rerun1\\TestResults.xml -testSettingsFile C:\\Users\\yan\\AppData\\Local\\Temp\\vyrtgDTalt\\Tests\\EditModeAndPlayModeTests\\Instability\\Rerun1\\TestSettings.json -forgetProjectPath -automated -upmNoDefaultPackages -enableAllModules \"-forceFullStacktrace Assert\" -scripting-runtime-version latest -api-profile NET_Standard_2_0 -runTests -automated -accept-apiupdate -crash-report-folder C:\\Users\\yan\\AppData\\Local\\Temp\\vyrtgDTalt\\Tests\\EditModeAndPlayModeTests\\Instability\\Rerun1\\CrashArtifacts",
+          "children": []
+        },
+        {
+          "type": "Info",
+          "time": 1540557951546,
+          "phase": "Immediate",
+          "version": 2,
+          "processId": 2860,
+          "errors": [],
+          "message": "Started Unity.Automation.UnityEditorProcess with processid: 10764",
+          "children": []
+        },
+        {
+          "type": "ProcessInfo",
+          "time": 1540557961776,
+          "phase": "Complete",
+          "version": 2,
+          "processId": 2860,
+          "errors": [],
+          "id": 10764,
+          "path": "C:\\unity\\lane2\\Tests\\bin\\UTRDebug_monobe_xbuild\\..\\..\\..\\build\\WindowsEditor\\Unity.exe",
+          "arguments": "-projectPath C:\\unity\\lane2\\Tests\\EditModeAndPlayModeTests\\Instability -cleanTestPrefs -batchmode -logFile C:\\Users\\yan\\AppData\\Local\\Temp\\vyrtgDTalt\\Tests\\EditModeAndPlayModeTests\\Instability\\Rerun1\\UnityLog.txt -testPlatform editmode -testResults C:\\Users\\yan\\AppData\\Local\\Temp\\vyrtgDTalt\\Tests\\EditModeAndPlayModeTests\\Instability\\Rerun1\\TestResults.xml -testSettingsFile C:\\Users\\yan\\AppData\\Local\\Temp\\vyrtgDTalt\\Tests\\EditModeAndPlayModeTests\\Instability\\Rerun1\\TestSettings.json -forgetProjectPath -automated -upmNoDefaultPackages -enableAllModules \"-forceFullStacktrace Assert\" -scripting-runtime-version latest -api-profile NET_Standard_2_0 -runTests -automated -accept-apiupdate -crash-report-folder C:\\Users\\yan\\AppData\\Local\\Temp\\vyrtgDTalt\\Tests\\EditModeAndPlayModeTests\\Instability\\Rerun1\\CrashArtifacts",
+          "logs": [
+            "C:\\Users\\yan\\AppData\\Local\\Temp\\vyrtgDTalt\\Tests\\EditModeAndPlayModeTests\\Instability\\Rerun1\\UnityLog.txt"
+          ],
+          "exitCode": 2,
+          "duration": 10229,
+          "children": [
+            {
+              "type": "TestPlan",
+              "time": 1540557959146,
+              "version": 2,
+              "phase": "Immediate",
+              "processId": 10764,
+              "tests": [
+                "InstabilityTests.AlwaysPassingTest",
+                "InstabilityTests.ErrorTest",
+                "InstabilityTests.FailThenPassTest",
+                "InstabilityTests.IgnoredByAssertTest",
+                "InstabilityTests.IgnoredTest",
+                "InstabilityTests.InconclusiveTest",
+                "InstabilityTests.PassThenFailTest",
+                "InstabilityTests.SkippedTest"
+              ],
+              "errors": [],
+              "children": []
+            },
+            {
+              "type": "TestStatus",
+              "time": 1540557959199,
+              "phase": "Complete",
+              "version": 2,
+              "processId": 10764,
+              "errors": [],
+              "name": "InstabilityTests.AlwaysPassingTest",
+              "state": 4,
+              "fixture": "Tests/EditModeAndPlayModeTests/Instability",
+              "message": "",
+              "duration": 5,
+              "durationMicroseconds": 5222,
+              "minimalCommandLine": [
+                "--suite=editor",
+                "--zero-tests-are-ok=1",
+                "--testproject=Tests/EditModeAndPlayModeTests/Instability",
+                "--testfilter=InstabilityTests.AlwaysPassingTest"
+              ],
+              "children": []
+            },
+            {
+              "type": "TestStatus",
+              "time": 1540557959224,
+              "phase": "Complete",
+              "version": 2,
+              "processId": 10764,
+              "errors": [],
+              "name": "InstabilityTests.ErrorTest",
+              "state": 6,
+              "fixture": "Tests/EditModeAndPlayModeTests/Instability",
+              "message": "System.Exception : Exception of type 'System.Exception' was thrown.",
+              "duration": 7,
+              "durationMicroseconds": 6956,
+              "rootCause": true,
+              "minimalCommandLine": [
+                "--suite=editor",
+                "--zero-tests-are-ok=1",
+                "--testproject=Tests/EditModeAndPlayModeTests/Instability",
+                "--testfilter=InstabilityTests.ErrorTest"
+              ],
+              "children": []
+            },
+            {
+              "type": "TestStatus",
+              "time": 1540557959233,
+              "phase": "Complete",
+              "version": 2,
+              "processId": 10764,
+              "errors": [],
+              "name": "InstabilityTests.FailThenPassTest",
+              "state": 5,
+              "fixture": "Tests/EditModeAndPlayModeTests/Instability",
+              "message": "  Expected: 1\r\n  But was:  0\r\n",
+              "duration": 8,
+              "durationMicroseconds": 8138,
+              "rootCause": true,
+              "minimalCommandLine": [
+                "--suite=editor",
+                "--zero-tests-are-ok=1",
+                "--testproject=Tests/EditModeAndPlayModeTests/Instability",
+                "--testfilter=InstabilityTests.FailThenPassTest"
+              ],
+              "children": []
+            },
+            {
+              "type": "TestStatus",
+              "time": 1540557959235,
+              "phase": "Complete",
+              "version": 2,
+              "processId": 10764,
+              "errors": [],
+              "name": "InstabilityTests.IgnoredByAssertTest",
+              "state": 3,
+              "fixture": "Tests/EditModeAndPlayModeTests/Instability",
+              "message": "Test ignored on purpose",
+              "duration": 1,
+              "durationMicroseconds": 801,
+              "minimalCommandLine": [
+                "--suite=editor",
+                "--zero-tests-are-ok=1",
+                "--testproject=Tests/EditModeAndPlayModeTests/Instability",
+                "--testfilter=InstabilityTests.IgnoredByAssertTest"
+              ],
+              "children": []
+            },
+            {
+              "type": "TestStatus",
+              "time": 1540557959236,
+              "phase": "Complete",
+              "version": 2,
+              "processId": 10764,
+              "errors": [],
+              "name": "InstabilityTests.IgnoredTest",
+              "state": 3,
+              "fixture": "Tests/EditModeAndPlayModeTests/Instability",
+              "message": "No reason",
+              "duration": 0,
+              "durationMicroseconds": 315,
+              "minimalCommandLine": [
+                "--suite=editor",
+                "--zero-tests-are-ok=1",
+                "--testproject=Tests/EditModeAndPlayModeTests/Instability",
+                "--testfilter=InstabilityTests.IgnoredTest"
+              ],
+              "children": []
+            },
+            {
+              "type": "TestStatus",
+              "time": 1540557959238,
+              "phase": "Complete",
+              "version": 2,
+              "processId": 10764,
+              "errors": [],
+              "name": "InstabilityTests.InconclusiveTest",
+              "state": 0,
+              "fixture": "Tests/EditModeAndPlayModeTests/Instability",
+              "message": "The test was inconclusive",
+              "duration": 1,
+              "durationMicroseconds": 680,
+              "rootCause": true,
+              "minimalCommandLine": [
+                "--suite=editor",
+                "--zero-tests-are-ok=1",
+                "--testproject=Tests/EditModeAndPlayModeTests/Instability",
+                "--testfilter=InstabilityTests.InconclusiveTest"
+              ],
+              "children": []
+            },
+            {
+              "type": "TestStatus",
+              "time": 1540557959239,
+              "phase": "Complete",
+              "version": 2,
+              "processId": 10764,
+              "errors": [],
+              "name": "InstabilityTests.PassThenFailTest",
+              "state": 4,
+              "fixture": "Tests/EditModeAndPlayModeTests/Instability",
+              "message": "",
+              "duration": 0,
+              "durationMicroseconds": 214,
+              "minimalCommandLine": [
+                "--suite=editor",
+                "--zero-tests-are-ok=1",
+                "--testproject=Tests/EditModeAndPlayModeTests/Instability",
+                "--testfilter=InstabilityTests.PassThenFailTest"
+              ],
+              "children": []
+            },
+            {
+              "type": "TestStatus",
+              "time": 1540557959240,
+              "phase": "Complete",
+              "version": 2,
+              "processId": 10764,
+              "errors": [],
+              "name": "InstabilityTests.SkippedTest",
+              "state": 2,
+              "fixture": "Tests/EditModeAndPlayModeTests/Instability",
+              "message": "",
+              "duration": 0,
+              "durationMicroseconds": 5,
+              "minimalCommandLine": [
+                "--suite=editor",
+                "--zero-tests-are-ok=1",
+                "--testproject=Tests/EditModeAndPlayModeTests/Instability",
+                "--testfilter=InstabilityTests.SkippedTest"
+              ],
+              "children": []
+            },
+            {
+              "type": "MemoryLeaks",
+              "time": 1540557959668,
+              "version": 2,
+              "phase": "Immediate",
+              "processId": 10764,
+              "allocatedMemory": 390250,
+              "memoryLabels": [
+                {
+                  "default": 2180
+                },
+                {
+                  "newDelete": 260426
+                },
+                {
+                  "thread": 136
+                },
+                {
+                  "manager": 1032
+                },
+                {
+                  "gfxDevice": 496
+                },
+                {
+                  "physics": 81
+                },
+                {
+                  "serialization": 40
+                },
+                {
+                  "terrain": 112
+                },
+                {
+                  "string": 35544
+                },
+                {
+                  "dynamicArray": 19196
+                },
+                {
+                  "hashMap": 768
+                },
+                {
+                  "curl": 1376
+                },
+                {
+                  "poolAlloc": 8
+                },
+                {
+                  "scriptManager": 11200
+                },
+                {
+                  "sprites": 8
+                },
+                {
+                  "gi": 616
+                },
+                {
+                  "vr": 2387
+                },
+                {
+                  "secure": 8
+                },
+                {
+                  "image": 32768
+                },
+                {
+                  "editorGui": 40
+                },
+                {
+                  "editorUtility": 556
+                },
+                {
+                  "assetImporter": 32
+                },
+                {
+                  "restService": 256
+                },
+                {
+                  "unityConnect": 20200
+                },
+                {
+                  "collab": 696
+                },
+                {
+                  "upm": 88
+                }
+              ],
+              "errors": [],
+              "children": []
+            }
+          ]
+        },
+        {
+          "type": "ArtifactPublish",
+          "time": 1540557961782,
+          "phase": "Immediate",
+          "version": 2,
+          "processId": 2860,
+          "errors": [],
+          "destination": "Tests/EditModeAndPlayModeTests/Instability/Rerun1/UnityLog.txt",
+          "children": []
+        },
+        {
+          "type": "Warning",
+          "time": 1540557961784,
+          "phase": "Immediate",
+          "version": 2,
+          "processId": 2860,
+          "errors": [],
+          "message": "Tests failed!",
+          "children": []
+        }
+      ]
+    },
+    {
+      "type": "Info",
+      "time": 1540557961787,
+      "phase": "Immediate",
+      "version": 2,
+      "processId": 2860,
+      "errors": [],
+      "message": "Deleting directory C:\\unity\\lane2\\Tests\\EditModeAndPlayModeTests\\Instability\\Library",
+      "children": []
+    },
+    {
+      "type": "TestSuite",
+      "time": 1540557972211,
+      "phase": "Complete",
+      "version": 2,
+      "processId": 2860,
+      "errors": [],
+      "name": "editor",
+      "scope": "Tests/EditModeAndPlayModeTests/Instability",
+      "platform": "editmode",
+      "supportsFilters": true,
+      "minimalCommandLine": [
+        "--suite=editor",
+        "--zero-tests-are-ok=1",
+        "--testproject=Tests/EditModeAndPlayModeTests/Instability"
+      ],
+      "isRerun": true,
+      "duration": 10255,
+      "artifacts": [
+        "Tests/EditModeAndPlayModeTests/Instability/Rerun2/UnityLog.txt"
+      ],
+      "summary": {
+        "failureReasons": [
+          "One or more tests have failed."
+        ],
+        "compilationErrorsCount": 0,
+        "instabilityCount": 0,
+        "time": 17,
+        "inconclusiveCount": 1,
+        "testsCount": 8,
+        "errorCount": 1,
+        "ignoredCount": 2,
+        "notRunCount": 3,
+        "failedCount": 1,
+        "skippedCount": 1,
+        "successCount": 2,
+        "result": 5
+      },
+      "children": [
+        {
+          "type": "Info",
+          "time": 1540557961956,
+          "phase": "Immediate",
+          "version": 2,
+          "processId": 2860,
+          "errors": [],
+          "message": "Launching executable, Debugging Time 14:46:01.9563192",
+          "children": []
+        },
+        {
+          "type": "Info",
+          "time": 1540557961956,
+          "phase": "Immediate",
+          "version": 2,
+          "processId": 2860,
+          "errors": [],
+          "message": "Launching executable: C:\\unity\\lane2\\Tests\\bin\\UTRDebug_monobe_xbuild\\..\\..\\..\\build\\WindowsEditor\\Unity.exe",
+          "children": []
+        },
+        {
+          "type": "Info",
+          "time": 1540557961957,
+          "phase": "Immediate",
+          "version": 2,
+          "processId": 2860,
+          "errors": [],
+          "message": "Successfully started MacroClientServer on port 9003",
+          "children": []
+        },
+        {
+          "type": "Info",
+          "time": 1540557961957,
+          "phase": "Immediate",
+          "version": 2,
+          "processId": 2860,
+          "errors": [],
+          "message": "Launching editor with latest scripting runtime",
+          "children": []
+        },
+        {
+          "type": "Info",
+          "time": 1540557961957,
+          "phase": "Immediate",
+          "version": 2,
+          "processId": 2860,
+          "errors": [],
+          "message": "Starting editor at: C:\\unity\\lane2\\Tests\\bin\\UTRDebug_monobe_xbuild\\..\\..\\..\\build\\WindowsEditor\\Unity.exe",
+          "children": []
+        },
+        {
+          "type": "Info",
+          "time": 1540557961957,
+          "phase": "Immediate",
+          "version": 2,
+          "processId": 2860,
+          "errors": [],
+          "message": "With arguments: -projectPath C:\\unity\\lane2\\Tests\\EditModeAndPlayModeTests\\Instability -cleanTestPrefs -batchmode -logFile C:\\Users\\yan\\AppData\\Local\\Temp\\vyrtgDTalt\\Tests\\EditModeAndPlayModeTests\\Instability\\Rerun2\\UnityLog.txt -testPlatform editmode -testResults C:\\Users\\yan\\AppData\\Local\\Temp\\vyrtgDTalt\\Tests\\EditModeAndPlayModeTests\\Instability\\Rerun2\\TestResults.xml -testSettingsFile C:\\Users\\yan\\AppData\\Local\\Temp\\vyrtgDTalt\\Tests\\EditModeAndPlayModeTests\\Instability\\Rerun2\\TestSettings.json -forgetProjectPath -automated -upmNoDefaultPackages -enableAllModules \"-forceFullStacktrace Assert\" -scripting-runtime-version latest -api-profile NET_Standard_2_0 -runTests -automated -accept-apiupdate -crash-report-folder C:\\Users\\yan\\AppData\\Local\\Temp\\vyrtgDTalt\\Tests\\EditModeAndPlayModeTests\\Instability\\Rerun2\\CrashArtifacts",
+          "children": []
+        },
+        {
+          "type": "Info",
+          "time": 1540557961967,
+          "phase": "Immediate",
+          "version": 2,
+          "processId": 2860,
+          "errors": [],
+          "message": "Started Unity.Automation.UnityEditorProcess with processid: 22984",
+          "children": []
+        },
+        {
+          "type": "ProcessInfo",
+          "time": 1540557972202,
+          "phase": "Complete",
+          "version": 2,
+          "processId": 2860,
+          "errors": [],
+          "id": 22984,
+          "path": "C:\\unity\\lane2\\Tests\\bin\\UTRDebug_monobe_xbuild\\..\\..\\..\\build\\WindowsEditor\\Unity.exe",
+          "arguments": "-projectPath C:\\unity\\lane2\\Tests\\EditModeAndPlayModeTests\\Instability -cleanTestPrefs -batchmode -logFile C:\\Users\\yan\\AppData\\Local\\Temp\\vyrtgDTalt\\Tests\\EditModeAndPlayModeTests\\Instability\\Rerun2\\UnityLog.txt -testPlatform editmode -testResults C:\\Users\\yan\\AppData\\Local\\Temp\\vyrtgDTalt\\Tests\\EditModeAndPlayModeTests\\Instability\\Rerun2\\TestResults.xml -testSettingsFile C:\\Users\\yan\\AppData\\Local\\Temp\\vyrtgDTalt\\Tests\\EditModeAndPlayModeTests\\Instability\\Rerun2\\TestSettings.json -forgetProjectPath -automated -upmNoDefaultPackages -enableAllModules \"-forceFullStacktrace Assert\" -scripting-runtime-version latest -api-profile NET_Standard_2_0 -runTests -automated -accept-apiupdate -crash-report-folder C:\\Users\\yan\\AppData\\Local\\Temp\\vyrtgDTalt\\Tests\\EditModeAndPlayModeTests\\Instability\\Rerun2\\CrashArtifacts",
+          "logs": [
+            "C:\\Users\\yan\\AppData\\Local\\Temp\\vyrtgDTalt\\Tests\\EditModeAndPlayModeTests\\Instability\\Rerun2\\UnityLog.txt"
+          ],
+          "exitCode": 2,
+          "duration": 10235,
+          "children": [
+            {
+              "type": "TestPlan",
+              "time": 1540557969592,
+              "version": 2,
+              "phase": "Immediate",
+              "processId": 22984,
+              "tests": [
+                "InstabilityTests.AlwaysPassingTest",
+                "InstabilityTests.ErrorTest",
+                "InstabilityTests.FailThenPassTest",
+                "InstabilityTests.IgnoredByAssertTest",
+                "InstabilityTests.IgnoredTest",
+                "InstabilityTests.InconclusiveTest",
+                "InstabilityTests.PassThenFailTest",
+                "InstabilityTests.SkippedTest"
+              ],
+              "errors": [],
+              "children": []
+            },
+            {
+              "type": "TestStatus",
+              "time": 1540557969645,
+              "phase": "Complete",
+              "version": 2,
+              "processId": 22984,
+              "errors": [],
+              "name": "InstabilityTests.AlwaysPassingTest",
+              "state": 4,
+              "fixture": "Tests/EditModeAndPlayModeTests/Instability",
+              "message": "",
+              "duration": 5,
+              "durationMicroseconds": 4853,
+              "minimalCommandLine": [
+                "--suite=editor",
+                "--zero-tests-are-ok=1",
+                "--testproject=Tests/EditModeAndPlayModeTests/Instability",
+                "--testfilter=InstabilityTests.AlwaysPassingTest"
+              ],
+              "children": []
+            },
+            {
+              "type": "TestStatus",
+              "time": 1540557969668,
+              "phase": "Complete",
+              "version": 2,
+              "processId": 22984,
+              "errors": [],
+              "name": "InstabilityTests.ErrorTest",
+              "state": 6,
+              "fixture": "Tests/EditModeAndPlayModeTests/Instability",
+              "message": "System.Exception : Exception of type 'System.Exception' was thrown.",
+              "duration": 6,
+              "durationMicroseconds": 5938,
+              "rootCause": true,
+              "minimalCommandLine": [
+                "--suite=editor",
+                "--zero-tests-are-ok=1",
+                "--testproject=Tests/EditModeAndPlayModeTests/Instability",
+                "--testfilter=InstabilityTests.ErrorTest"
+              ],
+              "children": []
+            },
+            {
+              "type": "TestStatus",
+              "time": 1540557969673,
+              "phase": "Complete",
+              "version": 2,
+              "processId": 22984,
+              "errors": [],
+              "name": "InstabilityTests.FailThenPassTest",
+              "state": 4,
+              "fixture": "Tests/EditModeAndPlayModeTests/Instability",
+              "message": "",
+              "duration": 4,
+              "durationMicroseconds": 4196,
+              "minimalCommandLine": [
+                "--suite=editor",
+                "--zero-tests-are-ok=1",
+                "--testproject=Tests/EditModeAndPlayModeTests/Instability",
+                "--testfilter=InstabilityTests.FailThenPassTest"
+              ],
+              "children": []
+            },
+            {
+              "type": "TestStatus",
+              "time": 1540557969676,
+              "phase": "Complete",
+              "version": 2,
+              "processId": 22984,
+              "errors": [],
+              "name": "InstabilityTests.IgnoredByAssertTest",
+              "state": 3,
+              "fixture": "Tests/EditModeAndPlayModeTests/Instability",
+              "message": "Test ignored on purpose",
+              "duration": 1,
+              "durationMicroseconds": 1396,
+              "minimalCommandLine": [
+                "--suite=editor",
+                "--zero-tests-are-ok=1",
+                "--testproject=Tests/EditModeAndPlayModeTests/Instability",
+                "--testfilter=InstabilityTests.IgnoredByAssertTest"
+              ],
+              "children": []
+            },
+            {
+              "type": "TestStatus",
+              "time": 1540557969677,
+              "phase": "Complete",
+              "version": 2,
+              "processId": 22984,
+              "errors": [],
+              "name": "InstabilityTests.IgnoredTest",
+              "state": 3,
+              "fixture": "Tests/EditModeAndPlayModeTests/Instability",
+              "message": "No reason",
+              "duration": 0,
+              "durationMicroseconds": 306,
+              "minimalCommandLine": [
+                "--suite=editor",
+                "--zero-tests-are-ok=1",
+                "--testproject=Tests/EditModeAndPlayModeTests/Instability",
+                "--testfilter=InstabilityTests.IgnoredTest"
+              ],
+              "children": []
+            },
+            {
+              "type": "TestStatus",
+              "time": 1540557969679,
+              "phase": "Complete",
+              "version": 2,
+              "processId": 22984,
+              "errors": [],
+              "name": "InstabilityTests.InconclusiveTest",
+              "state": 0,
+              "fixture": "Tests/EditModeAndPlayModeTests/Instability",
+              "message": "The test was inconclusive",
+              "duration": 1,
+              "durationMicroseconds": 998,
+              "rootCause": true,
+              "minimalCommandLine": [
+                "--suite=editor",
+                "--zero-tests-are-ok=1",
+                "--testproject=Tests/EditModeAndPlayModeTests/Instability",
+                "--testfilter=InstabilityTests.InconclusiveTest"
+              ],
+              "children": []
+            },
+            {
+              "type": "TestStatus",
+              "time": 1540557969684,
+              "phase": "Complete",
+              "version": 2,
+              "processId": 22984,
+              "errors": [],
+              "name": "InstabilityTests.PassThenFailTest",
+              "state": 5,
+              "fixture": "Tests/EditModeAndPlayModeTests/Instability",
+              "message": "  Expected: 1\r\n  But was:  0\r\n",
+              "duration": 4,
+              "durationMicroseconds": 3559,
+              "rootCause": true,
+              "minimalCommandLine": [
+                "--suite=editor",
+                "--zero-tests-are-ok=1",
+                "--testproject=Tests/EditModeAndPlayModeTests/Instability",
+                "--testfilter=InstabilityTests.PassThenFailTest"
+              ],
+              "children": []
+            },
+            {
+              "type": "TestStatus",
+              "time": 1540557969684,
+              "phase": "Complete",
+              "version": 2,
+              "processId": 22984,
+              "errors": [],
+              "name": "InstabilityTests.SkippedTest",
+              "state": 2,
+              "fixture": "Tests/EditModeAndPlayModeTests/Instability",
+              "message": "",
+              "duration": 0,
+              "durationMicroseconds": 5,
+              "minimalCommandLine": [
+                "--suite=editor",
+                "--zero-tests-are-ok=1",
+                "--testproject=Tests/EditModeAndPlayModeTests/Instability",
+                "--testfilter=InstabilityTests.SkippedTest"
+              ],
+              "children": []
+            },
+            {
+              "type": "MemoryLeaks",
+              "time": 1540557970178,
+              "version": 2,
+              "phase": "Immediate",
+              "processId": 22984,
+              "allocatedMemory": 390250,
+              "memoryLabels": [
+                {
+                  "default": 2180
+                },
+                {
+                  "newDelete": 260426
+                },
+                {
+                  "thread": 136
+                },
+                {
+                  "manager": 1032
+                },
+                {
+                  "gfxDevice": 496
+                },
+                {
+                  "physics": 81
+                },
+                {
+                  "serialization": 40
+                },
+                {
+                  "terrain": 112
+                },
+                {
+                  "string": 35544
+                },
+                {
+                  "dynamicArray": 19196
+                },
+                {
+                  "hashMap": 768
+                },
+                {
+                  "curl": 1376
+                },
+                {
+                  "poolAlloc": 8
+                },
+                {
+                  "scriptManager": 11200
+                },
+                {
+                  "sprites": 8
+                },
+                {
+                  "gi": 616
+                },
+                {
+                  "vr": 2387
+                },
+                {
+                  "secure": 8
+                },
+                {
+                  "image": 32768
+                },
+                {
+                  "editorGui": 40
+                },
+                {
+                  "editorUtility": 556
+                },
+                {
+                  "assetImporter": 32
+                },
+                {
+                  "restService": 256
+                },
+                {
+                  "unityConnect": 20200
+                },
+                {
+                  "collab": 696
+                },
+                {
+                  "upm": 88
+                }
+              ],
+              "errors": [],
+              "children": []
+            }
+          ]
+        },
+        {
+          "type": "ArtifactPublish",
+          "time": 1540557972209,
+          "phase": "Immediate",
+          "version": 2,
+          "processId": 2860,
+          "errors": [],
+          "destination": "Tests/EditModeAndPlayModeTests/Instability/Rerun2/UnityLog.txt",
+          "children": []
+        },
+        {
+          "type": "Warning",
+          "time": 1540557972210,
+          "phase": "Immediate",
+          "version": 2,
+          "processId": 2860,
+          "errors": [],
+          "message": "Tests failed!",
+          "children": []
+        }
+      ]
+    },
+    {
+      "type": "Info",
+      "time": 1540557972213,
+      "phase": "Immediate",
+      "version": 2,
+      "processId": 2860,
+      "errors": [],
+      "message": "Deleting directory C:\\unity\\lane2\\Tests\\EditModeAndPlayModeTests\\Instability\\Library",
+      "children": []
+    }
+  ],
+  "summary": {
+    "success": false,
+    "time": 0,
+    "inconclusiveCount": 1,
+    "testsCount": 8,
+    "errorCount": 1,
+    "ignoredCount": 2,
+    "notRunCount": 3,
+    "failedCount": 0,
+    "skippedCount": 1,
+    "successCount": 3,
+    "suitesCount": 1,
+    "compilationErrorsCount": 0,
+    "otherErrorsCount": 0,
+    "failureConclusion": "One or more tests have failed.",
+    "successConclusion": "",
+    "instabilityCount": 2,
+    "nonTestRelatedInstabilityCount": 0,
+    "unstableTestNames": [
+      "Tests/EditModeAndPlayModeTests/Instability/InstabilityTests.FailThenPassTest",
+      "Tests/EditModeAndPlayModeTests/Instability/InstabilityTests.PassThenFailTest"
+    ]
+  }
+}

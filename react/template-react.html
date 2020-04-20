@@ -1,0 +1,1404 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/balloon-css/0.4.0/balloon.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react-dom.js"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <title>Test session result</title>
+  <style type="text/css">
+
+    /* Typography */
+    body {
+      font-family: Helvetica, Arial, sans-serif;
+      font-size: 14px;
+    }
+
+    pre {
+      font-size: 13px;
+      font-family: 'Monaco', 'Consolas', 'Roboto Mono', monospace;
+    }
+
+    /* Layout */
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .layout {
+      display: flex;
+      flex-direction: row;
+      height: 100vh;
+    }
+
+    .layout > * {
+      flex: 1;
+      overflow: auto;
+    }
+
+    .layout__main {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .layout__main > * {
+      flex: 1;
+      overflow: auto;
+    }
+
+    .layout__panel {
+      max-width: 33%;
+    }
+
+    /* Layout modifiers */
+    .layout--vertical {
+      flex-direction: column;
+    }
+
+    .layout--vertical .layout__panel {
+      border-left: none;
+      max-width: none;
+    }
+
+    /* Flex helpers */
+    .flex-pull-right {
+        margin-left: auto;
+    }
+
+    .icon-button {
+      width: 32px;
+      height: 32px;
+      padding: 0;
+      border: none;
+      border-radius: 2px;
+      background: none;
+      color: #444;
+      opacity: .8;
+    }
+
+    .icon-button:focus,
+    .icon-button:hover {
+      opacity: 1;
+      outline: none;
+    }
+
+    .icon-button:hover {
+      background: rgba(0,0,0,0.05);
+    }
+
+    /* Icon label */
+    .icon-label {
+      display: flex;
+      align-items: center;
+    }
+
+    .icon-label > *:not(:last-child) {
+      margin-right: 4px;
+    }
+
+    /* Header */
+    .header {
+      min-height: 48px;
+      max-height: 48px;
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      background: #f4f4f4;
+      /* box-shadow: 0 3px 6px rgba(0,0,0,0.04), 0 3px 6px rgba(0,0,0,0.10); */
+    }
+
+    .header__title {
+      padding: 0px 16px 0 0;
+    }
+
+    .header__search {
+      position: relative;
+      flex: 1;
+      max-width: 640px;
+      margin-right: 16px;
+    }
+
+    .header__search__icon {
+      position: absolute;
+      left: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #444;
+      opacity: .5;
+    }
+
+    .header__search input {
+      padding: 0 42px 0 42px;
+      height: 32px;
+      font-size: 16px;
+      width: 100%;
+      border: 1px solid transparent;
+    }
+
+    .header__search input::-webkit-input-placeholder {
+      color: #444;
+      opacity: .5;
+    }
+
+    .header__search input:focus {
+      border: 1px solid #8ECBEF;
+      outline: none;
+    }
+
+    .header__search__icon-close {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #444;
+      opacity: .5;
+      cursor: pointer;
+    }
+
+    .header__search__icon-close:hover {
+      opacity: 1;
+    }
+
+    .body {
+      padding: 8px 0;
+    }
+
+    /* Icon */
+    .icon {
+      position: relative;
+      width: 24px;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .icon--open-folder:before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      height: 3px;
+      width: 8px;
+      background: black;
+      margin-top: -6px;
+      margin-left: -4px;
+      border-radius: 2px 2px 0 0;
+    }
+
+    .icon--open-folder:after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 16px;
+      height: 10px;
+      border: 2px solid black;
+      box-sizing: border-box;
+      border-radius: 0 2px 2px 2px;
+    }
+
+    .button {
+
+    }
+
+    .button--action-layout {
+
+    }
+
+    .button--action-layout__icon {
+      display: inline-block;
+    }
+
+    .button--action-layout--is-horizontal .button--action-layout__icon {
+      transform: rotate(90deg);
+    }
+
+    /* Components */
+
+    /* node-list*/
+    .node-list {
+        color: inherit;
+        font-family: 'Monaco', 'Consolas', 'Roboto Mono', monospace;
+        font-size: 13px;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .node-list__item {
+        color: inherit;
+    }
+
+    .node-list__item__anchor {
+        cursor: pointer;
+        display: block;
+        white-space: nowrap;
+    }
+
+    .node-list__item__anchor:hover {
+        background: #f2f2f2;
+    }
+
+    /* node */
+
+    .node__list {
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+    }
+
+    .node__anchor {
+        cursor: pointer;
+        white-space: nowrap;
+        display: block;
+        text-decoration: none;
+        color: #646465;
+    }
+
+    .node__anchor > *:not(last-child) {
+      margin-right: 4px;
+    }
+
+    .node__anchor:focus {
+      outline: none;
+    }
+
+    .node__anchor--secondary {
+      opacity: .6;
+    }
+
+    .node__anchor:hover:not(.node__anchor--is-active),
+    .node__anchor:focus:not(.node__anchor--is-active) {
+      background: rgba(36, 124, 224, 0.16);
+    }
+
+    .node__anchor:before {
+        content: "▹";
+        display: inline-block;
+        margin-right: 4px;
+    }
+
+    .node__anchor--is-empty:before {
+        content: '\00a0';
+    }
+
+    .node__anchor--is-expanded:before {
+        content: '▸';
+        transform: rotate(45deg);
+    }
+
+    .node__anchor--is-selected {
+        background: rgba(36, 124, 224, 0.1);
+    }
+
+    .node__anchor--is-selected.node__anchor--is-active {
+      background: #2479E0;
+      color: rgba(255,255,255,0.85);
+    }
+
+    .node__anchor--is-selected.node__anchor--is-active .graph-node__filename {
+      color: #fff;
+    }
+
+    .node__anchor--is-selected.node__anchor--is-active .node__anchor__ctx {
+      color: rgba(255,255,255,0.7);
+    }
+
+    .node__anchor--is-selected.node__anchor--is-active .node__anchor__action {
+      color: rgba(255,255,255,0.5);
+    }
+
+    .node__anchor__ctx {
+      color: #922e5f;
+    }
+
+    .graph-node__filename {
+        margin-right: 5px;
+        color: blue;
+    }
+
+    .node__anchor__action {
+      color: #F08F53;
+    }
+
+    .label {
+        padding: 0 3px;
+        display: inline-block;
+        background: #f2f2f2;
+        color: #666;
+        border-radius: 3px;
+    }
+
+    /* Inspector*/
+
+    .inspector {
+      width: 100%;
+      height: 100%;
+    }
+
+    .inspector__body > * {
+      flex: 1;
+      overflow: auto;
+    }
+
+    /* Inspector modifiers */
+    .inspector--horizontal .inspector__body {
+      flex-direction: row;
+    }
+
+    /* Dump */
+    .dump {
+      padding: 0 16px;
+    }
+
+    .dump pre {
+      margin: 0;
+    }
+
+    /* Tab List */
+    .tab-list {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 100%;
+    }
+    .tab-list__header {
+      height: 48px;
+      flex-shrink: 0;
+      align-items: center;
+      display: flex;
+      flex-direction: row;
+      background: #f4f4f4;
+    }
+    .tab-list__header__tabs {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+    .tab-list__header__tabs__label {
+      display: inline-block;
+      height: 100%;
+    }
+    .tab-list__header__tabs__label a {
+      display: block;
+      padding: 0 16px;
+      height: 100%;
+      line-height: 48px;
+      text-decoration: none;
+      color: grey;
+      text-transform: uppercase;
+      font-size: 12px;
+    }
+    .tab-list__header__tabs__label--is-active a {
+      color: #666;
+    }
+
+    .tab-list__header__actions {
+      margin-left: auto;
+      padding-right: 16px;
+    }
+    .tab-list__body {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      background: #f4f4f4;
+    }
+
+    /* List Group */
+    .list-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .list-group--horizontal {
+      flex-direction: row;
+    }
+
+    .list-group__item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0px;
+    }
+    .list-group--horizontal .list-group__item:not(:last-of-type) {
+      border-right: 1px solid #ccc;
+    }
+
+    .list-group__item.list-group__item--is-collapsed {
+      flex: none;
+    }
+
+    .list-group__item.list-group__item--is-collapsed .list-group__item__body {
+      display: none;
+    }
+
+    .list-group__item__head {
+      flex-shrink: 0;
+      padding: 4px 8px;
+      background: #DCDCDC;
+      color: #6C6C6C;
+      text-transform: uppercase;
+      font-weight: bold;
+      font-size: 12px;
+      position: relative;
+    }
+
+    .list-group--horizontal .list-group__item.list-group__item--is-collapsed .list-group__item__head {
+      height: 100%;
+      width: 22px;
+    }
+
+    .list-group--horizontal .list-group__item.list-group__item--is-collapsed .list-group__item__head:after {
+      transform: rotate(90deg);
+      left: 3px;
+      top: -8px;
+      transform-origin: bottom left;
+      white-space: nowrap;
+    }
+
+    .list-group__item__head:after {
+      content: attr(title);
+      position: absolute;
+      left: 18px;
+    }
+
+    .list-group__item__head:before {
+      content: "▹";
+      display: inline-block;
+      line-height: 1;
+      font-size: 13px;
+    }
+
+    .list-group--horizontal .list-group__item__head:before {
+      content: '';
+    }
+
+    .list-group--horizontal .list-group__item__head:after {
+      left: 16px;
+    }
+
+    .list-group:not(.list-group--horizontal) .list-group__item:not(.list-group__item--is-collapsed) .list-group__item__head:before {
+      content: '▸';
+      transform: rotate(45deg);
+    }
+
+    .list-group__item__body {
+      flex: 1;
+      overflow: auto;
+      padding: 8px 0;
+    }
+
+    /* Main node-list */
+    .root-path {
+      padding-left: 16px;
+      font-weight: bold;
+      font-family: 'Monaco', 'Consolas', 'Roboto Mono', monospace;
+      font-size: 13px;
+      color: #646465;
+    }
+
+    .root-path__icon {
+      font-size: 16px;
+      vertical-align: top;
+      margin-right: 4px;
+    }
+
+    /* Helpers */
+    .flex-shrink {
+      flex-shrink: 0;
+    }
+
+
+    /* Theme */
+
+
+    /* Legacy */
+
+    [data-balloon-length="xlarge"]:after {
+      width: 500px;
+    }
+    [data-balloon]:after {
+      text-align: left;
+      font-family: Consolas, monospace;
+      font-size: 12px;
+    }
+
+  </style>
+
+</head>
+<body>
+<div id="container">
+  <!-- This element's contents will be replaced with your component. -->
+</div>
+
+<script>
+var rce = React.createElement;
+
+/* ClassNames
+ * Creates a class name string;
+ *
+ * returns {string}
+*/
+var generateClassString = function(classesObj, classesString) {
+  var classArray = Object.keys(classesObj).filter(function(val) {
+    return classesObj[val];
+  }, this)
+  .map(function(key) {
+    if (classesObj[key]) {
+      return key;
+    }
+  });
+
+
+  var stringArray = classesString ? classesString.trim().split(' ') : [];
+  var classesArray = classesString ? classArray.concat(stringArray) : classArray;
+
+  return classesArray.join(' ');
+}
+
+var testData = {
+  "nodes": [{"id":0,"type":"TestSession","name":"TestSession","children":[{"id":1},{"id":2},{"id":15}]},{"id":1,"type":"ArtifactPublish","name":"ArtifactPublish","children":[]},{"id":2,"type":"TestSuite","name":"editor","children":[{"id":3},{"id":4},{"id":5},{"id":6},{"id":7},{"id":8},{"id":9},{"id":10},{"id":14}]},{"id":3,"type":"Info","name":"Info","children":[]},{"id":4,"type":"Info","name":"Info","children":[]},{"id":5,"type":"Info","name":"Info","children":[]},{"id":6,"type":"Info","name":"Info","children":[]},{"id":7,"type":"Info","name":"Info","children":[]},{"id":8,"type":"Info","name":"Info","children":[]},{"id":9,"type":"Info","name":"Info","children":[]},{"id":10,"type":"ProcessInfo","name":"ProcessInfo","children":[{"id":11},{"id":12}]},{"id":11,"type":"TestPlan","name":"TestPlan","children":[]},{"id":12,"type":"TestStatus","name":"EditorCrashTests.CrashEditor","children":[{"id":13}]},{"id":13,"type":"Error","name":"Error","children":[]},{"id":14,"type":"ArtifactPublish","name":"ArtifactPublish","children":[]},{"id":15,"type":"Info","name":"Info","children":[]}],
+  "requestednodes": [
+    0
+  ],
+  "top": "Test Session",
+  "prefixes": [
+    "/Users/lucas/unity3/runtime/",
+    "/Users/lucas/unity3/artifacts/",
+    "/Users/lucas/unity3/External/UnitTest++/src/",
+    "<UnitTest++>src",
+    "/Users/lucas/unity3/Tools/il2cpp/il2cpp/MapFileParser/",
+    "/Users/lucas/unity3/external/",
+    "<!dir!>/Users/lucas/unity3/artifacts/macosx32_debug_MapFileParser_mono_1/",
+    "<MapFileParser>runtime/",
+    "/Users/lucas/unity3/platformdependent/",
+    "/Users/lucas/unity3/Runtime/",
+    "/Users/lucas/unity3/editor/src/"
+  ]
+};
+
+
+var realData =
+'$REPLACE_ME$'
+;
+
+var parsedData = typeof(realData) === 'string' ? testData : realData;
+
+
+var allNodes = parsedData.nodes;
+var prefixes = parsedData.prefixes;
+
+// to reduce massive amount of storage/memory for strings with often the same prefixes,
+// they are often stored as "@index@RestOfString", with @index@ part replaced by prefix
+// from common prefixes table.
+function Deprefix(s)
+{
+  var match = s.match(/^@(\d+)@(.*)/);
+  if (!match)
+    return s;
+  return prefixes[match[1]] + match[2];
+}
+function DeprefixFull(s)
+{
+  return s.replace(/"@(\d+)@/g, function(match,p1,offset,string){return '"' + prefixes[p1]});
+}
+
+
+/* Component: NodeList
+ * Creates a Tree navigation of items
+*/
+var NodeList = React.createClass({
+  getDefaultProps: function() {
+    return {
+      showRefs: true
+    }
+  },
+
+  getInitialState: function() {
+    return {
+      expanded: this.props.expanded,
+      depth: this.props.depth
+    }
+  },
+
+  myOnClick: function(e) {
+    e.preventDefault();
+    this.setState({
+      expanded:!this.state.expanded
+    });
+  },
+
+  render: function() {
+    var listItemClasses = generateClassString({
+      'node__anchor--empty': this.props.entries.length==0,
+      'node__anchor--is-expanded': this.state.expanded
+    }, 'node-list__item__anchor node__anchor node__anchor--secondary ' + this.props.className);
+
+    var listItems = this.props.entries.map(function(idAndStack) {
+      return (
+        rce('li',
+          {
+            key: this.props.reactKey + "_li_" + idAndStack.id
+          },
+          rce(GraphNode,
+            {
+              key: this.props.reactKey + "_" + idAndStack.id,
+              reactKey: this.props.reactKey + "_" + idAndStack.id,
+              idAndStack: idAndStack,
+              graphNodeSelectCallback: this.props.graphNodeSelectCallback,
+              graphNodeActiveCallback: this.props.graphNodeActiveCallback,
+              selectedNode: this.props.selectedNode,
+              activeNode: this.props.activeNode,
+              //yan depth: this.props.renderLabel ? this.props.depth + 1 : this.props.depth,
+              depth: this.props.depth,
+              showRefs: this.props.showRefs
+            },
+            null
+          )
+        )
+      )
+    }, this);
+
+    return rce('div',
+        null,
+        this.props.renderLabel ?
+          rce('a',
+            {
+                className: listItemClasses,
+                href: '#',
+                onClick: this.myOnClick,
+                tabIndex: 0,
+                style: {
+                    paddingLeft: ((this.props.depth) * 16) + 'px'
+                }
+            },
+            rce('span', null,
+              this.props.caption
+            ),
+            this.props.renderLabel ?
+            rce('span', null,
+                ' ' + listItems.length
+            ): null,
+          ): null,
+
+        this.state.expanded ?
+          rce('ul', {className: 'node-list'}, listItems) : null
+      );
+  }
+});
+
+
+var CallstackButton = React.createClass({
+  myCallStackClick: function() {
+    console.log(this.props.callstack);
+  },
+
+  render: function() {
+    return rce('button', {
+      'data-balloon-length':"x-large",
+      'data-balloon': this.props.callstack.replace(/(?:\\r\\n|\\r|\\n)/g, '\n'),
+      'data-balloon-break': 1,
+      'data-balloon-pos':"right",
+      onClick: this.myCallStackClick
+    }, 'Callstack');
+  }
+});
+
+var NavigatableNodes = React.createClass({
+  getInitialState: function() {
+    return {
+      selectedNode: null,
+    }
+  },
+
+  componentDidUpdate: function() {
+    this.allNodes = this.nodetree.querySelectorAll('.node__anchor');
+  },
+
+  setFocus: function(value) {
+    var activeElement = document.activeElement;
+    this.allNodes.forEach((el, i) => {
+        if (el === activeElement) {
+          this.allNodes[i + value] ? this.allNodes[i + value].focus() : null;
+          return false;
+        }
+    })
+  },
+
+  select: function() {
+    var activeElement = document.activeElement;
+    activeElement.click();
+    setTimeout(() => {
+        this.allNodes = this.nodetree.querySelectorAll('.node__anchor');
+    }, 100)
+  },
+
+  handleKeyDown: function(e) {
+    var codeUp = 38;
+    var codeDown = 40;
+    var codeEnter = 13;
+    var codeRight = 39;
+    var codeLeft = 37;
+
+    if (e.keyCode === codeUp) {
+      e.preventDefault();
+      e.stopPropagation();
+      this.setFocus(-1);
+    }
+
+    if (e.keyCode === codeDown) {
+      e.preventDefault();
+      e.stopPropagation();
+      this.setFocus(1);
+    }
+
+    if (e.keyCode === codeLeft || e.keyCode === codeRight) {
+      this.select();
+    }
+  },
+
+  render: function() {
+    return rce('div', {
+        onKeyDown: this.handleKeyDown,
+        ref: (nodeTree) => this.nodetree = nodeTree
+      }, this.props.children)
+  }
+});
+
+var GraphNode = React.createClass({
+
+  getDefaultProps: function() {
+    return {
+      showRefs: true,
+      expanded: false
+    }
+  },
+
+  getInitialState: function() {
+    return {
+      expanded: this.props.expanded,
+      depth: this.props.depth
+    }
+  },
+
+  myOnClick: function(e){
+    e.preventDefault();
+
+    this.setState({
+      expanded: !this.state.expanded,
+    });
+
+    this.props.graphNodeActiveCallback
+    ? this.props.graphNodeActiveCallback(this)
+    : null;
+
+
+    this.props.graphNodeSelectCallback
+      ? this.props.graphNodeSelectCallback(allNodes[this.props.idAndStack.id])
+      : null;
+  },
+
+  render: function() {
+    var node = allNodes[this.props.idAndStack.id];
+  
+    var hasChildren;
+    if ("children" in node && node.children.length > 0 ) {
+        hasChildren = true;
+    }
+    var isFile = ("boundName" in node) && Deprefix(node.boundName).startsWith(parsedData.top);
+
+    var itemClassNames = generateClassString({
+      'node__anchor--is-active': this == this.props.activeNode,
+      'node__anchor--is-selected': this.props.selectedNode.id == this.props.idAndStack.id,
+      'node__anchor--is-empty': !hasChildren,
+      'node__anchor--is-expanded': hasChildren && this.state.expanded,
+      'node__anchor--has-deps': "deps" in node,
+      'node__anchor--has-needs': "needs" in node,
+      'node__anchor--has-inc': "inc" in node,
+      'node__anchor--has-refby': "refby" in node
+    }, 'node__anchor');
+
+    var fileNameClasses = generateClassString({
+      'graph-node__filename': isFile
+    });
+
+    // if node name contains grist ("<foobar>") at front, display it in different style
+    var context = '';
+    var name = Deprefix(node.name);
+    var match = name.match(/^(<.+>)(.*)/);
+    if (match)
+    {
+      context = match[1];
+      name = match[2];
+    }
+
+    // if name starts with root folder, display it in different style
+    var top = '';
+
+    if (name.startsWith(parsedData.top)) {
+      top = 'top';
+      name = name.substr(parsedData.top.length);
+    }
+
+
+    var elCallstack = null;
+    if ("callstack" in this.props.idAndStack) {
+      elCallstack = rce(CallstackButton,
+        {
+          callstack: this.props.idAndStack.callstack
+        },
+        null
+      )
+    };
+
+    var elAction = null;
+    if ("actions" in node && node.actions.length > 0) {
+      elAction = rce('span',
+        {
+          className: 'node__anchor__action'
+        },
+        node.actions[0].name
+      );
+    }
+
+    var elChildren;
+    var elChildrenArray;
+    var elDeps;
+    var nodesCriteria = this.props.showRefs ? ['children']: [];
+    var createListItem = function(name, src, label, ctx, caption, expanded, depth) {
+      if (name in src) {
+        return (
+          rce('li', null, rce(NodeList, {
+            ref: name + "List",
+            key: ctx.props.reactKey + "_" + name,
+            reactKey: ctx.props.reactKey + "_" + name,
+            caption: caption,
+            className: "internalNode " + name,
+            expanded: expanded,
+            entries: src.children,
+            graphNodeSelectCallback: ctx.props.graphNodeSelectCallback,
+            graphNodeActiveCallback: ctx.props.graphNodeActiveCallback,
+            selectedNode: ctx.props.selectedNode,
+            activeNode: ctx.props.activeNode,
+            // 
+            //renderLabel: label,
+            depth: depth + 1,
+            showRefs: ctx.props.showRefs
+          }, null))
+        )
+      }
+    }
+
+    if (this.state.expanded) {
+        elChildrenArray = nodesCriteria.map(function(criteria) {
+          return createListItem(criteria, node, true, this, null, true, this.props.depth);
+      }, this);
+
+      elChildren = rce('ul', {className: 'node__list'}, elChildrenArray);
+    }
+
+    return rce('div',
+        {className: 'graph-node'},
+        rce('a',
+          {
+            className: itemClassNames,
+            onClick: this.myOnClick,
+            href: '#',
+            tabIndex: 0,
+            style: {
+                paddingLeft: (this.props.depth * 16) + 'px'
+            }
+          },
+
+        context.length > 0 ?
+          rce('span',
+            {
+              className: 'node__anchor__ctx'
+            },
+            context
+          ) : null,
+
+        top.length > 0 ?
+          rce('span',
+            {
+              className: 'node__anchor__ctx__top'
+            },
+            top
+          ) : null,
+
+          rce('span',
+            {
+              className: fileNameClasses
+            },
+            name
+          ),
+
+          elAction
+        ),
+        //elCallstack,
+        rce('ul', {className: 'node__list'},
+            elDeps
+        ),
+        elChildren ?
+        elChildren : null
+      );
+  }
+});
+
+var SearchField = React.createClass({
+  timer: null,
+
+  getInitialProps: function() {
+    value: ''
+  },
+
+  getInitialState: function() {
+    return { value: this.props.value }
+  },
+
+  handleChange: function(event) {
+    this.setState({value: event.target.value});
+    // clearTimeout(this.timer);
+    // this.timer = setTimeout(() => {
+    //   this.props.onNewValue();
+    // }, 200)
+  },
+
+  componentDidMount: function() {
+    // this.refs.searchinput.focus();
+  },
+
+  handleOnFocus: function() {
+    this.refs.searchinput.setSelectionRange(this.state.value.length, this.state.value.length)
+  },
+
+  myKeyPress: function(event) {
+    // On enter key
+    if (event.keyCode == 13) {
+        this.props.onNewValue();
+    }
+  },
+  render: function()
+  {
+    return rce('input', {
+      ref: 'searchinput',
+      type:'text',
+      title: 'Press enter to search',
+      placeholder:"Search in dependencies",
+      value: this.state.value,
+      onChange:this.handleChange,
+      onKeyUp:this.myKeyPress,
+      onFocus: this.handleOnFocus
+    }, null);
+  }
+});
+
+
+var ResetButton = React.createClass({
+  render: function()
+  {
+    return rce('i', {className: 'material-icons header__search__icon-close', onClick:this.props.onClick}, 'close');
+  }
+})
+
+
+var TestStatus = React.createClass({
+    getDefaultProps: function() {
+      return {
+        data: null,
+      }
+    },
+
+    render: function() {
+        var name = this.props.data.name;
+        return rce('pre', null, name)
+    }
+});
+
+
+var Inspector = React.createClass({
+  getDefaultProps: function() {
+    return {
+      selectedNodenodeToDisplay: null,
+    }
+  },
+
+  myDumpToConsole: function() {
+    console.log(DeprefixFull(JSON.stringify(this.state.selectedNodenodeToDisplay, null, 2)));
+  },
+
+  render: function() {
+    var type = this.props.selectedNodenodeToDisplay.type;
+    console.log(type);
+    switch (type) 
+    {
+          case 'TestStatus':
+            return rce(TestStatus, {data:this.props.selectedNodenodeToDisplay});
+    }
+
+    return rce('div', {className:'dump'},
+        rce('pre', null, DeprefixFull(JSON.stringify(this.props.selectedNodenodeToDisplay, null, 2))),
+    );
+  }
+});
+
+
+var ListGroup = React.createClass({
+  getDefaultProps: function() {
+    return {
+      horizontal: false,
+      style: {}
+    }
+  },
+
+  render: function() {
+    var listGroupClasses = generateClassString({
+      'list-group--horizontal': this.props.horizontal
+    }, 'list-group');
+    return rce('div', {className: listGroupClasses, style: this.props.style},
+      this.props.children
+    )
+  }
+});
+
+var ListGroupItem = React.createClass({
+  getDefaultProps: function() {
+    return {
+      title: 'Item title',
+      collapsed: false
+    }
+  },
+
+  getInitialState: function() {
+    return {
+      collapsed: this.props.collapsed
+    }
+  },
+
+  handleToggleCollapse: function() {
+    this.setState({collapsed: !this.state.collapsed});
+  },
+
+  render: function() {
+    var listGroupItemClasses = generateClassString({
+      'list-group__item--is-collapsed': this.state.collapsed
+    }, 'list-group__item');
+
+    return rce('div', {className: listGroupItemClasses},
+      rce('div', {
+        className: 'list-group__item__head',
+        onClick: this.handleToggleCollapse,
+        title: this.props.title
+      }, null),
+      rce('div', {className: 'list-group__item__body'}, this.props.children)
+    )
+  }
+});
+
+var TabList = React.createClass({
+  getDefaultProps: function() {
+    return {
+      activeIndex: 0,
+    }
+  },
+
+  getInitialState: function() {
+    return {
+      activeIndex: this.props.activeIndex
+    }
+  },
+
+  handleLabelClick: function(e, i) {
+    e.preventDefault();
+    this.setState({activeIndex: i})
+  },
+
+  labels: function(child, index) {
+    var labelClasses = generateClassString({
+      'tab-list__header__tabs__label--is-active': index === this.state.activeIndex
+    }, 'tab-list__header__tabs__label');
+
+    return rce('li', {key: 'label-' + index, className: labelClasses},
+      rce('a', {
+        href: '#',
+        onClick: (e) => this.handleLabelClick(e, index)
+      }, child.props.label)
+    );
+  },
+
+  render: function() {
+    return rce('div', {className: 'tab-list'},
+      rce('div', {className: 'tab-list__header'},
+        rce('ul', {
+          className: 'tab-list__header__tabs'
+        },
+          React.Children.map(this.props.children, this.labels)
+        ),
+
+        this.props.actions
+        ? rce('div', {className: 'tab-list__header__actions'}, this.props.actions)
+        : null
+      ),
+      rce('div', {className: 'tab-list__body'},
+        React.Children.toArray(this.props.children)[this.state.activeIndex]
+      )
+    )
+  }
+});
+
+
+var TabListItem = React.createClass({
+  getDefaultProps: function() {
+    return {
+      label: 'tab label',
+    }
+  },
+  render: function() {
+    return rce('div', {style: {height: '100%'}}, this.props.children);
+  }
+});
+
+
+var App = React.createClass({
+  getInitialState: function() {
+    return {
+      selectedNode: { id:-1, msg:"Click a node to inspect", totalNodes:allNodes.length },
+      rootNodes: parsedData.requestednodes.map(function(index) {
+          return {id:index};
+      }),
+      filterValue: '',
+      searchResults: [],
+      inspectorIsOpen: true,
+      layoutVertical: false,
+      visibleInspectorTab: 'inspector',
+      activeNode: null,
+      isSearching: false,
+      isSearchResults: false
+    }
+  },
+
+  nodeSelected: function(node) {
+    this.setState({selectedNode: node});
+  },
+
+  nodeActivated: function(node) {
+    this.setState({activeNode: node})
+  },
+
+  filterChanged:function() {
+    this.setState({
+      isSearching: true,
+      filterValue: this.refs.searchfield.state.value
+    });
+    var r = new RegExp(this.refs.searchfield.state.value,"i");
+
+    var searchData = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(parsedData.nodes.filter(function(n) { return Deprefix(n.name).match(r);}).map(function(m) { return {id:m.id};}));
+      })
+    });
+
+    searchData.then(result => {
+      if (!this.refs.searchfield.state.value == '') {
+        this.setState({
+          rootNodes: result,
+          isSearching: false,
+          isSearchResults: true
+        });
+      } else {
+        this.setState({
+          rootNodes: parsedData.requestednodes.map(function(index) {
+            return {id:index};
+          }),
+          isSearching: false,
+          isSearchResults: false
+        });
+      }
+    }).catch(err => {console.log(err)})
+  },
+
+  resetRoots:function() {
+    this.refs.searchfield.setState({value: ""});
+    this.setState({
+      rootNodes: parsedData.requestednodes.map(function(index) {
+        return {id:index};
+      })
+    });
+  },
+
+  handleToggleInspectorClick: function() {
+    this.setState({
+      inspectorIsOpen: !this.state.inspectorIsOpen
+    });
+  },
+
+  handleToggleThemeClick: function() {
+    this.setState({
+      themeIsDark: !this.state.themeIsDark
+    });
+  },
+
+  handleLayoutClick: function() {
+    this.setState({
+      layoutVertical: !this.state.layoutVertical
+    })
+  },
+
+  handleTabClick: function(name, event) {
+    event.preventDefault();
+    this.setState({
+      visibleInspectorTab: name
+    });
+  },
+
+  render: function() {
+    var bodyClassNames = generateClassString({
+      'theme-dark': this.state.themeIsDark
+    });
+
+    var layoutClassNames = generateClassString({
+      'layout--vertical': this.state.layoutVertical
+    }, 'layout');
+
+    var inspectorClassNames = generateClassString({
+      'inspector--horizontal': this.state.layoutVertical
+    }, 'inspector');
+
+    var layoutButtonClasses = generateClassString({
+      'button--action-layout--is-horizontal': this.state.layoutVertical
+    }, 'button button--action-layout');
+
+    return rce('div', {className: bodyClassNames},
+      rce('div', {className: layoutClassNames},
+          rce('div', {className: 'layout__main'},
+            rce('div', {className:'header'},
+              rce('div', {className: 'flex-shrink header__title'}, 'Dependency Graph'),
+              rce('div', {className:'header__search'},
+                rce('i', {className: 'header__search__icon material-icons'}, 'search'),
+                rce(SearchField, {
+                  ref:'searchfield',
+                  onNewValue:this.filterChanged,
+                  value: this.state.filterValue
+                }, null),
+                this.state.filterValue.length
+                ? rce(ResetButton, {
+                  ref:'resetbutton',
+                  onClick:this.resetRoots
+                }, null)
+                : null
+              ),
+              rce('div', { className: 'flex-pull-right' },
+                rce('button', {
+                  className: 'material-icons icon-button',
+                  onClick: this.handleToggleThemeClick,
+                  title: 'Change theme'
+                }, 'brightness_6'),
+                !this.state.inspectorIsOpen
+                ? rce('button', {
+                  className: 'material-icons icon-button',
+                  onClick: this.handleToggleInspectorClick,
+                  title: 'Show Inspector'}, 'code')
+                : null
+              )
+            ),
+
+            !this.state.isSearching
+            ? rce('div', {className: 'body'},
+                !this.state.isSearchResults
+                ? rce('span', {className:'root-path'},
+                    rce('i', {className: 'material-icons root-path__icon'}, 'folder_open'),
+                    rce('span', null, parsedData.top)
+                  )
+                : rce('span', {className:'root-path'},
+                    rce('i', {className: 'material-icons root-path__icon'}, 'search'),
+                    rce('span', null, `Search results (${this.state.rootNodes.length})`),
+                  ),
+
+                !this.state.isSearching
+                ? rce(NavigatableNodes, null,
+                    rce(NodeList,
+                      {
+                        ref: (input) => this.rootNode = input,
+                        reactKey:'rootNode',
+                        caption:'RequestedNodes',
+                        className:'root',
+                        entries: this.state.rootNodes,
+                        graphNodeSelectCallback: this.nodeSelected,
+                        graphNodeActiveCallback: this.nodeActivated,
+                        selectedNode:this.state.selectedNode,
+                        activeNode: this.state.activeNode,
+                        expanded: true,
+                        showRefs: true,
+                        depth: 2
+                      },
+                      null
+                    )
+                  )
+                : null,
+              )
+            : null,
+          ),
+
+          this.state.inspectorIsOpen ?
+            rce('div', {className: 'layout__panel layout__panel--bottom'},
+              rce('div', {className: 'inspector'},
+                rce(TabList, {
+                  activeIndex: 0,
+                  actions: rce('div', null,
+                    rce('button', {
+                      className: 'material-icons icon-button',
+                      onClick: this.handleLayoutClick,
+                      title: 'Change position'
+                    }, 'view_compact'),
+                    rce('button', {
+                      className: 'material-icons icon-button',
+                      onClick: this.handleToggleInspectorClick,
+                      title: 'Close'
+                    }, 'close')
+                  )
+                },
+                  rce(TabListItem, {label: rce('span', {className: 'icon-label'},
+                    rce('i', {className: 'material-icons'}, 'code'),
+                    rce('span', null, 'Inspector')
+                  )},
+                    rce(ListGroup, {horizontal: this.state.layoutVertical, style: {height: '100%'}},
+                      rce(ListGroupItem, {title: `Dump`},
+                        rce(Inspector, {selectedNodenodeToDisplay: this.state.selectedNode}, null)
+                      ),
+                    )
+                  ),
+                )
+              )
+            ) : null
+        )
+      )
+  }
+});
+
+
+
+var App2 = React.createClass({
+  render: function() {
+    return  rce('ul', {className: 'node-list'}, 
+      rce('li', null, 'TestSession',
+           rce('li', null, 'TestStatus')        
+      ) 
+
+    );
+  }
+});
+
+ReactDOM.render(rce(App), document.getElementById('container'));
+console.log(JSON.stringify(testData));
+</script>
+</body>
+</html>
